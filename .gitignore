@@ -1,0 +1,8 @@
+.sass-cache
+node_modules
+.DS_Store
+deploy
+preprod
+components/*
+npm-debug.log
+www/image

@@ -1,0 +1,58 @@
+{
+	"content": {
+		"twitter_url": "https://twitter.com/camper",
+		"facebook_url": "https://www.facebook.com/Camper",
+		"instagram_url": "https://instagram.com/camper/",
+		"lab_url": "http://www.camper.com/lab",
+		"lang": {
+			"en": {
+				"camper_lab": "Camper Lab",
+				"shop_title": "Shop",
+				"shop_men": "Men",
+				"shop_women": "Women",
+				"planet": "Planet",
+				"buy_title": "Buy",
+				"campaign_title": "Discover campaign",
+				"experience_title": "See experience",
+				"legal": "Legal",
+				"home_txt": "HOME",
+				"mute_txt": "MUTE",
+				"play_txt": "PLAY",
+			}
+		}
+	},
+
+	"langs": ["en", "fr", "es", "it", "de", "pt"],
+
+	"default-route": "",
+
+	"routing": {
+		"/": {
+		},
+
+		"arelluf/capas": {
+		},
+		"arelluf/dub": {
+        },
+        "arelluf/kobarah": {
+        },
+        "arelluf/marta": {
+        },
+        "arelluf/paradise": {
+        },
+        "arelluf/pelotas": {
+        },
+
+        "deia/dub": {
+        },
+        "deia/marta": {
+        },
+        "deia/mateo": {
+        },
+
+        "es-trenc/beluga": {
+        },
+        "es-trenc/isamu": {
+        }
+	}
+}
