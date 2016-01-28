@@ -6,6 +6,9 @@ export default class Diptyque extends Page {
 		super(props)
 	}
 	componentDidMount() {
+
+		
+		
 		super.componentDidMount()
 	}
 	didTransitionInComplete() {

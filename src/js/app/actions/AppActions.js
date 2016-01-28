@@ -1,12 +1,27 @@
 import AppConstants from 'AppConstants'
 import AppDispatcher from 'AppDispatcher'
+import AppStore from 'AppStore'
+
+function _proceedHasherChangeAction(pageId) {
+    AppDispatcher.handleViewAction({
+        actionType: AppConstants.PAGE_HASHER_CHANGED,
+        item: pageId
+    })  
+}
 
 var AppActions = {
     pageHasherChanged: function(pageId) {
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.PAGE_HASHER_CHANGED,
-            item: pageId
-        })  
+
+        var manifest = AppStore.pageAssetsToLoad()
+        if(manifest.length < 1) {
+            _proceedHasherChangeAction(pageId)
+        }else{
+            // AppStore.PagesLoader.open()
+            AppStore.Preloader.load(manifest, ()=>{
+                // AppStore.PagesLoader.close()
+                _proceedHasherChangeAction(pageId)
+            })
+        }
     },
     windowResize: function(windowW, windowH) {
         AppDispatcher.handleViewAction({

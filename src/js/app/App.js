@@ -3,6 +3,7 @@ import AppActions from 'AppActions'
 import AppTemplate from 'AppTemplate'
 import Router from 'Router'
 import GEvents from 'GlobalEvents'
+import Preloader from 'Preloader'
 
 class App {
 	constructor() {
@@ -12,6 +13,9 @@ class App {
 		// Init router
 		this.router = new Router()
 		this.router.init()
+
+		// Init Preloader
+		AppStore.Preloader = new Preloader()
 
 		// Init global events
 		window.GlobalEvents = new GEvents()

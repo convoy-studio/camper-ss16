@@ -28,6 +28,9 @@
 
 	"routing": {
 		"/": {
+			"assets": [
+				"hello.jpg"
+			]
 		},
 
 		"arelluf/capas": {

@@ -12,6 +12,15 @@ export default {
 	PX_CONTAINER_ADD_CHILD: 'PX_CONTAINER_ADD_CHILD',
 	PX_CONTAINER_REMOVE_CHILD: 'PX_CONTAINER_REMOVE_CHILD',
 
+	ENVIRONMENTS: {
+		PREPROD: {
+			static: ''
+		},
+		PROD: {
+			"static": JS_url_static + '/'
+		}
+	},
+
 	MEDIA_GLOBAL_W: 1920,
 	MEDIA_GLOBAL_H: 1080,
 

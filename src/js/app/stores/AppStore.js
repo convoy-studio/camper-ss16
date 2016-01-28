@@ -5,6 +5,76 @@ import assign from 'object-assign'
 import data from 'GlobalData'
 import Router from 'Router'
 
+function _getContentScope() {
+    var hashObj = Router.getNewHash()
+    return AppStore.getRoutePathScopeById(hashObj.hash)
+}
+function _getPageAssetsToLoad() {
+    var scope = _getContentScope()
+    var hashObj = Router.getNewHash()
+    var type = _getTypeOfPage()
+    var manifest;
+
+    if(type != AppConstants.HOME) {
+        var filenames = [
+            'character.png',
+            'character-bg.jpg',
+            'shoe.png',
+            'shoe-bg.jpg'
+        ]
+        manifest = _addBasePathsToUrls(filenames, hashObj.parent, hashObj.target, type)
+    }
+
+    // In case of extra assets
+    if(scope.assets != undefined) {
+        var assets = scope.assets
+        var assetsManifest;
+        if(type == AppConstants.HOME) {
+            assetsManifest = _addBasePathsToUrls(assets, 'home', hashObj.target, type)
+        }else{
+            assetsManifest = _addBasePathsToUrls(assets, hashObj.parent, hashObj.target, type)       
+        }
+        manifest = (manifest == undefined) ? assetsManifest : manifest.concat(assetsManifest)
+    }
+
+    return manifest
+}
+function _addBasePathsToUrls(urls, pageId, targetId, type) {
+    var basePath = (type == AppConstants.HOME) ? _getHomePageAssetsBasePath() : _getPageAssetsBasePathById(pageId, targetId)
+    var manifest = []
+    for (var i = 0; i < urls.length; i++) {
+        var splitter = urls[i].split('.')
+        var fileName = splitter[0]
+        var extension = splitter[1]
+        var id = pageId + '-'
+        if(targetId) id += targetId + '-'
+        id += fileName
+        manifest[i] = {
+            id: id,
+            src: basePath + fileName + _getImageExtensionByDeviceRatio() + '.' + extension
+        }
+    }
+    return manifest
+}
+function _getPageAssetsBasePathById(id, assetGroupId) {
+    return AppStore.baseMediaPath() + 'image/diptyque/' + id + '/' + assetGroupId + '/'
+}
+function _getHomePageAssetsBasePath() {
+    return AppStore.baseMediaPath() + 'image/home/'
+}
+function _getImageExtensionByDeviceRatio() {
+    // return '@' + _getDeviceRatio() + 'x'
+    return ''
+}
+function _getDeviceRatio() {
+    var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
+    return (scale > 1) ? 2 : 1
+}
+function _getTypeOfPage(hash) {
+    var h = hash || Router.getNewHash()
+    if(h.parts.length == 2) return AppConstants.DIPTYQUE
+    else return AppConstants.HOME
+}
 function _getPageContent() {
     var hashObj = Router.getNewHash()
     var hash = hashObj.hash.length < 1 ? '/' : hashObj.hash
@@ -45,6 +115,22 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     globalContent: function() {
         return _getGlobalContent()
+    },
+    pageAssetsToLoad: function() {
+        return _getPageAssetsToLoad()
+    },
+    getRoutePathScopeById: function(id) {
+        id = id.length < 1 ? '/' : id
+        return data.routing[id]
+    },
+    baseMediaPath: function() {
+        return AppStore.getEnvironment().static
+    },
+    getEnvironment: function() {
+        return AppConstants.ENVIRONMENTS[ENV]
+    },
+    getTypeOfPage: function(hash) {
+        return _getTypeOfPage(hash)
     },
     lang: function() {
         var defaultLang = true
