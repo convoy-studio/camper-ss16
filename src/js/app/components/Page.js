@@ -23,7 +23,8 @@ export default class Page extends BasePage {
 		super.setupAnimations()
 	}
 	getImageUrlById(id) {
-		return AppStore.Preloader.getImageURL(this.id + '-' + this.props.type.toLowerCase() + '-' + id)
+		var url = this.props.hash.type == AppConstants.HOME ? 'home-' + id : this.props.hash.parent + '-' + this.props.hash.target + '-' + id
+		return AppStore.Preloader.getImageURL(url)
 	}
 	resize() {
 		super.resize()

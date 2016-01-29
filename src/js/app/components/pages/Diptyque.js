@@ -7,8 +7,8 @@ export default class Diptyque extends Page {
 	}
 	componentDidMount() {
 
-		
-		
+		console.log(this.getImageUrlById('shoe'))
+
 		super.componentDidMount()
 	}
 	didTransitionInComplete() {

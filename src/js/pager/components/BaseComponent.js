@@ -16,14 +16,14 @@ class BaseComponent {
 		this.childId = childId
 		this.parentId = parentId
 		this.parent = (parentId instanceof jQuery) ? parentId : $(this.parentId)
-		this.child = (template == undefined) ? $('<div></div>') : $(template(object))
-		if(this.child.attr('id') == undefined) this.child.attr('id', slug(childId))
-		this.child.ready(this.componentDidMount)
-		this.parent.append(this.child)
+		this.element = (template == undefined) ? $('<div></div>') : $(template(object))
+		if(this.element.attr('id') == undefined) this.element.attr('id', slug(childId))
+		this.element.ready(this.componentDidMount)
+		this.parent.append(this.element)
 	}
 	remove() {
 		this.componentWillUnmount()
-		this.child.remove()
+		this.element.remove()
 	}
 	resize() {
 	}

@@ -37,7 +37,7 @@ class PagesContainer extends BasePager {
 				type = Home
 				template = HomeTemplate
 		}
-		this.setupNewComponent(hash.parent, type, template)
+		this.setupNewComponent(hash, type, template)
 		this.currentComponent = this.components['new-component']
 	}
 	update() {

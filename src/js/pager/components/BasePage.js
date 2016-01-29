@@ -19,7 +19,7 @@ export default class BasePage extends BaseComponent {
 		setTimeout(() => this.props.isReady(this.props.hash), 0)
 	}
 	setupAnimations() {
-		var wrapper = this.child
+		var wrapper = this.element
 
 		// transition In
 		this.tlIn.from(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
