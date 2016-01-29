@@ -9,10 +9,10 @@ export default class Page extends BasePage {
 		super(props)
 	}
 	componentWillMount() {
+		this.pxContainer = new PIXI.Container()
 		super.componentWillMount()
 	}
 	componentDidMount() {
-		this.pxContainer = new PIXI.Container()
 		setTimeout(()=>{ AppActions.pxAddChild(this.pxContainer) }, 0)
 		super.componentDidMount()
 	}

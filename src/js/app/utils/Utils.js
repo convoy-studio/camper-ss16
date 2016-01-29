@@ -57,6 +57,15 @@ class Utils {
     	var video = texture.baseTexture.source
         Utils.DestroyVideo(video)
     }
+    static Rand(min, max, decimals) {
+        var randomNum = Math.random() * (max - min) + min
+        if(decimals == undefined) {
+        	return randomNum
+        }else{
+	        var d = Math.pow(10, decimals)
+	        return ~~((d * randomNum) + 0.5) / d
+        }
+	}
     static RandomColor() {
 	    var letters = '0123456789ABCDEF'.split('');
 	    var color = '#';
