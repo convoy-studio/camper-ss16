@@ -1,3 +1,67 @@
-#home-page {
+.home-page {
 	@extend .full;
+
+	.grid-container {
+		canvas {
+			@include transform(translate3d(0, 0, 0));
+			@include opacity(0);
+			@include anim(.12s, 0s, $easeOutExpo, scaleX(0.8) scaleY(0.8) scaleZ(0.8), 50%, 50%, transform opacity);
+			&.enable {
+				@include opacity(1);
+				@include anim(.3s, 0s, $easeOutBack, scaleX(1) scaleY(1) scaleZ(1), 50%, 50%, transform opacity);
+			}
+		}
+	}
+	.lines-grid-container {
+		.horizontal-lines > div {
+			position: absolute;
+			width: 100%;
+			height: 1px;
+			background-color: #fff;
+		}
+		.vertical-lines > div {
+			position: absolute;
+			width: 1px;
+			height: 100%;
+			background-color: #fff;
+		}
+	}
+	.bottom-texts-container {
+		& > div {
+			position: absolute;
+		}
+		.left-text, .right-text {
+			& > div {
+				position: absolute;
+			}
+			.background {
+				@extend .full;
+				background-color: #fff;
+			}
+		}
+	}
+	.around-border-container {
+		$borderSize: 10px;
+		& > div {
+			position: absolute;
+			background-color: $green;
+		}
+		.top, .bottom, .left-step-top, .right-step-top {
+			height: $borderSize;
+		}
+		.left, .right, .left-step-bottom, .right-step-bottom {
+			width: $borderSize;
+		}
+	}
+	.around-border-letters-container {
+		& > div {
+			& > div {
+				position: absolute;
+			}
+			font-size: 11px;
+			position: absolute;
+			text-transform: uppercase;
+			color: white;
+		}
+	}
 }

@@ -1,11 +1,11 @@
-@include font-face('CircularBook', '../font/circularbook/CircularStd-Book_gdi');
+@include font-face('FuturaMedium', '../font/futura/FuturaBT-Medium');
 
 #font-charger {
 	left: -10000px;
 	top: -10000px;
 	position: absolute;
 	@include opacity(0);
-	#CircularBook {
-		font-family: 'CircularBook';
+	#FuturaMedium {
+		font-family: 'FuturaMedium';
 	}
 }

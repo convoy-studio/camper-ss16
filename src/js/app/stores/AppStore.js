@@ -132,6 +132,12 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     getTypeOfPage: function(hash) {
         return _getTypeOfPage(hash)
     },
+    getHomeVideos: function() {
+        return data['home-videos']
+    },
+    generalInfos: function() {
+        return data.content
+    },
     lang: function() {
         var defaultLang = true
         for (var i = 0; i < data.langs.length; i++) {

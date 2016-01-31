@@ -1,23 +1,45 @@
 import BaseComponent from 'BaseComponent'
 import template from 'FrontContainer_hbs'
 import AppStore from 'AppStore'
+import AppConstants from 'AppConstants'
+import AppActions from 'AppActions'
+import headerLinks from 'header-links'
+import socialLinks from 'social-links'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
 		super()
 	}
 	render(parent) {
-		var scope = AppStore.globalContent()
+		var scope = {}
+		var generaInfos = AppStore.generalInfos()
+		scope.infos = AppStore.globalContent()
+		scope.facebookUrl = generaInfos['facebook_url']
+		scope.twitterUrl = generaInfos['twitter_url']
+		scope.instagramUrl = generaInfos['instagram_url']
+		scope.labUrl = generaInfos['lab_url']
+		scope.menShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/men/shoes/new-collection'
+		scope.womenShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/women/shoes/new-collection'
+
 		super.render('FrontContainer', parent, template, scope)
 	}
 	componentWillMount() {
 		super.componentWillMount()
 	}
 	componentDidMount() {
+
+		this.headerLinks = headerLinks(this.element)
+		this.socialLinks = socialLinks(this.element)
+
 		super.componentDidMount()
+
 	}
-	componentWillUnmount() {
-		super.componentWillUnmount()
+	resize() {
+
+		if(!this.domIsReady) return
+		this.headerLinks.resize()
+		this.socialLinks.resize()
+
 	}
 }
 

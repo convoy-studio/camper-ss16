@@ -2,7 +2,7 @@ import AppStore from 'AppStore'
 
 class Preloader  {
 	constructor() {
-		this.queue = new createjs.LoadQueue()
+		this.queue = new createjs.LoadQueue(false)
 		this.queue.on("complete", this.onManifestLoadCompleted, this)
 		this.currentLoadedCallback = undefined
 		this.allManifests = []

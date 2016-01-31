@@ -26,7 +26,8 @@ class Utils {
 			width: newW,
 			height: newH,
 			left: (windowW >> 1) - (newW >> 1),
-			top: (windowH >> 1) - (newH >> 1)
+			top: (windowH >> 1) - (newH >> 1),
+			scale: scale
 		}
 		
 		return css

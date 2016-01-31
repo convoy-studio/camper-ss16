@@ -1,24 +1,91 @@
 #front-container {
 	position: fixed;
 	z-index: 20;
-	a {
-		color: $black;
+	text-transform: uppercase;
+	&, a {
+		font-size: $globalFontSize;
+		color: $white;
+		white-space: nowrap;
+		font-size: 16px;
+		letter-spacing: 0.88px;
+		line-height: 15.85px;
+	}
+	.logo {
+		position: absolute;
+		$w: 100px;
+		width: $w;
+		@include screen(0px, $MQ_MEDIUM) {
+	        width: $w * 0.8;
+	    }
+		left: $PADDING_AROUND;
+		top: $PADDING_AROUND;
+		svg > * {
+			fill: $white;
+		}
 	}
 	header {
-		width: 100%;
-		background-color: yellow;
-		position: fixed;
+		& > * {
+			position: absolute;
+		}
+		.shop-wrapper {
+			& > div {
+				@include inline-block;
+			}
+			.shop-title {
+				margin-right: 0px;
+			}
+			.gender-wrapper {
+				& > div {
+					@include inline-block;
+				}	
+			}
+		}
+		.lang-wrapper, .shop-wrapper {
+			text-align: center;
+			overflow: hidden;
+			li {
+				margin: 8px 0;
+			}
+			@for $i from 5 to -1 {
+				.sub-#{$i} {
+					@include opacity(0);
+					@include anim(.4s, $i*0.02s, $easeInExpo, scaleY(0.5) translateY(4px) translateZ(0), 0%, 100%, transform opacity);
+				}
+			}
+			&.hovered {
+				@for $i from 0 through 5 {
+					.sub-#{$i} {
+						@include opacity(1);
+						@include anim(.6s, $i*0.04s, $easeOutExpo, scaleY(1) translateY(0px) translateZ(0), 0%, 0%, transform opacity);
+					}
+				}
+			}
+		}
 	}
 	footer {
-		width: 100%;
-		background-color: yellow;
-		position: fixed;
-		bottom: 0;
-	}
-	ul {
-		li {
-			@include inline-block;
-			margin-right: 20px;
+		& > * {
+			position: absolute;
+		}
+		#social-wrapper{
+			$w: 18px;
+			$margin: 14px;
+			li {
+				width: $w;
+				height: $w;
+				margin: $margin 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				svg > * {
+					fill: $green;
+				}
+			}
+			li.twitter {
+				width: $w + 3px;
+				height: $w + 3px;
+				margin-left: -2px;
+				padding-top: 2px;
+			}
 		}
 	}
 }
