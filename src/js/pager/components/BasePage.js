@@ -19,23 +19,29 @@ export default class BasePage extends BaseComponent {
 		setTimeout(() => this.props.isReady(this.props.hash), 0)
 	}
 	setupAnimations() {
-		var wrapper = this.element
+		// var wrapper = this.element
 
-		// transition In
-		this.tlIn.from(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
+		// // transition In
+		// this.tlIn.from(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
 
-		// transition Out
-		this.tlOut.to(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
+		// // transition Out
+		// this.tlOut.to(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
 
 		// reset
 		this.tlIn.pause(0)
 		this.tlOut.pause(0)
 	}
 	willTransitionIn() {
-		this.tlIn.play(0)
+		this.tlIn.timeScale(1.4)
+		setTimeout(()=>this.tlIn.play(0), 800)
 	}
 	willTransitionOut() {
-		this.tlOut.play(0)
+		if(this.tlOut.getChildren().length < 1) {
+			this.didTransitionOutComplete()
+		}else{
+			this.tlOut.timeScale(1.2)
+			setTimeout(()=>this.tlOut.play(0), 500)
+		}
 	}
 	didTransitionInComplete() {
 		setTimeout(() => this.props.didTransitionInComplete(), 0)

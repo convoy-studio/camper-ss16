@@ -100,7 +100,7 @@
 				cursor: pointer;
 				fill: $green;
 				stroke-width: 2;
-				@include anim(.4s, .0s, $easeOutExpo, scale(1), 50%, 50%, transform fill stroke-width);
+				@include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform fill stroke-width);
 			}
 			path:hover {
 				fill: black;

@@ -1,6 +1,7 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
+import Router from 'Router'
 
 export default (parent) => {
 
@@ -8,6 +9,7 @@ export default (parent) => {
 		e.preventDefault()
 		var id = e.target.id
 		var parentId = e.target.getAttribute('data-parent-id')
+		Router.setHash(parentId + '/' + id)
 	}
 
 	var scope;
@@ -62,6 +64,13 @@ export default (parent) => {
 			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 760) + 'px'
 			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 210) + 'px'
 			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 460) + 'px'
+		},
+		clear: ()=> {
+			for (var i = 0; i < mapdots.length; i++) {
+				var dot = mapdots[i]
+				dot.removeEventListener('click', onDotClick)
+			};
+			titles = null
 		}
 	}
 	return scope

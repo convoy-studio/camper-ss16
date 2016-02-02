@@ -158,6 +158,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
         AppStore.PXContainer.remove(item.child)
     },
     Parent: undefined,
+    Canvas: undefined,
     Orientation: AppConstants.LANDSCAPE,
     Detector: {
         isMobile: undefined

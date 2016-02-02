@@ -19,12 +19,13 @@ export default (pxContainer, bgUrl)=> {
 
 	scope = {
 		holder: holder,
+		bgSprite: bgSprite,
 		resize: ()=> {
 
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 
-			var size = [windowW >> 1, windowH]
+			var size = [(windowW >> 1) + 1, windowH]
 
 			mask.clear()
 			mask.beginFill(0xff0000, 1);
@@ -34,6 +35,11 @@ export default (pxContainer, bgUrl)=> {
 			bgSprite.x = size[0] >> 1
 			bgSprite.y = size[1] >> 1
 
+		},
+		clear: ()=> {
+			pxContainer.removeChild(holder)
+			mask.clear()
+			bgSprite.destroy()
 		}
 	}
 	return scope

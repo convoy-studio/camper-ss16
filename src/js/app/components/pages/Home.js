@@ -25,6 +25,7 @@ export default class Home extends Page {
 		this.onItemEnded = this.onItemEnded.bind(this)
 	}
 	componentDidMount() {
+		this.transitionInCompleted = false
 		this.lastGridItemIndex;
 		this.videoTriggerCounter = 200
 		this.imageTriggerCounter = 0
@@ -68,19 +69,19 @@ export default class Home extends Page {
 		};
 	}
 	didTransitionInComplete() {
+		this.transitionInCompleted = true
+		AppStore.Canvas.style['z-index'] = 0
 		super.didTransitionInComplete()
 	}
-	didTransitionOutComplete() {
-		super.didTransitionOutComplete()
-	}
 	update() {
+		if(!this.transitionInCompleted) return
 		this.videoTriggerCounter += 1
-		if(this.videoTriggerCounter > 300) {
+		if(this.videoTriggerCounter > 800) {
 			this.videoTriggerCounter = 0
 			this.triggerNewItem(AppConstants.ITEM_VIDEO)
 		}
 		this.imageTriggerCounter += 1
-		if(this.imageTriggerCounter > 40) {
+		if(this.imageTriggerCounter > 30) {
 			this.imageTriggerCounter = 0
 			this.triggerNewItem(AppConstants.ITEM_IMAGE)
 		}
@@ -105,6 +106,17 @@ export default class Home extends Page {
 		this.bg.style.left = resizeVarsBg.left + 'px'
 
 		super.resize()
+	}
+	componentWillUnmount() {
+		this.grid.clear()
+		this.map.clear()
+
+		this.grid = null
+		this.bottomTexts = null
+		this.aroundBorder = null
+		this.map = null
+
+		super.componentWillUnmount()
 	}
 }
 

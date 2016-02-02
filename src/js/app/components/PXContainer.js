@@ -24,11 +24,24 @@ export default class PXContainer {
 		this.currentColor = 0xffffff
 		var el = $(elementId)
 		$(this.renderer.view).attr('id', 'px-container')
+		AppStore.Canvas = this.renderer.view
 		el.append(this.renderer.view)
 		this.stage = new PIXI.Container()
-		this.background = new PIXI.Graphics()
-		this.drawBackground(this.currentColor)
-		this.stage.addChild(this.background)
+		// this.background = new PIXI.Graphics()
+		// this.drawBackground(this.currentColor)
+		// this.stage.addChild(this.background)
+
+		this.stats = new Stats();
+		// this.stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
+
+		// align top-left
+		this.stats.domElement.style.position = 'absolute';
+		this.stats.domElement.style.left = '0px';
+		this.stats.domElement.style.top = '0px';
+		this.stats.domElement.style['z-index'] = 999999
+
+		document.body.appendChild( this.stats.domElement );
+
 	}
 	drawBackground(color) {
 		var windowW = AppStore.Window.w
@@ -47,6 +60,7 @@ export default class PXContainer {
 		this.stage.removeChild(child)
 	}
 	update() {
+		this.stats.update()
 	    this.renderer.render(this.stage)
 	}
 	resize() {
@@ -54,6 +68,6 @@ export default class PXContainer {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		this.renderer.resize(windowW * scale, windowH * scale)
-		this.drawBackground(this.currentColor)
+		// this.drawBackground(this.currentColor)
 	}
 }

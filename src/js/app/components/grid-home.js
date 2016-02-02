@@ -121,6 +121,11 @@ var grid = (props, parent, onItemEnded)=> {
 			setTimeout(()=>{
 				item.drawOnce()
 			}, 500)
+		},
+		clear: ()=> {
+			for (var i = 0; i < items.length; i++) {
+				items[i].clear()
+			};
 		}
 	} 
 

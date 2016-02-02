@@ -26,7 +26,7 @@ class AppTemplate extends BaseComponent {
 		this.pagesContainer.render('#app-template')
 
 		this.pxContainer = new PXContainer()
-		this.pxContainer.init('#app-template')
+		this.pxContainer.init('#pages-container')
 		AppActions.pxContainerIsReady(this.pxContainer)
 
 		setTimeout(()=>{

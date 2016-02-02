@@ -43,11 +43,12 @@ html {
         @extend .full;
         position: absolute;
     }
+    canvas { z-index: 3; }
 }
 
 .page-wrapper {
     @extend .full;
-    position: fixed;
+    position: absolute;
 }
 
 #px-container {

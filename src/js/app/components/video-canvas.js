@@ -71,6 +71,7 @@ var videoCanvas = ( src, props )=> {
 	    video.removeEventListener('play', play)
 	    video.removeEventListener('pause', pause)
 	    video.removeEventListener('ended', ended)
+        ctx.clearRect(0,0,0,0)
     }
 
 	video.addEventListener('canplay', onCanPlay);

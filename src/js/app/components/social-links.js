@@ -19,6 +19,12 @@ var socialLinks = (parent)=> {
 
 			wrapper.style.left = socialCss.left + 'px'
 			wrapper.style.top = socialCss.top + 'px'
+		},
+		show: ()=> {
+			setTimeout(()=>$(wrapper).removeClass('hide'), 1000)
+		},
+		hide: ()=> {
+			setTimeout(()=>$(wrapper).addClass('hide'), 500)
 		}
 	}
 

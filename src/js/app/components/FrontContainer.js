@@ -5,10 +5,13 @@ import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
 import headerLinks from 'header-links'
 import socialLinks from 'social-links'
+import Router from 'Router'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
 		super()
+
+		this.onPageChange = this.onPageChange.bind(this)
 	}
 	render(parent) {
 		var scope = {}
@@ -28,11 +31,21 @@ class FrontContainer extends BaseComponent {
 	}
 	componentDidMount() {
 
+		AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.onPageChange)
+
 		this.headerLinks = headerLinks(this.element)
 		this.socialLinks = socialLinks(this.element)
 
 		super.componentDidMount()
 
+	}
+	onPageChange() {
+		var hashObj = Router.getNewHash()
+		if(hashObj.type == AppConstants.DIPTYQUE) {
+			this.socialLinks.hide()			
+		}else{
+			this.socialLinks.show()
+		}
 	}
 	resize() {
 

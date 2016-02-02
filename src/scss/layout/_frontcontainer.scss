@@ -86,6 +86,10 @@
 				margin-left: -2px;
 				padding-top: 2px;
 			}
+			@include anim(.4s, .0s, $easeInOutExpo, translateX(0px), 50%, 50%);
+			&.hide {
+				@include anim(.4s, .0s, $easeInOutExpo, translateX(80px), 50%, 50%);
+			}
 		}
 	}
 }
