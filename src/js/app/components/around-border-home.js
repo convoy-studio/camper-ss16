@@ -55,11 +55,12 @@ var aroundBorder = (parent)=> {
 			for (var i = 0; i < topLetters.length; i++) {
 				var tl = topLetters[i]
 				tl.style.left = (blockSize[0] >> 1) + (blockSize[0] * i) - 2 + 'px'
+				tl.style.top = -2 + 'px'
 			};
 			for (var i = 0; i < bottomLetters.length; i++) {
 				var bl = bottomLetters[i]
 				bl.style.left = (blockSize[0] << 1) + (blockSize[0] >> 1) + (blockSize[0] * i) - 2 + 'px'
-				bl.style.top = windowH - 10 + 'px'
+				bl.style.top = windowH - 12 + 'px'
 			};
 			for (var i = 0; i < leftLetters.length; i++) {
 				var ll = leftLetters[i]
@@ -74,7 +75,7 @@ var aroundBorder = (parent)=> {
 			for (var i = 0; i < leftStepTopLetters.length; i++) {
 				var lstl = leftStepTopLetters[i]
 				lstl.style.left = (blockSize[0] >> 1) + (blockSize[0] * i) - 2 + 'px'
-				lstl.style.top = (blockSize[1] * 3) + 'px'
+				lstl.style.top = (blockSize[1] * 3) - 2 + 'px'
 			};
 			for (var i = 0; i < leftStepBottomLetters.length; i++) {
 				var lsbl = leftStepBottomLetters[i]
@@ -84,7 +85,7 @@ var aroundBorder = (parent)=> {
 			for (var i = 0; i < rightStepTopLetters.length; i++) {
 				var rstl = rightStepTopLetters[i]
 				rstl.style.left = windowW - (blockSize[0] << 1) + (blockSize[0] >> 1) + (blockSize[0] * i) - 2 + 'px'
-				rstl.style.top = (blockSize[1] * 3) + 'px'
+				rstl.style.top = (blockSize[1] * 3) - 2 + 'px'
 			};
 			for (var i = 0; i < rightStepBottomLetters.length; i++) {
 				var rsbl = rightStepBottomLetters[i]

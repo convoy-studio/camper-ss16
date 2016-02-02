@@ -27,6 +27,11 @@
 		}
 	}
 	.bottom-texts-container {
+		color: black;
+		font-size: 12px;
+		letter-spacing: 0.73px;
+		line-height: $globalLineHeight;
+
 		& > div {
 			position: absolute;
 		}
@@ -34,9 +39,26 @@
 			& > div {
 				position: absolute;
 			}
+			.front-wrapper {
+				z-index: 1;
+				padding: 0px 40px;
+			}
 			.background {
 				@extend .full;
 				background-color: #fff;
+			}
+		}
+		.right-text {
+			.front-wrapper {
+				padding: 0;
+			}
+			.vision {
+				font-size: 15.12px;
+				text-align: center;
+				margin-bottom: 14px;
+			}
+			.logo {
+				width: 230px;
 			}
 		}
 	}
@@ -62,6 +84,30 @@
 			position: absolute;
 			text-transform: uppercase;
 			color: white;
+		}
+	}
+	.map-wrapper {
+		position: absolute;
+		z-index: 2;
+		.titles-wrapper {
+			color: white;
+			& > div {
+				position: absolute;
+			}
+		}
+		g#map-dots {
+			path {
+				cursor: pointer;
+				fill: $green;
+				stroke-width: 2;
+				@include anim(.4s, .0s, $easeOutExpo, scale(1), 50%, 50%, transform fill stroke-width);
+			}
+			path:hover {
+				fill: black;
+				stroke: white;
+				stroke-width: 1;
+				@include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform fill stroke-width);
+			}
 		}
 	}
 }

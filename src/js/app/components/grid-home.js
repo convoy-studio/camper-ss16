@@ -109,7 +109,7 @@ var grid = (props, parent, onItemEnded)=> {
 			if(type == AppConstants.ITEM_VIDEO) {
 				item.play()
 			}else{
-				item.timeout(imageEnded, 4000)
+				item.timeout(imageEnded, 2000)
 				item.seek(Utils.Rand(2, 10, 0))
 			}
 		},

@@ -11,13 +11,7 @@
 				"shop_men": "Men",
 				"shop_women": "Women",
 				"planet": "Planet",
-				"buy_title": "Buy",
-				"campaign_title": "Discover campaign",
-				"experience_title": "See experience",
-				"legal": "Legal",
-				"map_txt": "MAP",
-				"mute_txt": "MUTE",
-				"play_txt": "PLAY",
+				"map_txt": "MAP"
 			}
 		}
 	},
@@ -42,34 +36,39 @@
 
 	"routing": {
 		"/": {
+			"texts": {
+				"txt_a": "Back to the roots. Inspirations for our new collection comes from the balearic island of Mallorca, the founding ground of Camper. Visit three different spots of the island - Deia, Es Trenc and Arelluf - as interpreted by creative director, Romain Kremer.",
+				"a_vision": "A VISION OF"
+			},
 			"assets": [
 				"background.jpg"
 			]
 		},
 
-		"arelluf/capas": {
-		},
-		"arelluf/dub": {
+        "deia/mateo": {
         },
-        "arelluf/kobarah": {
-        },
-        "arelluf/marta": {
-        },
-        "arelluf/paradise": {
-        },
-        "arelluf/pelotas": {
-        },
-
         "deia/dub": {
         },
         "deia/marta": {
-        },
-        "deia/mateo": {
         },
 
         "es-trenc/beluga": {
         },
         "es-trenc/isamu": {
+        },
+
+		"arelluf/capas": {
+		},
+        "arelluf/pelotas": {
+        },
+        "arelluf/marta": {
+        },
+        "arelluf/kobarah": {
+        },
+		"arelluf/dub": {
+        },
+        "arelluf/paradise": {
         }
+
 	}
 }

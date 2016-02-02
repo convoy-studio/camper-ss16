@@ -5,14 +5,18 @@ import bottomTexts from 'bottom-texts-home'
 import AppConstants from 'AppConstants'
 import grid from 'grid-home'
 import aroundBorder from 'around-border-home'
+import map from 'map-home'
 
 export default class Home extends Page {
 	constructor(props) {
+		var content = AppStore.pageContent()
 		props.data.grid = []
 		props.data.grid.length = 28
 		props.data['lines-grid'] = { horizontal: [], vertical: [] }
 		props.data['lines-grid'].horizontal.length = 3
 		props.data['lines-grid'].vertical.length = 6
+		props.data['text_a'] = content.texts['txt_a']
+		props.data['a_vision'] = content.texts['a_vision']
 		super(props)
 		var bgUrl = this.getImageUrlById('background')
 		this.props.data.bgurl = bgUrl
@@ -26,9 +30,9 @@ export default class Home extends Page {
 		this.imageTriggerCounter = 0
 
 		this.seats = [
-			1, 2, 3, 4, 5,
-			7, 8, 12, 13,
-			15, 16, 19, 20,
+			0, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 10, 11, 12, 13,
+			14, 15, 16, 17, 18, 19, 20,
 			23, 24, 25
 		]
 
@@ -39,6 +43,7 @@ export default class Home extends Page {
 		this.grid = grid(this.props, this.element, this.onItemEnded)
 		this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
+		this.map = map(this.element)
 
 		super.componentDidMount()
 	}
@@ -88,6 +93,7 @@ export default class Home extends Page {
 		this.grid.resize()
 		this.bottomTexts.resize()
 		this.aroundBorder.resize()
+		this.map.resize()
 
 		var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 
