@@ -26,6 +26,10 @@ export default class Page extends BasePage {
 		var url = this.props.hash.type == AppConstants.HOME ? 'home-' + id : this.props.hash.parent + '-' + this.props.hash.target + '-' + id
 		return AppStore.Preloader.getImageURL(url)
 	}
+	getImageSizeById(id) {
+		var url = this.props.hash.type == AppConstants.HOME ? 'home-' + id : this.props.hash.parent + '-' + this.props.hash.target + '-' + id
+		return AppStore.Preloader.getImageSize(url)
+	}
 	resize() {
 		super.resize()
 	}

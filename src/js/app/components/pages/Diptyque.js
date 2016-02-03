@@ -2,12 +2,19 @@ import Page from 'Page'
 import AppStore from 'AppStore'
 import diptyquePart from 'diptyque-part'
 import character from 'character'
+import shoe from 'main-shoe'
+import shoesHolder from 'shoes-holder'
 
 export default class Diptyque extends Page {
 	constructor(props) {
 		super(props)
+
+		this.onMouseMove = this.onMouseMove.bind(this)
 	}
 	componentDidMount() {
+
+		this.mouse = new PIXI.Point()
+		this.mouse.nX = this.mouse.nY = 0
 
 		this.leftPart = diptyquePart(
 			this.pxContainer,
@@ -19,7 +26,13 @@ export default class Diptyque extends Page {
 			this.getImageUrlById('character-bg')
 		)
 
-		this.character = character(this.rightPart.holder, this.getImageUrlById('character'))
+		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
+		this.shoe = shoe(this.leftPart.holder, this.getImageUrlById('shoe'), this.getImageSizeById('shoe'))
+		this.shoesHolder = shoesHolder(this.pxContainer)
+
+		window.addEventListener('mousemove', this.onMouseMove)
+
+		setTimeout(()=>this.shoesHolder.open(), 2000)
 
 		super.componentDidMount()
 	}
@@ -43,11 +56,21 @@ export default class Diptyque extends Page {
 		AppStore.Canvas.style['z-index'] = 4
 		super.willTransitionIn()
 	}
-	didTransitionInComplete() {
-		super.didTransitionInComplete()
+	onMouseMove(e) {
+		e.preventDefault()
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		this.mouse.x = e.clientX
+		this.mouse.y = e.clientY
+		this.mouse.nX = (e.clientX / windowW) * 1
+		this.mouse.nY = (e.clientY / windowH) * 1
 	}
-	didTransitionOutComplete() {
-		super.didTransitionOutComplete()
+	update() {
+		this.character.update(this.mouse)
+		this.shoe.update(this.mouse)
+		this.leftPart.update(this.mouse)
+		this.rightPart.update(this.mouse)
+		super.update()
 	}
 	resize() {
 		var windowW = AppStore.Window.w
@@ -56,6 +79,8 @@ export default class Diptyque extends Page {
 		this.leftPart.resize()
 		this.rightPart.resize()
 		this.character.resize()
+		this.shoe.resize()
+		this.shoesHolder.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)
 

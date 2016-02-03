@@ -46,6 +46,11 @@
 		},
 
         "deia/mateo": {
+        	"shoes": [
+        		"s_0.png",
+        		"s_1.png",
+        		"s_2.png"
+        	]
         },
         "deia/dub": {
         },

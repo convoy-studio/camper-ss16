@@ -1,3 +1,5 @@
+import AppConstants from 'AppConstants'
+
 class Utils {
 	static NormalizeMouseCoords(e, objWrapper) {
 		var posx = 0;
@@ -17,9 +19,17 @@ class Utils {
 		objWrapper.y = posy
 		return objWrapper
 	}
-	static ResizePositionProportionally(windowW, windowH, contentW, contentH) {
+	static ResizePositionProportionally(windowW, windowH, contentW, contentH, orientation) {
 		var aspectRatio = contentW / contentH
-		var scale = ((windowW / windowH) < aspectRatio) ? (windowH / contentH) * 1 : (windowW / contentW) * 1
+		if(orientation !== undefined) {
+			if(orientation == AppConstants.LANDSCAPE) {
+				var scale = (windowW / contentW) * 1
+			}else{
+				var scale = (windowH / contentH) * 1
+			}
+		}else{
+			var scale = ((windowW / windowH) < aspectRatio) ? (windowH / contentH) * 1 : (windowW / contentW) * 1
+		}
 		var newW = contentW * scale
 		var newH = contentH * scale
 		var css = {
@@ -67,13 +77,9 @@ class Utils {
 	        return ~~((d * randomNum) + 0.5) / d
         }
 	}
-    static RandomColor() {
-	    var letters = '0123456789ABCDEF'.split('');
-	    var color = '#';
-	    for (var i = 0; i < 6; i++ ) {
-	        color += letters[Math.floor(Math.random() * 16)];
-	    }
-	    return color;
+	static GetImgUrlId(url) {
+		var split = url.split('/')
+		return split[split.length-1].split('.')[0]
 	}
 }
 

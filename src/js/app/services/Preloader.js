@@ -32,6 +32,10 @@ class Preloader  {
 	getImageURL(id) {
 		return this.getContentById(id).getAttribute("src")
 	}
+	getImageSize(id) {
+		var content = this.getContentById(id)
+		return { width: content.width, height: content.height }
+	}
 }
 
 export default Preloader

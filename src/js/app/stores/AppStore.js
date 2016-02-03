@@ -99,6 +99,18 @@ function _windowWidthHeight() {
         h: window.innerHeight
     }
 }
+function _getDiptyqueShoes() {
+    var hashObj = Router.getNewHash()
+    var baseurl = _getPageAssetsBasePathById(hashObj.parent, hashObj.target)
+    var shoes = _getContentScope().shoes
+    var urls = []
+    for (var i = 0; i < shoes.length; i++) {
+        var filename = shoes[i]
+        var path = baseurl + 'shoes/' + filename
+        urls[i] = path
+    };
+    return urls
+}
 
 var AppStore = assign({}, EventEmitter2.prototype, {
     emitChange: function(type, item) {
@@ -137,6 +149,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     generalInfos: function() {
         return data.content
+    },
+    diptyqueShoes: function() {
+        return _getDiptyqueShoes()
     },
     lang: function() {
         var defaultLang = true
