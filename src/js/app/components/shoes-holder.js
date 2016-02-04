@@ -23,7 +23,21 @@ export default (pxContainer)=> {
 
 	var tl = new TimelineLite()
 
+	var open = ()=> {
+		tl.timeScale(1.1)
+		tl.play(0)
+		scope.isOpen = true
+	}
+	var close = ()=> {
+		tl.timeScale(1.6)
+		tl.reverse()
+		scope.isOpen = false
+	}
+
 	scope = {
+		isOpen: false,
+		open: open,
+		close: close,
 		resize: ()=>{
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
@@ -63,9 +77,6 @@ export default (pxContainer)=> {
 			};
 
 			tl.pause(0)
-		},
-		open: ()=> {
-			tl.play(0)
 		}
 	}
 	return scope

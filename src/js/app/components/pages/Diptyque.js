@@ -33,7 +33,6 @@ export default class Diptyque extends Page {
 		dom.event.on(window, 'mousemove', this.onMouseMove)
 		dom.event.on(window, 'click', this.onClick)
 
-		// setTimeout(()=>this.shoesHolder.open(), 2000)
 
 		super.componentDidMount()
 		this.domIsReady = true
@@ -66,11 +65,20 @@ export default class Diptyque extends Page {
 		this.mouse.y = e.clientY
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
+
+		if(this.mouse.nX < 0.5) AppStore.Parent.style.cursor = 'pointer'
+		else AppStore.Parent.style.cursor = 'auto'
 	}
 	onClick(e) {
 		// this.mouse.x = e.clientX
 		// this.mouse.y = e.clientY
-		console.log(this.mouse.nX, this.mouse.x)
+		if(this.mouse.nX < 0.5) {
+			if(this.shoesHolder.isOpen) {
+				this.shoesHolder.close()
+			}else{
+				this.shoesHolder.open()
+			}
+		}
 	}
 	update() {
 		if(!this.domIsReady) return
