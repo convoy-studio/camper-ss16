@@ -89,21 +89,3 @@ a {
     color: $white;
     text-decoration: none;
 }
-.buy-model-btn {
-    position: absolute;
-    z-index: 2;
-    font-size: 12px;
-    white-space: nowrap;
-    color: black;
-
-    & > div {
-        position: absolute;
-    }
-    .front {
-        z-index: 1;
-    }
-    .background {
-        background-color: white;
-        border: 1px solid black;
-    }
-}

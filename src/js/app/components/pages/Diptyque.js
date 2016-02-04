@@ -2,9 +2,8 @@ import Page from 'Page'
 import AppStore from 'AppStore'
 import diptyquePart from 'diptyque-part'
 import character from 'character'
-import shoesHolder from 'shoes-holder'
+import ffText from 'fun-fact-text-holder'
 import dom from 'dom-handler'
-import buyBtn from 'buy-model-btn'
 
 export default class Diptyque extends Page {
 	constructor(props) {
@@ -15,8 +14,6 @@ export default class Diptyque extends Page {
 
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.onClick = this.onClick.bind(this)
-		this.onShoeMouseOver = this.onShoeMouseOver.bind(this)
-		this.onShoeMouseOut = this.onShoeMouseOut.bind(this)
 	}
 	componentDidMount() {
 
@@ -34,9 +31,7 @@ export default class Diptyque extends Page {
 		)
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
-		this.shoesHolder = shoesHolder(this.pxContainer, this.onShoeMouseOver, this.onShoeMouseOut)
-
-		this.buyBtn = buyBtn(this.element)
+		this.ffText = ffText(this.pxContainer)
 
 		dom.event.on(window, 'mousemove', this.onMouseMove)
 		dom.event.on(window, 'click', this.onClick)
@@ -77,42 +72,21 @@ export default class Diptyque extends Page {
 		if(this.mouse.nX < 0.5) {
 
 			// if shoes are open
-			if(this.shoesHolder.isOpen) {
+			if(this.ffText.isOpen) {
 
-				// if shoe on mouseover
-				if(this.buyBtn.active) {
-
-					if(this.buyBtn.currentLink != undefined) window.open(this.buyBtn.currentLink, '_blank')
-
-				}else{
-
-					this.shoesHolder.close()
-
-				}
+				this.ffText.close()
 				
 			}else{
-				this.shoesHolder.open()
+				this.ffText.open()
 			}
 
 		}
-	}
-	onShoeMouseOver(item) {
-		this.buyBtn.active = true
-		this.buyBtn.currentLink = item.link
-	}
-	onShoeMouseOut(item) {
-		this.buyBtn.active = false
-		this.buyBtn.currentLink = undefined
 	}
 	update() {
 		if(!this.domIsReady) return
 		this.character.update(this.mouse)
 		this.leftPart.update(this.mouse)
 		this.rightPart.update(this.mouse)
-
-		if(this.shoesHolder.isOpen) {
-			this.buyBtn.move(this.mouse.x, this.mouse.y)
-		}
 
 		super.update()
 	}
@@ -123,8 +97,7 @@ export default class Diptyque extends Page {
 		this.leftPart.resize()
 		this.rightPart.resize()
 		this.character.resize()
-		this.shoesHolder.resize()
-		this.buyBtn.resize()
+		this.ffText.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)
 

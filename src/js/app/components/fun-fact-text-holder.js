@@ -1,9 +1,9 @@
 import AppStore from 'AppStore'
 import Utils from 'Utils'
 import colorUtils from 'color-utils'
-import shoesGrid from 'shoes-grid'
+// import shoesGrid from 'shoes-grid'
 
-export default (pxContainer, onShoeMouseOver, onShoeMouseOut)=> {
+export default (pxContainer)=> {
 	var scope;
 
 	var holder = new PIXI.Container()
@@ -18,8 +18,8 @@ export default (pxContainer, onShoeMouseOver, onShoeMouseOut)=> {
 		holder.addChild(bgColor)
 	};
 
-	var sGrid = shoesGrid(holder, onShoeMouseOver, onShoeMouseOut)
-	sGrid.load()
+	// var sGrid = shoesGrid(holder, onShoeMouseOver, onShoeMouseOut)
+	// sGrid.load()
 
 	var tl = new TimelineLite()
 
@@ -44,7 +44,7 @@ export default (pxContainer, onShoeMouseOver, onShoeMouseOut)=> {
 
 			var size = [(windowW >> 1) + 1, windowH]
 
-			sGrid.resize()
+			// sGrid.resize()
 
 			tl.clear()
 
@@ -69,12 +69,12 @@ export default (pxContainer, onShoeMouseOver, onShoeMouseOut)=> {
 				tl.fromTo(bgColor, 1.4, { y:-windowH }, { y:windowH, ease:Expo.easeInOut }, delay*i)
 			};
 
-			tl.from(sGrid.holder, 1, { y:-windowH, ease:Expo.easeInOut }, delay*len)
+			// tl.from(sGrid.holder, 1, { y:-windowH, ease:Expo.easeInOut }, delay*len)
 
-			for (var i = 0; i < sGrid.sprites.length; i++) {
-				var sprt = sGrid.sprites[i]
-				tl.from(sprt.sprite.scale, 0.6, { x:0, y:0, ease:Back.easeOut }, delay*len + 0.4 + (i*0.1))
-			};
+			// for (var i = 0; i < sGrid.sprites.length; i++) {
+			// 	var sprt = sGrid.sprites[i]
+			// 	tl.from(sprt.sprite.scale, 0.6, { x:0, y:0, ease:Back.easeOut }, delay*len + 0.4 + (i*0.1))
+			// };
 
 			tl.pause(0)
 		}
