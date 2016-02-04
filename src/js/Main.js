@@ -5,17 +5,16 @@ import AppStore from 'AppStore'
 import Utils from 'Utils'
 import App from 'App'
 import AppMobile from 'AppMobile'
-import $ from 'jquery'
 import TweenMax from 'gsap'
 import raf from 'raf'
 import MobileDetect from 'mobile-detect'
-window.jQuery = window.$ = $
+import dom from 'dom-handler'
 
 var md = new MobileDetect(window.navigator.userAgent)
 
 AppStore.Detector.isMobile = (md.mobile() || md.tablet()) ? true : false
-AppStore.Parent = $('#app-container')
-AppStore.Detector.oldIE = AppStore.Parent.is('.ie6, .ie7, .ie8')
+AppStore.Parent = dom.select('#app-container')
+AppStore.Detector.oldIE = dom.classes.contains(AppStore.Parent, 'ie6') || dom.classes.contains(AppStore.Parent, 'ie7') || dom.classes.contains(AppStore.Parent, 'ie8')
 AppStore.Detector.isSupportWebGL = Utils.SupportWebGL()
 if(AppStore.Detector.oldIE) AppStore.Detector.isMobile = true
 
@@ -24,7 +23,7 @@ if(AppStore.Detector.oldIE) AppStore.Detector.isMobile = true
 
 var app;
 if(AppStore.Detector.isMobile) {
-	$('html').addClass('mobile')
+	dom.classes.add(dom.select('html'), 'mobile')
 	app = new AppMobile()
 }else{
 	app = new App()	

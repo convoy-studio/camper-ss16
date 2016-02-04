@@ -1,14 +1,15 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import dom from 'dom-handler'
 
 var bottomTexts = (parent)=> {
 
 	var scope;
-	var bottomTextsContainer = parent.find(".bottom-texts-container")
-	var leftBlock = bottomTextsContainer.find('.left-text').get(0)
-	var rightBlock = bottomTextsContainer.find('.right-text').get(0)
-	var leftFront = $(leftBlock).find('.front-wrapper').get(0)
-	var rightFront = $(rightBlock).find('.front-wrapper').get(0)
+	var bottomTextsContainer = dom.select('.bottom-texts-container', parent)
+	var leftBlock = dom.select('.left-text', bottomTextsContainer)
+	var rightBlock = dom.select('.right-text', bottomTextsContainer)
+	var leftFront = dom.select('.front-wrapper', leftBlock)
+	var rightFront = dom.select('.front-wrapper', rightBlock)
 
 	var resize = ()=> {
 		var windowW = AppStore.Window.w

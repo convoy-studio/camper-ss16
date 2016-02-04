@@ -6,6 +6,7 @@ import AppConstants from 'AppConstants'
 import grid from 'grid-home'
 import aroundBorder from 'around-border-home'
 import map from 'map-home'
+import dom from 'dom-handler'
 
 export default class Home extends Page {
 	constructor(props) {
@@ -39,7 +40,7 @@ export default class Home extends Page {
 
 		this.usedSeats = []
 
-		this.bg = this.element.find(".bg-wrapper").get(0)
+		this.bg = dom.select('.bg-wrapper', this.element)
 
 		this.grid = grid(this.props, this.element, this.onItemEnded)
 		this.bottomTexts = bottomTexts(this.element)

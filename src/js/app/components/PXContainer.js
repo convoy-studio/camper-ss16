@@ -1,6 +1,7 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import Router from 'Router'
+import dom from 'dom-handler'
 
 export default class PXContainer {
 	constructor() {
@@ -22,10 +23,10 @@ export default class PXContainer {
 		this.renderer = new PIXI.autoDetectRenderer(1, 1, renderOptions)
 		// this.renderer = new PIXI.CanvasRenderer(1, 1, renderOptions)
 		this.currentColor = 0xffffff
-		var el = $(elementId)
-		$(this.renderer.view).attr('id', 'px-container')
+		var el = dom.select(elementId)
+		this.renderer.view.setAttribute('id', 'px-container')
 		AppStore.Canvas = this.renderer.view
-		el.append(this.renderer.view)
+		dom.tree.add(el, this.renderer.view)
 		this.stage = new PIXI.Container()
 		// this.background = new PIXI.Graphics()
 		// this.drawBackground(this.currentColor)

@@ -27,10 +27,10 @@ class BasePager extends BaseComponent {
 	}
 	willPageTransitionIn() {
 		this.switchPagesDivIndex()
-		this.components['new-component'].willTransitionIn()
+		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
 	}
 	willPageTransitionOut() {
-		this.components['old-component'].willTransitionOut()
+		if(this.components['old-component'] != undefined) this.components['old-component'].willTransitionOut()
 	}
 	didPageTransitionInComplete() {
 		PagerActions.pageTransitionDidFinish()
@@ -42,14 +42,15 @@ class BasePager extends BaseComponent {
 	switchPagesDivIndex() {
 		var newComponent = this.components['new-component']
 		var oldComponent = this.components['old-component']
-		if(newComponent != undefined) newComponent.parent.css('z-index', 2)
-		if(oldComponent != undefined) oldComponent.parent.css('z-index', 1)
+		if(newComponent != undefined) newComponent.parent.style['z-index'] = 2
+		if(oldComponent != undefined) oldComponent.parent.style['z-index'] = 1
 	}
 	setupNewComponent(hash, Type, template) {
 		var id = Utils.CapitalizeFirstLetter(hash.parent.replace("/", ""))
 		this.oldPageDivRef = this.currentPageDivRef
 		this.currentPageDivRef = (this.currentPageDivRef === 'page-a') ? 'page-b' : 'page-a'
-		var el = this.element.find('#'+this.currentPageDivRef)
+		var el = document.getElementById(this.currentPageDivRef)
+
 		var props = {
 			id: this.currentPageDivRef,
 			isReady: this.onPageReady,

@@ -2,6 +2,7 @@ import AppStore from 'AppStore'
 import videoCanvas from 'video-canvas'
 import Utils from 'Utils'
 import AppConstants from 'AppConstants'
+import dom from 'dom-handler'
 
 var grid = (props, parent, onItemEnded)=> {
 
@@ -15,10 +16,10 @@ var grid = (props, parent, onItemEnded)=> {
 		scope.transitionOutItem(item)
 	}
 
-	var $gridContainer = parent.find(".grid-container")
-	var gridChildren = $gridContainer.children().get()
-	var linesHorizontal = parent.find(".lines-grid-container .horizontal-lines").children().get()
-	var linesVertical = parent.find(".lines-grid-container .vertical-lines").children().get()
+	var $gridContainer = dom.select(".grid-container", parent)
+	var gridChildren = $gridContainer.children
+	var linesHorizontal = dom.select(".lines-grid-container .horizontal-lines", parent).children
+	var linesVertical = dom.select(".lines-grid-container .vertical-lines", parent).children
 	var scope;
 	var currentSeat;
 	var items = []

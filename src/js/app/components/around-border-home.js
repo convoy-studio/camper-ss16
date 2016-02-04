@@ -1,29 +1,30 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import dom from 'dom-handler'
 
 var aroundBorder = (parent)=> {
 
 	var scope;
 
-	var $container = parent.find('.around-border-container')
-	var top = $container.find('.top').get(0)
-	var bottom = $container.find('.bottom').get(0)
-	var left = $container.find('.left').get(0)
-	var right = $container.find('.right').get(0)
-	var leftStepTop = $container.find('.left-step-top').get(0)
-	var leftStepBottom = $container.find('.left-step-bottom').get(0)
-	var rightStepTop = $container.find('.right-step-top').get(0)
-	var rightStepBottom = $container.find('.right-step-bottom').get(0)
+	var $container = dom.select('.around-border-container', parent)
+	var top = dom.select('.top', $container)
+	var bottom = dom.select('.bottom', $container)
+	var left = dom.select('.left', $container)
+	var right = dom.select('.right', $container)
+	var leftStepTop = dom.select('.left-step-top', $container)
+	var leftStepBottom = dom.select('.left-step-bottom', $container)
+	var rightStepTop = dom.select('.right-step-top', $container)
+	var rightStepBottom = dom.select('.right-step-bottom', $container)
 
-	var $lettersContainer = parent.find(".around-border-letters-container")
-	var topLetters = $lettersContainer.find(".top").children().get()
-	var bottomLetters = $lettersContainer.find(".bottom").children().get()
-	var leftLetters = $lettersContainer.find(".left").children().get()
-	var rightLetters = $lettersContainer.find(".right").children().get()
-	var leftStepTopLetters = $lettersContainer.find('.left-step-top').children().get()
-	var leftStepBottomLetters = $lettersContainer.find('.left-step-bottom').children().get()
-	var rightStepTopLetters = $lettersContainer.find('.right-step-top').children().get()
-	var rightStepBottomLetters = $lettersContainer.find('.right-step-bottom').children().get()
+	var $lettersContainer = dom.select('.around-border-letters-container', parent)
+	var topLetters = dom.select('.top', $lettersContainer).children
+	var bottomLetters = dom.select('.bottom', $lettersContainer).children
+	var leftLetters = dom.select('.left', $lettersContainer).children
+	var rightLetters = dom.select('.right', $lettersContainer).children
+	var leftStepTopLetters = dom.select('.left-step-top', $lettersContainer).children
+	var leftStepBottomLetters = dom.select('.left-step-bottom', $lettersContainer).children
+	var rightStepTopLetters = dom.select('.right-step-top', $lettersContainer).children
+	var rightStepBottomLetters = dom.select('.right-step-bottom', $lettersContainer).children
 
 	scope = {
 		resize: ()=> {

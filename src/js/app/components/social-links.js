@@ -1,10 +1,11 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
+import dom from 'dom-handler'
 
 var socialLinks = (parent)=> {
 
 	var scope;
-	var wrapper = parent.find("#footer #social-wrapper").get(0)
+	var wrapper = dom.select("#footer #social-wrapper", parent)
 
 	scope = {
 		resize: ()=> {
@@ -12,19 +13,21 @@ var socialLinks = (parent)=> {
 			var windowH = AppStore.Window.h
 			var padding = AppConstants.PADDING_AROUND * 0.4
 
+			var wrapperSize = dom.size(wrapper)
+
 			var socialCss = {
-				left: windowW - padding - $(wrapper).width(),
-				top: windowH - padding - $(wrapper).height(),
+				left: windowW - padding - wrapperSize[0],
+				top: windowH - padding - wrapperSize[1],
 			}
 
 			wrapper.style.left = socialCss.left + 'px'
 			wrapper.style.top = socialCss.top + 'px'
 		},
 		show: ()=> {
-			setTimeout(()=>$(wrapper).removeClass('hide'), 1000)
+			setTimeout(()=>dom.classes.remove(wrapper, 'hide'), 1000)
 		},
 		hide: ()=> {
-			setTimeout(()=>$(wrapper).addClass('hide'), 500)
+			setTimeout(()=>dom.classes.add(wrapper, 'hide'), 500)
 		}
 	}
 

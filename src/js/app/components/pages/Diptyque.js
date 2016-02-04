@@ -2,14 +2,15 @@ import Page from 'Page'
 import AppStore from 'AppStore'
 import diptyquePart from 'diptyque-part'
 import character from 'character'
-import shoe from 'main-shoe'
 import shoesHolder from 'shoes-holder'
+import dom from 'dom-handler'
 
 export default class Diptyque extends Page {
 	constructor(props) {
 		super(props)
 
 		this.onMouseMove = this.onMouseMove.bind(this)
+		this.onClick = this.onClick.bind(this)
 	}
 	componentDidMount() {
 
@@ -27,14 +28,15 @@ export default class Diptyque extends Page {
 		)
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
-		this.shoe = shoe(this.leftPart.holder, this.getImageUrlById('shoe'), this.getImageSizeById('shoe'))
 		this.shoesHolder = shoesHolder(this.pxContainer)
 
-		window.addEventListener('mousemove', this.onMouseMove)
+		dom.event.on(window, 'mousemove', this.onMouseMove)
+		dom.event.on(window, 'click', this.onClick)
 
-		setTimeout(()=>this.shoesHolder.open(), 2000)
+		// setTimeout(()=>this.shoesHolder.open(), 2000)
 
 		super.componentDidMount()
+		this.domIsReady = true
 	}
 	setupAnimations() {
 		var windowW = AppStore.Window.w
@@ -65,9 +67,14 @@ export default class Diptyque extends Page {
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
 	}
+	onClick(e) {
+		// this.mouse.x = e.clientX
+		// this.mouse.y = e.clientY
+		console.log(this.mouse.nX, this.mouse.x)
+	}
 	update() {
+		if(!this.domIsReady) return
 		this.character.update(this.mouse)
-		this.shoe.update(this.mouse)
 		this.leftPart.update(this.mouse)
 		this.rightPart.update(this.mouse)
 		super.update()
@@ -79,7 +86,6 @@ export default class Diptyque extends Page {
 		this.leftPart.resize()
 		this.rightPart.resize()
 		this.character.resize()
-		this.shoe.resize()
 		this.shoesHolder.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)

@@ -2,6 +2,7 @@ import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import Router from 'Router'
+import dom from 'dom-handler'
 
 export default (parent) => {
 
@@ -13,25 +14,24 @@ export default (parent) => {
 	}
 
 	var scope;
-	var $el = parent.find('.map-wrapper')
-	var el = $el.get(0)
-	var titlesWrapper = $el.find('.titles-wrapper').get(0)
-	var mapdots = $el.find('#map-dots path').get()
+	var el = dom.select('.map-wrapper', parent)
+	var titlesWrapper = dom.select('.titles-wrapper', el)
+	var mapdots = dom.select.all('#map-dots .dot-path', el)
 
 	for (var i = 0; i < mapdots.length; i++) {
 		var dot = mapdots[i]
-		dot.addEventListener('click', onDotClick)
+		dom.event.on(dot, 'click', onDotClick)
 	};
 
 	var titles = {
 		'deia': {
-			el: $(titlesWrapper).find(".deia").get(0)
+			el: dom.select('.deia', titlesWrapper)
 		},
 		'es-trenc': {
-			el: $(titlesWrapper).find(".es-trenc").get(0)
+			el: dom.select('.es-trenc', titlesWrapper)
 		},
 		'arelluf': {
-			el: $(titlesWrapper).find(".arelluf").get(0)
+			el: dom.select('.arelluf', titlesWrapper)
 		}
 	}
 

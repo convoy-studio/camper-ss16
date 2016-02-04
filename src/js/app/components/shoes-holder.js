@@ -59,7 +59,7 @@ export default (pxContainer)=> {
 
 			for (var i = 0; i < sGrid.sprites.length; i++) {
 				var sprt = sGrid.sprites[i]
-				tl.from(sprt.sprite.scale, 1, { x:0, y:0, ease:Back.easeOut }, delay*len + 0.4 + (i*0.1))
+				tl.from(sprt.sprite.scale, 0.6, { x:0, y:0, ease:Back.easeOut }, delay*len + 0.4 + (i*0.1))
 			};
 
 			tl.pause(0)

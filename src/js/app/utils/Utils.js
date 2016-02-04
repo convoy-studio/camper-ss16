@@ -1,4 +1,5 @@
 import AppConstants from 'AppConstants'
+import dom from 'dom-handler'
 
 class Utils {
 	static NormalizeMouseCoords(e, objWrapper) {
@@ -61,7 +62,7 @@ class Utils {
         	var child = children[i]
         	child.setAttribute('src', '');
         	// Working with a polyfill or use jquery
-        	$(child).remove()
+        	dom.tree.remove(child)
         }
     }
     static DestroyVideoTexture(texture) {
