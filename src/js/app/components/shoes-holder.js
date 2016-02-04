@@ -3,7 +3,7 @@ import Utils from 'Utils'
 import colorUtils from 'color-utils'
 import shoesGrid from 'shoes-grid'
 
-export default (pxContainer)=> {
+export default (pxContainer, onShoeMouseOver, onShoeMouseOut)=> {
 	var scope;
 
 	var holder = new PIXI.Container()
@@ -18,7 +18,7 @@ export default (pxContainer)=> {
 		holder.addChild(bgColor)
 	};
 
-	var sGrid = shoesGrid(holder)
+	var sGrid = shoesGrid(holder, onShoeMouseOver, onShoeMouseOut)
 	sGrid.load()
 
 	var tl = new TimelineLite()

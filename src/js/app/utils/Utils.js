@@ -82,6 +82,21 @@ class Utils {
 		var split = url.split('/')
 		return split[split.length-1].split('.')[0]
 	}
+	static Style(div, style) {
+    	div.style.webkitTransform = style
+		div.style.mozTransform    = style
+		div.style.msTransform     = style
+		div.style.oTransform      = style
+		div.style.transform       = style
+    }
+    static Translate(div, x, y, z) {
+    	if ('webkitTransform' in document.body.style || 'mozTransform' in document.body.style || 'oTransform' in document.body.style || 'transform' in document.body.style) {
+    		Utils.Style(div, 'translate3d('+x+'px,'+y+'px,'+z+'px)')
+		}else{
+			div.style.top = y + 'px'
+			div.style.left = x + 'px'
+		}
+    }
 }
 
 export default Utils

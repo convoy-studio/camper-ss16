@@ -3,11 +3,21 @@ import gridPositions from 'grid-positions'
 import img from 'img'
 import Utils from 'Utils'
 import AppConstants from 'AppConstants'
+import Router from 'Router'
 
-export default (parent)=> {
+export default (parent, onShoeMouseOver, onShoeMouseOut)=> {
+
+	var onButtonOver = (e)=> {
+		onShoeMouseOver(e.target)
+	}
+	var onButtonOut = (e)=> {
+		onShoeMouseOut(e.target)
+	}
+
 	var scope;
-
-	var urls = AppStore.diptyqueShoes()
+	var hashObj = Router.getNewHash()
+	var baseurl = AppStore.getPageAssetsBasePathById(hashObj.parent, hashObj.target)
+	var items = AppStore.diptyqueShoes()
 	var loaded = 0
 	var sprites = []
 	var grid;
@@ -24,15 +34,23 @@ export default (parent)=> {
 	holder.addChild(shoesHolder)
 
 	var sprites = []
-	for (var i = 0; i < urls.length; i++) {
-		var url = urls[i]
-		var id = Utils.GetImgUrlId(url)
+	for (var i = 0; i < items.length; i++) {
+		var item = items[i]
+		var filename = item['img-name']
+		var url = baseurl + 'shoes/' + item['img-name']
+		var id = Utils.GetImgUrlId(filename)
 		var c = new PIXI.Container()
 		var sprt = new PIXI.Sprite()
+		sprt.link = item['link']
+		sprt.interactive = true
+		sprt.buttonMode = true
+		sprt.on('mouseover', onButtonOver)
+		sprt.on('mouseout', onButtonOut)
 		c.addChild(sprt)
 		shoesHolder.addChild(c)
 		sprites[i] = {
 			url: url,
+			filename: filename,
 			id: id,
 			container: c,
 			sprite: sprt
@@ -47,15 +65,13 @@ export default (parent)=> {
 	}
 
 	var setupSprites = ()=> {
-		for (var i = 0; i < urls.length; i++) {
-			var tex = PIXI.Texture.fromImage(urls[i])
+		for (var i = 0; i < sprites.length; i++) {
+			var tex = PIXI.Texture.fromImage(sprites[i].url)
 			var c = new PIXI.Container()
-			// var sprite = new PIXI.Sprite(tex)
 			var sprite = sprites[i].sprite
 			sprite.texture = tex
 			sprites[i].container.addChild(sprite)
 			sprite.anchor.x = sprite.anchor.y = 0.5
-			// sprites[i].sprite = sprite
 		}
 	}
 
@@ -79,7 +95,7 @@ export default (parent)=> {
 		sprt.img = el
 
 		if(bigImgW < el.width) bigImgW = el.width
-		if(loaded == urls.length) {
+		if(loaded == sprites.length) {
 			allImgLoaded = true
 			setupSprites()
 			scope.resize()
@@ -107,9 +123,9 @@ export default (parent)=> {
 			shoesHolder.y = (size[1] >> 1) - (gridSize[1] >> 1)
 		},
 		load: ()=> {
-			for (var i = 0; i < urls.length; i++) {
-				var url = urls[i]
-				img(url, imgLoaded)
+			for (var i = 0; i < sprites.length; i++) {
+				var item = sprites[i]
+				img(item.url, imgLoaded)
 			};
 		}
 	}

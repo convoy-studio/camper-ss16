@@ -6,12 +6,8 @@ export default class BasePage extends BaseComponent {
 		this.props = props
 		this.didTransitionInComplete = this.didTransitionInComplete.bind(this)
 		this.didTransitionOutComplete = this.didTransitionOutComplete.bind(this)
-		this.tlIn = new TimelineMax({
-			onComplete:this.didTransitionInComplete
-		})
-		this.tlOut = new TimelineMax({
-			onComplete:this.didTransitionOutComplete
-		})
+		this.tlIn = new TimelineMax()
+		this.tlOut = new TimelineMax()
 	}
 	componentDidMount() {
 		this.resize()
@@ -19,19 +15,13 @@ export default class BasePage extends BaseComponent {
 		setTimeout(() => this.props.isReady(this.props.hash), 0)
 	}
 	setupAnimations() {
-		// var wrapper = this.element
-
-		// // transition In
-		// this.tlIn.from(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
-
-		// // transition Out
-		// this.tlOut.to(wrapper, 1, { opacity:0, ease:Expo.easeInOut })
 
 		// reset
 		this.tlIn.pause(0)
 		this.tlOut.pause(0)
 	}
 	willTransitionIn() {
+		this.tlIn.eventCallback("onComplete", this.didTransitionInComplete)
 		this.tlIn.timeScale(1.4)
 		setTimeout(()=>this.tlIn.play(0), 800)
 	}
@@ -39,14 +29,17 @@ export default class BasePage extends BaseComponent {
 		if(this.tlOut.getChildren().length < 1) {
 			this.didTransitionOutComplete()
 		}else{
+			this.tlOut.eventCallback("onComplete", this.didTransitionOutComplete)
 			this.tlOut.timeScale(1.2)
 			setTimeout(()=>this.tlOut.play(0), 500)
 		}
 	}
 	didTransitionInComplete() {
+		this.tlIn.eventCallback("onComplete", null)
 		setTimeout(() => this.props.didTransitionInComplete(), 0)
 	}
 	didTransitionOutComplete() {
+		this.tlOut.eventCallback("onComplete", null)
 		setTimeout(() => this.props.didTransitionOutComplete(), 0)
 	}
 	resize() {

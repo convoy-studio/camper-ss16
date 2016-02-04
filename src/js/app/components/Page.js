@@ -7,6 +7,7 @@ import PxHelper from 'PxHelper'
 export default class Page extends BasePage {
 	constructor(props) {
 		super(props)
+		this.transitionInCompleted = false
 	}
 	componentWillMount() {
 		this.pxContainer = new PIXI.Container()
@@ -16,8 +17,22 @@ export default class Page extends BasePage {
 		setTimeout(()=>{ AppActions.pxAddChild(this.pxContainer) }, 0)
 		super.componentDidMount()
 	}
-	didTransitionOutComplete() {
-		super.didTransitionOutComplete()
+	willTransitionIn() {
+		AppStore.Canvas.style['z-index'] = 4
+		super.willTransitionIn()
+	}
+	willTransitionOut() {
+		AppStore.Canvas.style['z-index'] = 4
+		super.willTransitionOut()
+	}
+	didTransitionInComplete() {
+		if(this.props.hash.type == AppConstants.HOME) {
+			this.transitionInCompleted = true
+			AppStore.Canvas.style['z-index'] = 0
+		}else{
+			AppStore.Canvas.style['z-index'] = 1
+		}
+		super.didTransitionInComplete()
 	}
 	setupAnimations() {
 		super.setupAnimations()

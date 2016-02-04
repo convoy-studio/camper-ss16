@@ -26,7 +26,6 @@ export default class Home extends Page {
 		this.onItemEnded = this.onItemEnded.bind(this)
 	}
 	componentDidMount() {
-		this.transitionInCompleted = false
 		this.lastGridItemIndex;
 		this.videoTriggerCounter = 200
 		this.imageTriggerCounter = 0
@@ -68,11 +67,6 @@ export default class Home extends Page {
 				this.usedSeats.splice(i, 1)
 			}
 		};
-	}
-	didTransitionInComplete() {
-		this.transitionInCompleted = true
-		AppStore.Canvas.style['z-index'] = 0
-		super.didTransitionInComplete()
 	}
 	update() {
 		if(!this.transitionInCompleted) return

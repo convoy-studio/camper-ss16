@@ -103,13 +103,14 @@ function _getDiptyqueShoes() {
     var hashObj = Router.getNewHash()
     var baseurl = _getPageAssetsBasePathById(hashObj.parent, hashObj.target)
     var shoes = _getContentScope().shoes
-    var urls = []
-    for (var i = 0; i < shoes.length; i++) {
-        var filename = shoes[i]
-        var path = baseurl + 'shoes/' + filename
-        urls[i] = path
-    };
-    return urls
+    // var items = []
+    // for (var i = 0; i < shoes.length; i++) {
+    //     console.log(shoes[i])
+    //     // var filename = shoes[i]['img-name']
+    //     // var path = baseurl + 'shoes/' + filename
+    //     // items[i]['img-name'] = path
+    // };
+    return shoes
 }
 
 var AppStore = assign({}, EventEmitter2.prototype, {
@@ -137,6 +138,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     baseMediaPath: function() {
         return AppStore.getEnvironment().static
+    },
+    getPageAssetsBasePathById: function(parent, target) {
+        return _getPageAssetsBasePathById(parent, target)
     },
     getEnvironment: function() {
         return AppConstants.ENVIRONMENTS[ENV]

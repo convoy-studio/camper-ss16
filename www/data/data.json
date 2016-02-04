@@ -11,7 +11,8 @@
 				"shop_men": "Men",
 				"shop_women": "Women",
 				"planet": "Planet",
-				"map_txt": "MAP"
+				"map_txt": "MAP",
+				"buy_btn_txt": "BUY THIS MODEL"
 			}
 		}
 	},
@@ -47,9 +48,16 @@
 
         "deia/mateo": {
         	"shoes": [
-        		"s_0.png",
-        		"s_1.png",
-        		"s_2.png"
+        		{
+        			"link": "http://camper.com",
+        			"img-name": "s_0.png"
+        		},{
+        			"link": "http://camper.com",
+        			"img-name": "s_1.png"
+        		},{
+        			"link": "http://camper.com",
+        			"img-name": "s_2.png"
+        		}
         	]
         },
         "deia/dub": {
