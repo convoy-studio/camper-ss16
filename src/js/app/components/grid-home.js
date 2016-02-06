@@ -2,7 +2,7 @@ import AppStore from 'AppStore'
 import videoCanvas from 'video-canvas'
 import Utils from 'Utils'
 import AppConstants from 'AppConstants'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 var grid = (props, parent, onItemEnded)=> {
 

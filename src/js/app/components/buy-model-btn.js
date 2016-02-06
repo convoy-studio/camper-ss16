@@ -1,4 +1,4 @@
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 import Utils from 'Utils'
 
 export default (parent)=> {

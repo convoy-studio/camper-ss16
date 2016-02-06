@@ -1,6 +1,6 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 var bottomTexts = (parent)=> {
 

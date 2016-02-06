@@ -1,7 +1,7 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import Router from 'Router'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 export default class PXContainer {
 	constructor() {

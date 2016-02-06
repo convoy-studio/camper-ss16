@@ -5,6 +5,7 @@ import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
 import PXContainer from 'PXContainer'
+import TransitionMap from 'TransitionMap'
 
 class AppTemplate extends BaseComponent {
 	constructor() {
@@ -19,6 +20,8 @@ class AppTemplate extends BaseComponent {
 		super.componentWillMount()
 	}
 	componentDidMount() {
+		
+		
 		this.frontContainer = new FrontContainer()
 		this.frontContainer.render('#app-template')
 
@@ -28,6 +31,9 @@ class AppTemplate extends BaseComponent {
 		this.pxContainer = new PXContainer()
 		this.pxContainer.init('#pages-container')
 		AppActions.pxContainerIsReady(this.pxContainer)
+
+		this.transitionMap = new TransitionMap()
+		this.transitionMap.render('#app-template')
 
 		setTimeout(()=>{
 			this.isReady()
@@ -51,6 +57,7 @@ class AppTemplate extends BaseComponent {
 		this.frontContainer.resize()
 		this.pxContainer.resize()
 		this.pagesContainer.resize()
+		this.transitionMap.resize()
 		super.resize()
 	}
 }

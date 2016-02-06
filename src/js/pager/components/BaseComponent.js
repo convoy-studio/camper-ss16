@@ -1,5 +1,5 @@
 import slug from 'to-slug-case'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 class BaseComponent {
 	constructor() {

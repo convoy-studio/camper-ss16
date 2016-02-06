@@ -8,7 +8,7 @@ import AppMobile from 'AppMobile'
 import TweenMax from 'gsap'
 import raf from 'raf'
 import MobileDetect from 'mobile-detect'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 var md = new MobileDetect(window.navigator.userAgent)
 

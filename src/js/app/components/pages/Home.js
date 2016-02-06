@@ -5,8 +5,8 @@ import bottomTexts from 'bottom-texts-home'
 import AppConstants from 'AppConstants'
 import grid from 'grid-home'
 import aroundBorder from 'around-border-home'
-import map from 'map-home'
-import dom from 'dom-handler'
+import map from 'main-map'
+import dom from 'dom-hand'
 
 export default class Home extends Page {
 	constructor(props) {
@@ -44,7 +44,7 @@ export default class Home extends Page {
 		this.grid = grid(this.props, this.element, this.onItemEnded)
 		this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
-		this.map = map(this.element)
+		this.map = map(this.element, AppConstants.INTERACTIVE)
 
 		super.componentDidMount()
 	}

@@ -1,5 +1,5 @@
 import AppActions from 'AppActions'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
     	
 class GlobalEvents {
 	init() {

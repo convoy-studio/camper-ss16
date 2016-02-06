@@ -3,17 +3,22 @@ import AppStore from 'AppStore'
 import diptyquePart from 'diptyque-part'
 import character from 'character'
 import ffText from 'fun-fact-text-holder'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
+import arrowsWrapper from 'arrows-wrapper'
 
 export default class Diptyque extends Page {
 	constructor(props) {
-		var content = AppStore.globalContent()
-		props.data['buy-txt'] = content['buy_btn_txt']
+		// var content = AppStore.globalContent()
+
+		props.data['next-page'] = AppStore.getNextDiptyque()
+		props.data['previous-page'] = AppStore.getPreviousDiptyque()
 
 		super(props)
 
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.onClick = this.onClick.bind(this)
+		this.onArrowMouseEnter = this.onArrowMouseEnter.bind(this)
+		this.onArrowMouseLeave = this.onArrowMouseLeave.bind(this)
 	}
 	componentDidMount() {
 
@@ -32,6 +37,7 @@ export default class Diptyque extends Page {
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
 		this.ffText = ffText(this.pxContainer)
+		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
 
 		dom.event.on(window, 'mousemove', this.onMouseMove)
 		dom.event.on(window, 'click', this.onClick)
@@ -64,8 +70,8 @@ export default class Diptyque extends Page {
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
 
-		if(this.mouse.nX < 0.5) AppStore.Parent.style.cursor = 'pointer'
-		else AppStore.Parent.style.cursor = 'auto'
+		// if(this.mouse.nX < 0.5) AppStore.Parent.style.cursor = 'pointer'
+		// else AppStore.Parent.style.cursor = 'auto'
 
 	}
 	onClick(e) {
@@ -81,6 +87,12 @@ export default class Diptyque extends Page {
 			}
 
 		}
+	}
+	onArrowMouseEnter(e) {
+		e.preventDefault()
+	}
+	onArrowMouseLeave(e) {
+		e.preventDefault()
 	}
 	update() {
 		if(!this.domIsReady) return
@@ -98,14 +110,25 @@ export default class Diptyque extends Page {
 		this.rightPart.resize()
 		this.character.resize()
 		this.ffText.resize()
+		this.arrowsWrapper.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)
 
 		super.resize()
 	}
 	componentWillUnmount() {
+		dom.event.off(window, 'mousemove', this.onMouseMove)
+		dom.event.off(window, 'click', this.onClick)
 		this.leftPart.clear()
 		this.rightPart.clear()
+		this.character.clear()
+		this.ffText.clear()
+		this.arrowsWrapper.clear()
+		this.mouse = null
+		this.leftPart = null
+		this.rightPart = null
+		this.character = null
+		this.arrowsWrapper = null
 		super.componentWillUnmount()
 	}
 }

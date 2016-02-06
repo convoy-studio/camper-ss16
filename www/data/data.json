@@ -46,6 +46,8 @@
 			]
 		},
 
+        "deia/dub": {
+        },
         "deia/mateo": {
         	"shoes": [
         		{
@@ -59,10 +61,6 @@
         			"img-name": "s_2.png"
         		}
         	]
-        },
-        "deia/dub": {
-        },
-        "deia/marta": {
         },
 
         "es-trenc/beluga": {

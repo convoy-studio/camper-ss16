@@ -89,3 +89,88 @@ a {
     color: $white;
     text-decoration: none;
 }
+.arrow {
+    $size: 20px;
+    position: absolute;
+    width: $size;
+    height: $size;
+    polygon {
+        fill: white;
+    }
+}
+#transition-map {
+    @extend .full;
+    background-color: $green;
+}
+.map-wrapper {
+    position: absolute;
+    z-index: 2;
+    .titles-wrapper {
+        color: white;
+        & > div {
+            position: absolute;
+        }
+    }
+    g#map-dots {
+        path {
+            cursor: pointer;
+            fill: $green;
+            stroke-width: 2;
+            @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform fill stroke-width);
+        }
+        path:hover {
+            fill: black;
+            stroke: white;
+            stroke-width: 1;
+            @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform fill stroke-width);
+        }
+        .dot-path {
+            &.animate {
+                @keyframes bounce {
+                    from {
+                        fill: $green;
+                        stroke-width: 2;
+                        @include anim(.2s, .0s, $easeOutExpo, scale(1.6), 50%, 50%, transform fill stroke-width);
+                    }
+                    to {
+                        fill: $green;
+                        stroke: white;
+                        stroke-width: 2;
+                        @include anim(.2s, .0s, $easeOutElastic, scale(3), 50%, 50%, transform fill stroke-width);
+                    }
+                }
+                animation: bounce .1s $easeInOutExpo alternate infinite;
+            }
+        }
+    }
+    g#footsteps {
+
+        @keyframes dash {
+            from {
+                stroke-dashoffset: 500;
+            }
+            to {
+                stroke-dashoffset: 100;
+            }
+        }
+        
+        g {
+            @include opacity(0);
+            @include simpleAnim(.0s, .0s, $easeOutExpo);
+
+            path:first-child {
+                stroke-width: 4px;
+                &.animate {
+                    animation: dash 15s linear alternate infinite;
+                }
+            }
+            path:last-child, path:nth-child(2) {
+                stroke-width: 2px;
+                &.animate {
+                    @include simpleAnim(2s, .0s, linear);
+                }
+            }
+        }
+
+    }
+}

@@ -8,42 +8,42 @@ import AppConstants from 'AppConstants'
 class Router {
 	init() {
 		this.routing = data.routing
+		this.setupRoutes()
 		this.newHashFounded = false
 		hasher.newHash = undefined
 		hasher.oldHash = undefined
-		hasher.initialized.add(this._didHasherChange.bind(this))
-		hasher.changed.add(this._didHasherChange.bind(this))
-		this._setupCrossroads()
+		hasher.initialized.add(this.didHasherChange.bind(this))
+		hasher.changed.add(this.didHasherChange.bind(this))
+		this.setupCrossroads()
 	}
 	beginRouting() {
 		hasher.init()
 	}
-	_setupCrossroads() {
-	 	var routes = this.routing
-		for(var key in routes) {
-			if(key.length > 1) {
-	    		crossroads.addRoute(key, this._onParseUrl.bind(this))
-			}
-		}
-		crossroads.addRoute('', this._onParseUrl.bind(this))
+	setupCrossroads() {
+	 	var routes = hasher.routes
+	 	for (var i = 0; i < routes.length; i++) {
+	 		var route = routes[i]
+	 		crossroads.addRoute(route, this.onParseUrl.bind(this))
+	 	};
+		crossroads.addRoute('', this.onParseUrl.bind(this))
 	}
-	_onParseUrl() {
-		this._assignRoute()
+	onParseUrl() {
+		this.assignRoute()
 	}
-	_onDefaultURLHandler() {
-		this._sendToDefault()
+	onDefaultURLHandler() {
+		this.sendToDefault()
 	}
-	_assignRoute(id) {
+	assignRoute(id) {
 		var hash = hasher.getHash()
-		var parts = this._getURLParts(hash)
-		this._updatePageRoute(hash, parts, parts[0], (parts[1] == undefined) ? '' : parts[1])
+		var parts = this.getURLParts(hash)
+		this.updatePageRoute(hash, parts, parts[0], (parts[1] == undefined) ? '' : parts[1])
 		this.newHashFounded = true
 	}
-	_getURLParts(url) {
+	getURLParts(url) {
 		var hash = url
 		return hash.split('/')
 	}
-	_updatePageRoute(hash, parts, parent, target) {
+	updatePageRoute(hash, parts, parent, target) {
 		hasher.oldHash = hasher.newHash
 		hasher.newHash = {
 			hash: hash,
@@ -54,15 +54,25 @@ class Router {
 		hasher.newHash.type = hasher.newHash.hash == '' ? AppConstants.HOME : AppConstants.DIPTYQUE
 		AppActions.pageHasherChanged()
 	}
-	_didHasherChange(newHash, oldHash) {
+	didHasherChange(newHash, oldHash) {
 		this.newHashFounded = false
 		crossroads.parse(newHash)
 		if(this.newHashFounded) return
 		// If URL don't match a pattern, send to default
-		this._onDefaultURLHandler()
+		this.onDefaultURLHandler()
 	}
-	_sendToDefault() {
+	sendToDefault() {
 		hasher.setHash(AppStore.defaultRoute())
+	}
+	setupRoutes() {
+		hasher.routes = []
+		hasher.diptyqueRoutes = []
+		var i = 0, k;
+		for(k in this.routing) {
+			hasher.routes[i] = k
+			if(k.length > 2) hasher.diptyqueRoutes.push(k)
+			i++
+		}
 	}
 	static getBaseURL() {
 		return document.URL.split("#")[0]
@@ -71,7 +81,10 @@ class Router {
 		return hasher.getHash()
 	}
 	static getRoutes() {
-		return AppStore.Data.routing
+		return hasher.routes
+	}
+	static getDiptyqueRoutes() {
+		return hasher.diptyqueRoutes
 	}
 	static getNewHash() {
 		return hasher.newHash

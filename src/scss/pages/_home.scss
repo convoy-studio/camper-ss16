@@ -86,28 +86,4 @@
 			color: white;
 		}
 	}
-	.map-wrapper {
-		position: absolute;
-		z-index: 2;
-		.titles-wrapper {
-			color: white;
-			& > div {
-				position: absolute;
-			}
-		}
-		g#map-dots {
-			path {
-				cursor: pointer;
-				fill: $green;
-				stroke-width: 2;
-				@include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform fill stroke-width);
-			}
-			path:hover {
-				fill: black;
-				stroke: white;
-				stroke-width: 1;
-				@include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform fill stroke-width);
-			}
-		}
-	}
 }

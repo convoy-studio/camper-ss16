@@ -157,6 +157,41 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     diptyqueShoes: function() {
         return _getDiptyqueShoes()
     },
+    getNextDiptyque: function() {
+        var hashObj = Router.getNewHash()
+        var routes = Router.getDiptyqueRoutes()
+        var current = hashObj.hash
+        for (var i = 0; i < routes.length; i++) {
+            var route = routes[i]
+            if(route == current) {
+                var index = (i+1) > routes.length-1 ? 0 : (i+1)
+                return routes[index]
+            }
+        };
+    },
+    getPreviousDiptyque: function() {
+        var hashObj = Router.getNewHash()
+        var routes = Router.getDiptyqueRoutes()
+        var current = hashObj.hash
+        for (var i = 0; i < routes.length; i++) {
+            var route = routes[i]
+            if(route == current) {
+                var index = (i-1) < 0 ? routes.length-1 : (i-1)
+                return routes[index]
+            }
+        };
+    },
+    getDiptyquePageIndex: function() {
+        var hashObj = Router.getNewHash()
+        var routes = Router.getDiptyqueRoutes()
+        var current = hashObj.hash
+        for (var i = 0; i < routes.length; i++) {
+            var route = routes[i]
+            if(route == current) {
+                return i
+            }
+        };
+    },
     lang: function() {
         var defaultLang = true
         for (var i = 0; i < data.langs.length; i++) {

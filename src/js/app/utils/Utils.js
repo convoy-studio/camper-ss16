@@ -1,5 +1,5 @@
 import AppConstants from 'AppConstants'
-import dom from 'dom-handler'
+import dom from 'dom-hand'
 
 class Utils {
 	static NormalizeMouseCoords(e, objWrapper) {

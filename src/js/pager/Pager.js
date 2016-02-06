@@ -56,8 +56,10 @@ var PagerStore = assign({}, EventEmitter2.prototype, {
             	PagerStore.emit(type)
             	break
             case PagerConstants.PAGE_TRANSITION_OUT_COMPLETE:
-            	var type = PagerConstants.PAGE_TRANSITION_IN
-            	PagerStore.emit(type)
+                setTimeout(()=> {
+                	var type = PagerConstants.PAGE_TRANSITION_IN
+                	PagerStore.emit(type)
+                }, 1300)
             	break
             case PagerConstants.PAGE_TRANSITION_DID_FINISH:
             	if (PagerStore.firstPageTransition) PagerStore.firstPageTransition = false

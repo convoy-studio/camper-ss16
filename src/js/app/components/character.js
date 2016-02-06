@@ -33,6 +33,12 @@ export default (holder, characterUrl, textureSize)=> {
 				sprite.ix = sprite.x
 				sprite.iy = sprite.y
 			})
+		},
+		clear: ()=> {
+			holder.removeChild(sprite)
+			sprite.destroy()
+			sprite = null
+			tex = null
 		}
 	}
 	return scope
