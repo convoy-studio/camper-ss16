@@ -167,7 +167,7 @@ a {
             path:last-child, path:nth-child(2) {
                 stroke-width: 2px;
                 &.animate {
-                    @include simpleAnim(2s, .0s, linear);
+                    @include simpleAnim(1s, .0s, linear);
                 }
             }
         }

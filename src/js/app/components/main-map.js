@@ -24,6 +24,7 @@ export default (parent, type) => {
 	var scope;
 	var dir, stepEl;
 	var selectedDots = [];
+	var currentPaths, fillLine, dashedLine, stepTotalLen = 0;
 	var previousHighlightIndex = undefined;
 	var el = dom.select('.map-wrapper', parent)
 	var titlesWrapper = dom.select('.titles-wrapper', el)
@@ -112,23 +113,22 @@ export default (parent, type) => {
 
 			scope.highlightDots(oldHash, newHash)
 
-			var paths = dom.select.all('path', stepEl)
-			var dashedLine = paths[0]
-			var fillLine;
+			currentPaths = dom.select.all('path', stepEl)
+			dashedLine = currentPaths[0]
 
 			// choose path depends of footstep direction
 			if(dir == AppConstants.FORWARD) {
-				fillLine = paths[1]
-				paths[2].style.opacity = 0
+				fillLine = currentPaths[1]
+				currentPaths[2].style.opacity = 0
 			}else{
-				fillLine = paths[2]
-				paths[1].style.opacity = 0
+				fillLine = currentPaths[2]
+				currentPaths[1].style.opacity = 0
 			}
 
 			stepEl.style.opacity = 1
 
 			// find total length of shape
-			var stepTotalLen = fillLine.getTotalLength()
+			stepTotalLen = fillLine.getTotalLength()
 			fillLine.style['stroke-dashoffset'] = 0
 			fillLine.style['stroke-dasharray'] = stepTotalLen
 			
@@ -136,23 +136,26 @@ export default (parent, type) => {
 			dom.classes.add(dashedLine, 'animate')
 
 			// start animation
-			setTimeout(()=>{
-				fillLine.style['stroke-dashoffset'] = stepTotalLen
-				dom.classes.add(fillLine, 'animate')
-			}, 1500)
+			dom.classes.add(fillLine, 'animate')
 
-			// remove animations and put everything back
+		},
+		resetHighlight: ()=> {
 			setTimeout(()=>{
 				stepEl.style.opacity = 0
-				paths[1].style.opacity = 1
-				paths[2].style.opacity = 1
+				currentPaths[1].style.opacity = 1
+				currentPaths[2].style.opacity = 1
 				dom.classes.remove(fillLine, 'animate')
 				dom.classes.remove(dashedLine, 'animate')
 				for (var i = 0; i < selectedDots.length; i++) {
 					var dot = selectedDots[i]
 					dom.classes.remove(dot, 'animate')
 				};
-			}, 4000)
+			}, 0)
+		},
+		updateProgress: (progress)=> {
+			if(fillLine == undefined) return
+			var dashOffset = (progress / 1) * stepTotalLen
+			fillLine.style['stroke-dashoffset'] = dashOffset
 		},
 		clear: ()=> {
 			if(type == AppConstants.INTERACTIVE) {

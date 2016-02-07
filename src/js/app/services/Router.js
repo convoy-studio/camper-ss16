@@ -9,6 +9,7 @@ class Router {
 	init() {
 		this.routing = data.routing
 		this.setupRoutes()
+		this.firstPass = true
 		this.newHashFounded = false
 		hasher.newHash = undefined
 		hasher.oldHash = undefined
@@ -52,7 +53,12 @@ class Router {
 			target: target
 		}
 		hasher.newHash.type = hasher.newHash.hash == '' ? AppConstants.HOME : AppConstants.DIPTYQUE
-		AppActions.pageHasherChanged()
+		// If first pass send the action from App.js when all assets are ready
+		if(this.firstPass) {
+			this.firstPass = false
+		}else{
+			AppActions.pageHasherChanged()
+		}
 	}
 	didHasherChange(newHash, oldHash) {
 		this.newHashFounded = false

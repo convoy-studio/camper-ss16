@@ -102,15 +102,7 @@ function _windowWidthHeight() {
 function _getDiptyqueShoes() {
     var hashObj = Router.getNewHash()
     var baseurl = _getPageAssetsBasePathById(hashObj.parent, hashObj.target)
-    var shoes = _getContentScope().shoes
-    // var items = []
-    // for (var i = 0; i < shoes.length; i++) {
-    //     console.log(shoes[i])
-    //     // var filename = shoes[i]['img-name']
-    //     // var path = baseurl + 'shoes/' + filename
-    //     // items[i]['img-name'] = path
-    // };
-    return shoes
+    return _getContentScope().shoes
 }
 
 var AppStore = assign({}, EventEmitter2.prototype, {

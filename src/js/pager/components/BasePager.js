@@ -3,6 +3,8 @@ import {PagerStore, PagerActions, PagerConstants, PagerDispatcher} from 'Pager'
 import Utils from 'Utils'
 import template from 'PagesContainer_hbs'
 import AppStore from 'AppStore'
+import AppConstants from 'AppConstants'
+import AppActions from 'AppActions'
 
 class BasePager extends BaseComponent {
 	constructor() {
@@ -12,6 +14,7 @@ class BasePager extends BaseComponent {
 		this.willPageTransitionOut = this.willPageTransitionOut.bind(this)
 		this.didPageTransitionInComplete = this.didPageTransitionInComplete.bind(this)
 		this.didPageTransitionOutComplete = this.didPageTransitionOutComplete.bind(this)
+		this.pageTransitionDidFinish = this.pageTransitionDidFinish.bind(this)
 		this.components = {
 			'new-component': undefined,
 			'old-component': undefined
@@ -23,6 +26,7 @@ class BasePager extends BaseComponent {
 	componentWillMount() {
 		PagerStore.on(PagerConstants.PAGE_TRANSITION_IN, this.willPageTransitionIn)
 		PagerStore.on(PagerConstants.PAGE_TRANSITION_OUT, this.willPageTransitionOut)
+		PagerStore.on(PagerConstants.PAGE_TRANSITION_DID_FINISH, this.pageTransitionDidFinish)
 		super.componentWillMount()
 	}
 	willPageTransitionIn() {
@@ -30,14 +34,20 @@ class BasePager extends BaseComponent {
 		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
 	}
 	willPageTransitionOut() {
-		if(this.components['old-component'] != undefined) this.components['old-component'].willTransitionOut()
+		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionOut()
+	}
+	pageAssetsLoaded() {
+		PagerActions.onTransitionOutComplete()
 	}
 	didPageTransitionInComplete() {
+		PagerActions.onTransitionInComplete()
 		PagerActions.pageTransitionDidFinish()
-		this.unmountComponent('old-component')
 	}
 	didPageTransitionOutComplete() {
-		PagerActions.onTransitionOutComplete()
+		AppActions.loadPageAssets()
+	}
+	pageTransitionDidFinish() {
+		this.unmountComponent('old-component')
 	}
 	switchPagesDivIndex() {
 		var newComponent = this.components['new-component']

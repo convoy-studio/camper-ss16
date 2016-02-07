@@ -8,6 +8,7 @@ import Preloader from 'Preloader'
 class App {
 	constructor() {
 		this.onAppReady = this.onAppReady.bind(this)
+		this.loadMainAssets = this.loadMainAssets.bind(this)
 	}
 	init() {
 		// Init router
@@ -22,12 +23,21 @@ class App {
 		GlobalEvents.init()
 
 		var appTemplate = new AppTemplate()
-		appTemplate.isReady = this.onAppReady
+		appTemplate.isReady = this.loadMainAssets
 		appTemplate.render('#app-container')
-	}
-	onAppReady() {
+
 		// Start routing
 		this.router.beginRouting()
+	}
+	loadMainAssets() {
+		var hashUrl = location.hash.substring(2)
+		var parts = hashUrl.substr(1).split('/')
+		var manifest = AppStore.pageAssetsToLoad()
+		if(manifest.length < 1) this.onAppReady()
+		else AppStore.Preloader.load(manifest, this.onAppReady)
+	}
+	onAppReady() {
+		AppActions.pageHasherChanged()
 	}
 }
 

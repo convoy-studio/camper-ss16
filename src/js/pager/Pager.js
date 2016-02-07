@@ -10,10 +10,22 @@ var PagerActions = {
         	item: hash
         })  
     },
+    onTransitionOut: function() {
+        PagerDispatcher.handlePagerAction({
+            type: PagerConstants.PAGE_TRANSITION_OUT,
+            item: undefined
+        })  
+    },
     onTransitionOutComplete: function() {
     	PagerDispatcher.handlePagerAction({
         	type: PagerConstants.PAGE_TRANSITION_OUT_COMPLETE,
         	item: undefined
+        })  
+    },
+    onTransitionInComplete: function() {
+        PagerDispatcher.handlePagerAction({
+            type: PagerConstants.PAGE_TRANSITION_IN_COMPLETE,
+            item: undefined
         })  
     },
     pageTransitionDidFinish: function() {
@@ -32,7 +44,7 @@ var PagerConstants = {
     PAGE_TRANSITION_OUT_COMPLETE: 'PAGE_TRANSITION_OUT_COMPLETE',
 	PAGE_TRANSITION_IN_COMPLETE: 'PAGE_TRANSITION_IN_COMPLETE',
 	PAGE_TRANSITION_IN_PROGRESS: 'PAGE_TRANSITION_IN_PROGRESS',
-	PAGE_TRANSITION_DID_FINISH: 'PAGE_TRANSITION_DID_FINISH',
+	PAGE_TRANSITION_DID_FINISH: 'PAGE_TRANSITION_DID_FINISH'
 }
 
 // Dispatcher
@@ -52,19 +64,19 @@ var PagerStore = assign({}, EventEmitter2.prototype, {
         switch(actionType) {
             case PagerConstants.PAGE_IS_READY:
             	PagerStore.pageTransitionState = PagerConstants.PAGE_TRANSITION_IN_PROGRESS
-            	var type = PagerStore.firstPageTransition ? PagerConstants.PAGE_TRANSITION_IN : PagerConstants.PAGE_TRANSITION_OUT
+            	var type = PagerConstants.PAGE_TRANSITION_IN
             	PagerStore.emit(type)
             	break
             case PagerConstants.PAGE_TRANSITION_OUT_COMPLETE:
-                setTimeout(()=> {
-                	var type = PagerConstants.PAGE_TRANSITION_IN
-                	PagerStore.emit(type)
-                }, 1300)
+                PagerStore.emit(type)
             	break
             case PagerConstants.PAGE_TRANSITION_DID_FINISH:
             	if (PagerStore.firstPageTransition) PagerStore.firstPageTransition = false
                 PagerStore.pageTransitionState = PagerConstants.PAGE_TRANSITION_DID_FINISH
                 PagerStore.emit(actionType)
+                break
+            default:
+                PagerStore.emit(actionType, item)
                 break
         }
         return true
