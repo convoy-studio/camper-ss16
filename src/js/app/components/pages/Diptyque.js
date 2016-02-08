@@ -5,15 +5,24 @@ import character from 'character'
 import ffText from 'fun-fact-text-holder'
 import dom from 'dom-hand'
 import arrowsWrapper from 'arrows-wrapper'
+import AppConstants from 'AppConstants'
 
 export default class Diptyque extends Page {
 	constructor(props) {
-		// var content = AppStore.globalContent()
 
-		props.data['next-page'] = AppStore.getNextDiptyque()
-		props.data['previous-page'] = AppStore.getPreviousDiptyque()
+		var nextDiptyque = AppStore.getNextDiptyque()
+		var previousDiptyque = AppStore.getPreviousDiptyque()
+		props.data['next-page'] = nextDiptyque
+		props.data['previous-page'] = previousDiptyque
+		props.data['next-preview-url'] = AppStore.getPreviewUrlByHash(nextDiptyque)
+		props.data['previous-preview-url'] = AppStore.getPreviewUrlByHash(previousDiptyque)
 
 		super(props)
+
+		this.preview = {
+			next: AppStore.getPreviewUrlByHash(nextDiptyque),
+			previous: AppStore.getPreviewUrlByHash(previousDiptyque)
+		}
 
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.onClick = this.onClick.bind(this)
@@ -37,10 +46,13 @@ export default class Diptyque extends Page {
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
 		this.ffText = ffText(this.pxContainer)
-		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
+		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave, this.preview)
 
 		dom.event.on(window, 'mousemove', this.onMouseMove)
 		dom.event.on(window, 'click', this.onClick)
+
+		TweenMax.set(this.arrowsWrapper.background('left'), { x:-AppConstants.SIDE_EVENT_PADDING })
+		TweenMax.set(this.arrowsWrapper.background('right'), { x:AppConstants.SIDE_EVENT_PADDING })
 
 		super.componentDidMount()
 		this.domIsReady = true
@@ -90,9 +102,31 @@ export default class Diptyque extends Page {
 	}
 	onArrowMouseEnter(e) {
 		e.preventDefault()
+		var id = e.currentTarget.id
+
+		var posX;
+		var offsetX = AppConstants.SIDE_EVENT_PADDING
+		if(id == 'left') posX = offsetX
+		else posX = -offsetX
+
+		TweenMax.to(this.pxContainer, 0.4, { x:posX, ease:Back.easeOut, force3D:true })
+		TweenMax.to(this.arrowsWrapper.background(id), 0.4, { x:0, ease:Back.easeOut, force3D:true })
+
+		this.arrowsWrapper.over(id)
 	}
 	onArrowMouseLeave(e) {
 		e.preventDefault()
+		var id = e.currentTarget.id
+
+		var posX;
+		var offsetX = AppConstants.SIDE_EVENT_PADDING
+		if(id == 'left') posX = -offsetX
+		else posX = offsetX
+
+		TweenMax.to(this.pxContainer, 0.6, { x:0, ease:Expo.easeOut })
+		TweenMax.to(this.arrowsWrapper.background(id), 0.6, { x:posX, ease:Expo.easeOut })
+
+		this.arrowsWrapper.out(id)
 	}
 	update() {
 		if(!this.domIsReady) return

@@ -31,7 +31,9 @@ class BasePager extends BaseComponent {
 	}
 	willPageTransitionIn() {
 		this.switchPagesDivIndex()
-		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
+		setTimeout(()=>{
+			if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
+		}, 600)
 	}
 	willPageTransitionOut() {
 		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionOut()

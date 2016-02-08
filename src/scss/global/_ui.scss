@@ -90,12 +90,55 @@ a {
     text-decoration: none;
 }
 .arrow {
-    $size: 20px;
     position: absolute;
-    width: $size;
-    height: $size;
-    polygon {
-        fill: white;
+    polygon { fill: white; }
+    svg, .background, .icons-wrapper { position: absolute; }
+    svg:first-child {
+        $size: 40px;
+        width: $size;
+        height: $size;
+        z-index: 1;
+    }
+    svg:nth-child(2) {
+        $size: 40px;
+        width: $size;
+        height: $size;
+        z-index: 2;
+        @include opacity(1);
+        @include anim(.3s, .0s, $easeInOutExpo, scale(1, 1) translateX(0px), 50%, 50%, transform opacity);
+    }
+    &.left svg:nth-child(2) { 
+        left: -10px;
+    }
+    &.right svg:nth-child(2) {
+        left: 10px;
+    }
+    &.left svg:first-child {
+        @include opacity(0);
+        @include anim(.1s, .0s, $easeInOutExpo, scaleX(2) translateX(10px), 50%, 50%, transform opacity);
+    }
+    &.right svg:first-child {
+        @include opacity(0);
+        @include anim(.1s, .0s, $easeInOutExpo, scaleX(2) translateX(-10px), 50%, 50%, transform opacity);   
+    }
+    .background {
+        position: absolute;
+        z-index: 0;
+        background-size: 100%;
+    }
+    &.hovered {
+        svg:first-child {
+            @include opacity(0);
+            @include anim(.4s, .2s, $easeOutElastic, scale(1) translateX(0px), 50%, 50%, transform opacity);
+        }
+        &.left svg:nth-child(2) { 
+            @include opacity(0);
+            @include anim(.4s, .0s, $easeOutExpo, scale(1.2, 0.5) translateX(-10px), 50%, 50%, transform opacity);
+        }
+        &.right svg:nth-child(2) {
+            @include opacity(0);
+            @include anim(.4s, .0s, $easeOutExpo, scale(1.2, 0.5) translateX(10px), 50%, 50%, transform opacity);
+        }
     }
 }
 #transition-map {
@@ -159,13 +202,13 @@ a {
             @include simpleAnim(.0s, .0s, $easeOutExpo);
 
             path:first-child {
-                stroke-width: 4px;
+                stroke-width: 2px;
                 &.animate {
                     animation: dash 15s linear alternate infinite;
                 }
             }
             path:last-child, path:nth-child(2) {
-                stroke-width: 2px;
+                stroke-width: 3px;
                 &.animate {
                     @include simpleAnim(1s, .0s, linear);
                 }
