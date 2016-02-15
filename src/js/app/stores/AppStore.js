@@ -19,7 +19,6 @@ function _getPageAssetsToLoad() {
         var filenames = [
             'character.png',
             'character-bg.jpg',
-            'shoe.png',
             'shoe-bg.jpg'
         ]
         manifest = _addBasePathsToUrls(filenames, hashObj.parent, hashObj.target, type)

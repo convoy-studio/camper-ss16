@@ -16,8 +16,9 @@ var grid = (props, parent, onItemEnded)=> {
 		scope.transitionOutItem(item)
 	}
 
-	var $gridContainer = dom.select(".grid-container", parent)
-	var gridChildren = $gridContainer.children
+	var gridContainer = dom.select(".grid-container", parent)
+	var linesGridContainer = dom.select('.lines-grid-container', parent)
+	var gridChildren = gridContainer.children
 	var linesHorizontal = dom.select(".lines-grid-container .horizontal-lines", parent).children
 	var linesVertical = dom.select(".lines-grid-container .vertical-lines", parent).children
 	var scope;
@@ -47,6 +48,10 @@ var grid = (props, parent, onItemEnded)=> {
 
 		var originalVideoSize = AppConstants.HOME_VIDEO_SIZE
 		var blockSize = [ windowW / AppConstants.GRID_ROWS, windowH / AppConstants.GRID_COLUMNS ]
+
+		linesGridContainer.style.width = windowW + 'px'
+		linesGridContainer.style.height = windowH + 'px'
+		linesGridContainer.style.position = 'absolute'
 
 		var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
 
@@ -91,7 +96,7 @@ var grid = (props, parent, onItemEnded)=> {
 	}
 
 	scope = {
-		el: $gridContainer,
+		el: gridContainer,
 		children: gridChildren,
 		items: items,
 		num: totalNum,

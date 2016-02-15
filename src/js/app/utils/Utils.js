@@ -97,6 +97,17 @@ class Utils {
 			div.style.left = x + 'px'
 		}
     }
+    static SpringTo(item, toPosition, index) {
+    	var dx = toPosition.x - item.position.x
+    	var dy = toPosition.y - item.position.y
+		var angle = Math.atan2(dy, dx)
+		var targetX = toPosition.x - Math.cos(angle) * (item.config.length * index)
+		var targetY = toPosition.y - Math.sin(angle) * (item.config.length * index)
+		item.velocity.x += (targetX - item.position.x) * item.config.spring
+		item.velocity.y += (targetY - item.position.y) * item.config.spring
+		item.velocity.x *= item.config.friction
+		item.velocity.y *= item.config.friction
+    }
 }
 
 export default Utils

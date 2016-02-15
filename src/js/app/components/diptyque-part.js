@@ -54,6 +54,7 @@ export default (pxContainer, bgUrl)=> {
 		},
 		clear: ()=> {
 			pxContainer.removeChild(holder)
+			holder.removeChild(mask)
 			mask.clear()
 			sprite.destroy()
 		}

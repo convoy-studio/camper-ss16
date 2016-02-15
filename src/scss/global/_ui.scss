@@ -94,13 +94,13 @@ a {
     polygon { fill: white; }
     svg, .background, .icons-wrapper { position: absolute; }
     svg:first-child {
-        $size: 40px;
+        $size: $iconsSize;
         width: $size;
         height: $size;
         z-index: 1;
     }
     svg:nth-child(2) {
-        $size: 40px;
+        $size: $iconsSize;
         width: $size;
         height: $size;
         z-index: 2;

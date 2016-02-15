@@ -38,7 +38,6 @@ html {
 #pages-container {
     position: absolute;
     z-index: 10;
-    @extend .full;
     & > div {
         @extend .full;
         position: absolute;
@@ -47,7 +46,6 @@ html {
 }
 
 .page-wrapper {
-    @extend .full;
     position: absolute;
 }
 

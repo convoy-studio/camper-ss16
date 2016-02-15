@@ -2,7 +2,7 @@ import dom from 'dom-hand'
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 
-export default (parent, onMouseEnter, onMouseLeave, previewObj)=> {
+export default (parent, onMouseEnter, onMouseLeave)=> {
 	var scope;
 	var arrowsWrapper = dom.select('.arrows-wrapper', parent)
 	var leftArrow = dom.select('.arrow.left', arrowsWrapper)

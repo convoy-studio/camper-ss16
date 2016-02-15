@@ -2,10 +2,11 @@ import Page from 'Page'
 import AppStore from 'AppStore'
 import diptyquePart from 'diptyque-part'
 import character from 'character'
-import ffText from 'fun-fact-text-holder'
+import funFact from 'fun-fact-holder'
 import dom from 'dom-hand'
 import arrowsWrapper from 'arrows-wrapper'
 import AppConstants from 'AppConstants'
+import selfieStick from 'selfie-stick'
 
 export default class Diptyque extends Page {
 	constructor(props) {
@@ -16,18 +17,18 @@ export default class Diptyque extends Page {
 		props.data['previous-page'] = previousDiptyque
 		props.data['next-preview-url'] = AppStore.getPreviewUrlByHash(nextDiptyque)
 		props.data['previous-preview-url'] = AppStore.getPreviewUrlByHash(previousDiptyque)
+		props.data['fact-txt'] = props.data.fact[AppStore.lang()]
 
 		super(props)
-
-		this.preview = {
-			next: AppStore.getPreviewUrlByHash(nextDiptyque),
-			previous: AppStore.getPreviewUrlByHash(previousDiptyque)
-		}
 
 		this.onMouseMove = this.onMouseMove.bind(this)
 		this.onClick = this.onClick.bind(this)
 		this.onArrowMouseEnter = this.onArrowMouseEnter.bind(this)
 		this.onArrowMouseLeave = this.onArrowMouseLeave.bind(this)
+		this.onCharacterMouseOver = this.onCharacterMouseOver.bind(this)
+		this.onCharacterMouseOut = this.onCharacterMouseOut.bind(this)
+		this.onCharacterClicked = this.onCharacterClicked.bind(this)
+		this.onSelfieStickClicked = this.onSelfieStickClicked.bind(this)
 	}
 	componentDidMount() {
 
@@ -44,9 +45,12 @@ export default class Diptyque extends Page {
 			this.getImageUrlById('character-bg')
 		)
 
-		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
-		this.ffText = ffText(this.pxContainer)
-		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave, this.preview)
+		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'), this.onCharacterMouseOver, this.onCharacterMouseOut, this.onCharacterClicked)
+		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data)
+		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
+		this.selfieStick = selfieStick(this.element, this.mouse, this.props.data)
+
+		dom.event.on(this.selfieStick.el, 'click', this.onSelfieStickClicked)
 
 		dom.event.on(window, 'mousemove', this.onMouseMove)
 		dom.event.on(window, 'click', this.onClick)
@@ -82,22 +86,32 @@ export default class Diptyque extends Page {
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
 
-		// if(this.mouse.nX < 0.5) AppStore.Parent.style.cursor = 'pointer'
+		// if(this.mouse.nX > 0.5) AppStore.Parent.style.cursor = 'pointer'
 		// else AppStore.Parent.style.cursor = 'auto'
 
 	}
 	onClick(e) {
-		if(this.mouse.nX < 0.5) {
 
-			// if shoes are open
-			if(this.ffText.isOpen) {
-
-				this.ffText.close()
-				
-			}else{
-				this.ffText.open()
-			}
-
+	}
+	onCharacterMouseOver() {
+		// console.log('over')
+	}
+	onCharacterMouseOut() {
+		// console.log('out')
+	}
+	onCharacterClicked() {
+		if(this.funFact.isOpen) {
+			this.funFact.close()
+		}else{
+			this.funFact.open()
+		}
+	}
+	onSelfieStickClicked(e) {
+		e.preventDefault()
+		if(this.selfieStick.isOpened) {
+			this.selfieStick.close()
+		}else{
+			this.selfieStick.open()
 		}
 	}
 	onArrowMouseEnter(e) {
@@ -133,6 +147,8 @@ export default class Diptyque extends Page {
 		this.character.update(this.mouse)
 		this.leftPart.update(this.mouse)
 		this.rightPart.update(this.mouse)
+		this.selfieStick.update()
+		this.funFact.update()
 
 		super.update()
 	}
@@ -143,8 +159,9 @@ export default class Diptyque extends Page {
 		this.leftPart.resize()
 		this.rightPart.resize()
 		this.character.resize()
-		this.ffText.resize()
+		this.funFact.resize()
 		this.arrowsWrapper.resize()
+		this.selfieStick.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)
 
@@ -153,10 +170,12 @@ export default class Diptyque extends Page {
 	componentWillUnmount() {
 		dom.event.off(window, 'mousemove', this.onMouseMove)
 		dom.event.off(window, 'click', this.onClick)
+		dom.event.off(this.selfieStick.el, 'click', this.onSelfieStickClicked)
 		this.leftPart.clear()
 		this.rightPart.clear()
 		this.character.clear()
-		this.ffText.clear()
+		this.funFact.clear()
+		this.selfieStick.clear()
 		this.arrowsWrapper.clear()
 		this.mouse = null
 		this.leftPart = null

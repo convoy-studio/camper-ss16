@@ -1,8 +1,79 @@
-#about-page {
+.diptyque-page {
 	@extend .full;
 
 	.arrows-wrapper {
 		position: absolute;
+	}
+	.fun-fact-wrapper {
+		position: absolute;
+		& > div {
+			position: absolute;
+		}
+		.video-wrapper {
+			overflow: hidden;
+			background-color: yellow;
+			video {
+				position: absolute;
+			}
+		}
+		.message-wrapper {
+			background-color: red;
+			font-size: 60px;
+			color: #FFFFFF;
+			letter-spacing: 2px;
+			line-height: 80px;
+			text-align: center;
+			.message-inner {
+				position: absolute;
+				width: 50%;
+			}
+		}
+		.cursor-cross {
+			width: $iconsSize;
+			height: $iconsSize;
+
+			svg {
+				@include opacity(0);
+        		@include anim(.3s, .0s, $easeOutElastic, scale(0.5, 0.5), 50%, 50%, transform opacity);
+			}
+
+			&.active {
+				svg {
+					@include opacity(1);
+        			@include anim(.3s, .0s, $easeInOutElastic, scale(1, 1), 50%, 50%, transform opacity);
+				}
+			}
+		}
+	}
+	.selfie-stick-wrapper {
+		cursor: pointer;
+		position: absolute;
+		z-index: 30;
+		.screen-wrapper {
+			z-index: 1;
+		}
+		.background {
+			background-color: #ff0000;
+			@include opacity(0);
+		}
+		& > div {
+			position: absolute;
+		}
+		.screen-wrapper {
+			width: 100%;
+			& > div {
+				position: absolute;
+			}
+			.screen-holder {
+				z-index: 1;
+			}
+			.video-holder {
+				width: 84%;
+			}
+			video {
+				width: 100%;
+			}
+		}
 	}
 
 }

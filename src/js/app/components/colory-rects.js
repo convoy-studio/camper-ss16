@@ -2,7 +2,7 @@ import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import colorUtils from 'color-utils'
 
-export default (pxContainer, color)=> {
+export default (pxContainer, colors)=> {
 
 	var scope;
 
@@ -10,7 +10,7 @@ export default (pxContainer, color)=> {
 	pxContainer.addChild(holder)
 
 	var bgColors = []
-	bgColors.length = 5
+	bgColors.length = 6
 
 	var tl = new TimelineLite()
 
@@ -21,37 +21,44 @@ export default (pxContainer, color)=> {
 	};
 
 	var open = ()=> {
-		tl.timeScale(1.1)
+		tl.timeScale(1.5)
 		tl.play(0)
 		scope.isOpen = true
 	}
 	var close = ()=> {
-		tl.timeScale(1.6)
+		tl.timeScale(2)
 		tl.reverse()
 		scope.isOpen = false
 	}
 
 	scope = {
+		tl: tl,
 		isOpen: false,
+		holder: holder,
 		open: open,
 		close: close,
 		resize: (width, height, direction)=>{
 
 			tl.clear()
 
-			var initialS = color.s
-			var v = color.v
-			var lightStep = Math.round(initialS / bgColors.length)
-			var delay = 0.12
+			var hs = colors.from.h - colors.to.h
+			var ss = colors.from.s - colors.to.s
+			var vs = colors.from.v - colors.to.v
 			var len = bgColors.length
+			var stepH = hs / bgColors.length
+			var stepS = ss / bgColors.length
+			var stepV = vs / bgColors.length
+			var hd = (hs < 0) ? -1 : 1
+			var sd = (ss < 0) ? -1 : 1
+			var vd = (vs < 0) ? -1 : 1
+
+			var delay = 0.12
 			for (var i = 0; i < len; i++) {
 				var bgColor = bgColors[i]
-				var s = initialS - (lightStep*i) - lightStep
-				if(s <= 0) {
-					s = 0
-					v = 100
-				}
-				var c = '0x' + colorUtils.hsvToHex(color.h, s, v)
+				var h = Math.round(colors.from.h + (stepH*i*hd))
+				var s = Math.round(colors.from.s + (stepS*i*sd))
+				var v = Math.round(colors.from.v + (stepV*i*vd))
+				var c = '0x' + colorUtils.hsvToHex(h, s, v)
 				bgColor.clear()
 				bgColor.beginFill(c, 1);
 				bgColor.drawRect(0, 0, width, height);
