@@ -19,6 +19,7 @@ export default (holder, mouse, data)=> {
 	var animation = {
 		position: {x: 0, y: 0},
 		fposition: {x: 0, y: 0},
+		iposition: {x: 0, y: 0},
 		velocity: {x: 0, y: 0},
 		rotation: 0,
 		config: {
@@ -47,19 +48,21 @@ export default (holder, mouse, data)=> {
 		})
 	})
 
+	var windowH = AppStore.Window.h
+
 	scope = {
 		el: el,
 		isOpened: false,
 		open: ()=> {
-			animation.config.length = 200,
-			animation.config.spring = 0.6,
-			animation.config.friction = 0.7
+			animation.config.length = 100,
+			animation.config.spring = 0.9,
+			animation.config.friction = 0.5
 			mVideo.play(0)
 			background.style.visibility = 'visible'
 			scope.isOpened = true
 		},
 		close: ()=> {
-			animation.config.length = 200,
+			animation.config.length = 0,
 			animation.config.spring = 0.6,
 			animation.config.friction = 0.7
 			mVideo.pause(0)
@@ -71,13 +74,13 @@ export default (holder, mouse, data)=> {
 			var windowH = AppStore.Window.h
 
 			if(scope.isOpened) {
-				animation.fposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
-				animation.fposition.y = (windowH >> 1) - (screenHolderSize[1] * 0.3)
-				animation.fposition.x += (mouse.nX - 0.5) * 200
-				animation.fposition.y += (mouse.nY - 0.5) * 50
+				animation.fposition.x = animation.iposition.x
+				animation.fposition.y = animation.iposition.y - (screenHolderSize[1] * 0.8)
+				animation.fposition.x += (mouse.nX - 0.5) * 80
+				animation.fposition.y += (mouse.nY - 0.5) * 30
 			}else{
-				animation.fposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
-				animation.fposition.y = windowH - (screenHolderSize[1] * 0.4)
+				animation.fposition.x = animation.iposition.x
+				animation.fposition.y = animation.iposition.y
 				animation.fposition.x += (mouse.nX - 0.5) * 20
 				animation.fposition.y -= (mouse.nY - 0.5) * 20
 			}
@@ -86,7 +89,7 @@ export default (holder, mouse, data)=> {
 
 			animation.position.x += (animation.fposition.x - animation.position.x) * 0.1
 
-			animation.config.length += (0.01 - animation.config.length) * 0.1
+			animation.config.length += (0.01 - animation.config.length) * 0.05
 
 			Utils.Translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)			
 		},
@@ -108,6 +111,13 @@ export default (holder, mouse, data)=> {
 			topOffset = (windowW / AppConstants.MEDIA_GLOBAL_W) * 26
 			videoHolder.style.left = (screenHolderSize[0] >> 1) - (videoHolderSize[0] >> 1) + 'px'
 			videoHolder.style.top = topOffset + 'px'
+
+			// screenWrapper.style.left = (windowW >> 1) - (screenHolderSize[0] >> 1) + 'px'
+			// screenWrapper.style.top = windowH - videoHolderSize[1] + 'px'
+			animation.iposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
+			animation.iposition.y = windowH - (videoHolderSize[1] * 0.5)
+			animation.position.x = animation.iposition.x
+			animation.position.y = animation.iposition.y
 
 		},
 		clear: ()=> {

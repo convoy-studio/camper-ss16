@@ -62,73 +62,73 @@
         "deia/dub": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/13bbb61195164873d823a3b91a2c82accefb3edd/deia-dub.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 188, "s": 85, "v": 61 },
+        		"to": { "h": 357, "s": 97, "v": 26 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
         "deia/mateo": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/e424889ac026f70e544af03035e7187f34941705/deia-mateo.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 37, "s": 89, "v": 83 },
+        		"to": { "h": 8, "s": 86, "v": 57 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
 
         "es-trenc/beluga": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/23444d3c8693e59f8079f827dd182c5e33413877/es-trenc-beluga.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 212, "s": 10, "v": 69 },
+        		"to": { "h": 193, "s": 12, "v": 45 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
         "es-trenc/isamu": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/6eafae7f1b3bc41d856973557a2f51598c8241a6/es-trenc-isamu.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 210, "s": 1, "v": 74 },
+        		"to": { "h": 21, "s": 35, "v": 72 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
 
 		"arelluf/capas": {
 			"selfie-stick-video-url": "http://embed.wistia.com/deliveries/840a3f6729b1f52f446aae6daec939a3eca4c0c1/arelluf-capas.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 0, "s": 0, "v": 0 },
+        		"to": { "h": 8, "s": 76, "v": 91 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
 		},
         "arelluf/pelotas": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/3dcfd70c7072692ea3a739aef5376b026b04b675/arelluf-pelotas.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 211, "s": 95, "v": 29 },
+        		"to": { "h": 22, "s": 35, "v": 79 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
         "arelluf/marta": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/840a3f6729b1f52f446aae6daec939a3eca4c0c1/arelluf-capas.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 200, "s": 57, "v": 81 },
+        		"to": { "h": 201, "s": 100, "v": 69 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
         "arelluf/kobarah": {
@@ -138,7 +138,7 @@
         		"to": { "h": 344, "s": 56, "v": 100 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
 		"arelluf/dub": {
@@ -148,17 +148,17 @@
         		"to": { "h": 15, "s": 84, "v": 100 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         },
         "arelluf/paradise": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/a819c373f9777852f3967ce023bcfb0d9115386f/arelluf-paradise.mp4",
         	"ambient-color": {
-        		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"from": { "h": 59, "s": 19, "v": 99 },
+        		"to": { "h": 207, "s": 31, "v": 100 }
         	},
         	"fact": {
-        		"en": "WHEN YOU CAN ́T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
         	}
         }
 
