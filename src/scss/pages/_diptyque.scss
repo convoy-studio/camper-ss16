@@ -34,7 +34,7 @@
 
 			svg {
 				@include opacity(0);
-        		@include anim(.3s, .0s, $easeOutElastic, scale(0.5, 0.5), 50%, 50%, transform opacity);
+        		@include anim(.3s, .0s, $easeInOutElastic, scale(0.5, 0.5), 50%, 50%, transform opacity);
 			}
 
 			&.active {

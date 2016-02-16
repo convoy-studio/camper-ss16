@@ -16,6 +16,8 @@ export default (holder, mouse, data)=> {
 	var screenHolder = dom.select('.screen-holder', el)
 	var videoHolder = dom.select('.video-holder', el)
 	var selfieStickWrapper = dom.select('.selfie-stick-wrapper', el)
+	var springTo = Utils.SpringTo
+	var translate = Utils.Translate
 	var animation = {
 		position: {x: 0, y: 0},
 		fposition: {x: 0, y: 0},
@@ -32,7 +34,6 @@ export default (holder, mouse, data)=> {
 	var onVideoEnded = ()=> {
 		scope.close()
 	}
-
 	var mVideo = miniVideo({
 		autoplay: false
 	})
@@ -47,8 +48,6 @@ export default (holder, mouse, data)=> {
 			scope.resize()
 		})
 	})
-
-	var windowH = AppStore.Window.h
 
 	scope = {
 		el: el,
@@ -85,13 +84,13 @@ export default (holder, mouse, data)=> {
 				animation.fposition.y -= (mouse.nY - 0.5) * 20
 			}
 
-			Utils.SpringTo(animation, animation.fposition, 1)
+			springTo(animation, animation.fposition, 1)
 
 			animation.position.x += (animation.fposition.x - animation.position.x) * 0.1
 
 			animation.config.length += (0.01 - animation.config.length) * 0.05
 
-			Utils.Translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)			
+			translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)			
 		},
 		resize: ()=> {
 
@@ -112,10 +111,8 @@ export default (holder, mouse, data)=> {
 			videoHolder.style.left = (screenHolderSize[0] >> 1) - (videoHolderSize[0] >> 1) + 'px'
 			videoHolder.style.top = topOffset + 'px'
 
-			// screenWrapper.style.left = (windowW >> 1) - (screenHolderSize[0] >> 1) + 'px'
-			// screenWrapper.style.top = windowH - videoHolderSize[1] + 'px'
 			animation.iposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
-			animation.iposition.y = windowH - (videoHolderSize[1] * 0.5)
+			animation.iposition.y = windowH - (videoHolderSize[1] * 0.35)
 			animation.position.x = animation.iposition.x
 			animation.position.y = animation.iposition.y
 

@@ -67,6 +67,8 @@ export default (props)=> {
 	    	var e = eListeners[i]
 	    	video.removeEventListener(e.event, e.cb);
 	    }
+	    eListeners.length = 0
+	    eListeners = null
 	}
 
 	var clear = ()=> {
@@ -75,6 +77,7 @@ export default (props)=> {
 	    video.removeEventListener('ended', ended);
 	    scope.clearAllEvents()
 	    size = null
+	    video = null
     }
 
 	video.addEventListener('canplay', onCanPlay);

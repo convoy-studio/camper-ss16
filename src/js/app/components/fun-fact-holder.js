@@ -40,8 +40,7 @@ export default (pxContainer, parent, mouse, data)=> {
 		autoplay: false,
 		loop: true
 	})
-	// var videoSrc = 'http://embed.wistia.com/deliveries/2a3313ea3ae2862e1156a520a31ca0979f7c2aad/hello.mp4'
-	var videoSrc = 'http://embed.wistia.com/deliveries/d81b2cff6083abae40ec50668fd8d65deada7bbb/dub.mp4'
+	var videoSrc = data['fun-fact-video-url']
 	mVideo.addTo(videoWrapper)
 	mVideo.load(videoSrc, ()=> {
 		isReady = true

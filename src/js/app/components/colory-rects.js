@@ -10,7 +10,7 @@ export default (pxContainer, colors)=> {
 	pxContainer.addChild(holder)
 
 	var bgColors = []
-	bgColors.length = 6
+	bgColors.length = 5
 
 	var tl = new TimelineLite()
 

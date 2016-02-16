@@ -42,9 +42,9 @@ export default class Home extends Page {
 		this.bg = dom.select('.bg-wrapper', this.element)
 
 		this.grid = grid(this.props, this.element, this.onItemEnded)
-		this.bottomTexts = bottomTexts(this.element)
+		// this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
-		this.map = map(this.element, AppConstants.INTERACTIVE)
+		// this.map = map(this.element, AppConstants.INTERACTIVE)
 
 		super.componentDidMount()
 	}
@@ -87,9 +87,9 @@ export default class Home extends Page {
 		var windowH = AppStore.Window.h
 		
 		this.grid.resize()
-		this.bottomTexts.resize()
+		// this.bottomTexts.resize()
 		this.aroundBorder.resize()
-		this.map.resize()
+		// this.map.resize()
 
 		var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 
@@ -103,8 +103,9 @@ export default class Home extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
+		this.aroundBorder.clear()
 		this.grid.clear()
-		this.map.clear()
+		// this.map.clear()
 
 		this.grid = null
 		this.bottomTexts = null
