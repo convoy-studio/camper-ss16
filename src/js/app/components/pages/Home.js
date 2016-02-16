@@ -4,9 +4,11 @@ import Utils from 'Utils'
 import bottomTexts from 'bottom-texts-home'
 import AppConstants from 'AppConstants'
 import grid from 'grid-home'
+import imageCanvasesGrid from 'image-to-canvases-grid'
 import aroundBorder from 'around-border-home'
 import map from 'main-map'
 import dom from 'dom-hand'
+import gridPositions from 'grid-positions'
 
 export default class Home extends Page {
 	constructor(props) {
@@ -39,8 +41,10 @@ export default class Home extends Page {
 
 		this.usedSeats = []
 
-		this.bg = dom.select('.bg-wrapper', this.element)
+		// this.bg = dom.select('.bg-wrapper', this.element)
 
+		this.imgCGrid = imageCanvasesGrid(this.element)
+		this.imgCGrid.load(this.props.data.bgurl)
 		this.grid = grid(this.props, this.element, this.onItemEnded)
 		// this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
@@ -86,7 +90,10 @@ export default class Home extends Page {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 		
-		this.grid.resize()
+		var gGrid = gridPositions(windowW, windowH, AppConstants.GRID_COLUMNS, AppConstants.GRID_ROWS, 'cols_rows')
+
+		this.grid.resize(gGrid)
+		this.imgCGrid.resize(gGrid)
 		// this.bottomTexts.resize()
 		this.aroundBorder.resize()
 		// this.map.resize()
@@ -94,11 +101,11 @@ export default class Home extends Page {
 		var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 
 		// bg
-		this.bg.style.position = 'absolute'
-		this.bg.style.width = resizeVarsBg.width + 'px'
-		this.bg.style.height = resizeVarsBg.height + 'px'
-		this.bg.style.top = resizeVarsBg.top + 'px'
-		this.bg.style.left = resizeVarsBg.left + 'px'
+		// this.bg.style.position = 'absolute'
+		// this.bg.style.width = resizeVarsBg.width + 'px'
+		// this.bg.style.height = resizeVarsBg.height + 'px'
+		// this.bg.style.top = resizeVarsBg.top + 'px'
+		// this.bg.style.left = resizeVarsBg.left + 'px'
 
 		super.resize()
 	}

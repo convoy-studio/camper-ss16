@@ -23,7 +23,7 @@ var aroundBorder = (parent)=> {
 			var borderSize = 10
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
-			var blockSize = [ windowW / AppConstants.GRID_ROWS, windowH / AppConstants.GRID_COLUMNS ]
+			var blockSize = [ windowW / AppConstants.GRID_COLUMNS, windowH / AppConstants.GRID_ROWS ]
 
 			top.style.width = windowW + 'px'
 			bottom.style.width = windowW + 'px'

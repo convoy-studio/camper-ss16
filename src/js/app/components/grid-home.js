@@ -3,6 +3,7 @@ import videoCanvas from 'video-canvas'
 import Utils from 'Utils'
 import AppConstants from 'AppConstants'
 import dom from 'dom-hand'
+import gridPositions from 'grid-positions'
 
 var grid = (props, parent, onItemEnded)=> {
 
@@ -27,6 +28,8 @@ var grid = (props, parent, onItemEnded)=> {
 	var totalNum = props.data.grid.length
 	var videos = AppStore.getHomeVideos()
 
+	
+
 	var vCanvasProps = {
 		autoplay: false,
 		volume: 0,
@@ -42,56 +45,99 @@ var grid = (props, parent, onItemEnded)=> {
 		items[i] = vCanvas
 	}
 
-	var resize = ()=> {
+	var resize = (gGrid)=> {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
 		var originalVideoSize = AppConstants.HOME_VIDEO_SIZE
-		var blockSize = [ windowW / AppConstants.GRID_ROWS, windowH / AppConstants.GRID_COLUMNS ]
+		var blockSize = gGrid.blockSize
 
 		linesGridContainer.style.width = windowW + 'px'
 		linesGridContainer.style.height = windowH + 'px'
 		linesGridContainer.style.position = 'absolute'
 
-		var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
+		var gPos = gGrid.positions
+		var parent;
+		var count = 0
+		var hl, vl;
+		for (var i = 0; i < gPos.length; i++) {
+			var row = gPos[i]
 
-		var pos = [ 0, 0 ]
-		var horizontalLinesIndex = 0
-		var verticalLinesIndex = 0
-		for (var i = 0; i < scope.num; i++) {
-			var item = scope.items[i]
-			var parent = scope.children[i]
-
-			parent.style.position = 'absolute'
-			parent.style.width = blockSize[ 0 ] + 'px'
-			parent.style.height = blockSize[ 1 ] + 'px'
-			parent.style.left = pos[ 0 ] + 'px'
-			parent.style.top = pos[ 1 ] + 'px'
-			
-			item.canvas.width = blockSize[ 0 ]
-			item.canvas.height = blockSize[ 1 ]
-			item.resize(resizeVars.left, resizeVars.top, resizeVars.width, resizeVars.height)
-			item.drawOnce()
-			
+			// horizontal lines
 			if(i > 0) {
-				var vl = scope.lines.vertical[verticalLinesIndex]
-				if(vl) vl.style.left = pos[ 0 ] + 'px'
-				verticalLinesIndex += 1
+				hl = scope.lines.horizontal[i-1]
+				hl.style.top = blockSize[1] * i + 'px'
 			}
 
-			// positions
-			scope.positions[ i ] = [ pos[ 0 ], pos[ 1 ] ]
-			pos[ 0 ] += blockSize[ 0 ]
-			if( pos[ 0 ] > windowW - (blockSize[ 0 ] >> 1) ) {
+			for (var j = 0; j < row.length; j++) {
 				
-				pos[ 1 ] += blockSize[ 1 ]
-				pos[ 0 ] = 0
+				parent = scope.children[count]
 
-				var hl = scope.lines.horizontal[horizontalLinesIndex]
-				if(hl) hl.style.top = pos[ 1 ] + 'px'
-				horizontalLinesIndex += 1
+				// block divs
+				parent.style.position = 'absolute'
+				parent.style.width = blockSize[0] + 'px'
+				parent.style.height = blockSize[1] + 'px'
+				parent.style.left = row[j][0] + 'px'
+				parent.style.top = row[j][1] + 'px'
+
+				// vertical lines
+				if(i == 0 && j > 0) {
+					vl = scope.lines.vertical[j-1]
+					vl.style.left = blockSize[0] * j + 'px'
+				}
+
+				count++
 			}
-		};
+		}
+
+		// gGrid = gridPositions(windowW, windowH, AppConstants.GRID_ROWS, AppConstants.GRID_COLUMNS)
+		// console.log(gGrid.positions)
+
+		// for (var i in gGrid) {
+
+		// }
+
+		// console.log(gGrid)
+
+		// var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
+
+		// var pos = [ 0, 0 ]
+		// var horizontalLinesIndex = 0
+		// var verticalLinesIndex = 0
+		// for (var i = 0; i < scope.num; i++) {
+		// 	var item = scope.items[i]
+		// 	var parent = scope.children[i]
+
+		// 	parent.style.position = 'absolute'
+		// 	parent.style.width = blockSize[ 0 ] + 'px'
+		// 	parent.style.height = blockSize[ 1 ] + 'px'
+		// 	parent.style.left = pos[ 0 ] + 'px'
+		// 	parent.style.top = pos[ 1 ] + 'px'
+			
+		// 	item.canvas.width = blockSize[ 0 ]
+		// 	item.canvas.height = blockSize[ 1 ]
+		// 	item.resize(resizeVars.left, resizeVars.top, resizeVars.width, resizeVars.height)
+		// 	item.drawOnce()
+			
+		// 	if(i > 0) {
+		// 		var vl = scope.lines.vertical[verticalLinesIndex]
+		// 		if(vl) vl.style.left = pos[ 0 ] + 'px'
+		// 		verticalLinesIndex += 1
+		// 	}
+
+		// 	// positions
+		// 	scope.positions[ i ] = [ pos[ 0 ], pos[ 1 ] ]
+		// 	pos[ 0 ] += blockSize[ 0 ]
+		// 	if( pos[ 0 ] > windowW - (blockSize[ 0 ] >> 1) ) {
+				
+		// 		pos[ 1 ] += blockSize[ 1 ]
+		// 		pos[ 0 ] = 0
+
+		// 		var hl = scope.lines.horizontal[horizontalLinesIndex]
+		// 		if(hl) hl.style.top = pos[ 1 ] + 'px'
+		// 		horizontalLinesIndex += 1
+		// 	}
+		// };
 
 	}
 
@@ -107,26 +153,26 @@ var grid = (props, parent, onItemEnded)=> {
 		},
 		resize: resize,
 		transitionInItem: (index, type)=> {
-			var item = scope.items[index]
-			item.seat = index
+			// var item = scope.items[index]
+			// item.seat = index
 
-			item.canvas.classList.add('enable')
+			// item.canvas.classList.add('enable')
 			
-			if(type == AppConstants.ITEM_VIDEO) {
-				item.play()
-			}else{
-				item.timeout(imageEnded, 2000)
-				item.seek(Utils.Rand(2, 10, 0))
-			}
+			// if(type == AppConstants.ITEM_VIDEO) {
+			// 	item.play()
+			// }else{
+			// 	item.timeout(imageEnded, 2000)
+			// 	item.seek(Utils.Rand(2, 10, 0))
+			// }
 		},
 		transitionOutItem: (item)=> {
-			item.canvas.classList.remove('enable')
+			// item.canvas.classList.remove('enable')
 
-			item.video.currentTime = 0
-			item.pause()
-			setTimeout(()=>{
-				item.drawOnce()
-			}, 500)
+			// item.video.currentTime = 0
+			// item.pause()
+			// setTimeout(()=>{
+			// 	item.drawOnce()
+			// }, 500)
 		},
 		clear: ()=> {
 			for (var i = 0; i < items.length; i++) {
