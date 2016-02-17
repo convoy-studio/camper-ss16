@@ -9,6 +9,7 @@ import colorUtils from 'color-utils'
 export default (pxContainer, parent, mouse, data)=> {
 	var scope;
 	var isReady = false
+	var onCloseTimeout;
 	var el = dom.select('.fun-fact-wrapper', parent)
 	var videoWrapper = dom.select('.video-wrapper', el)
 	var messageWrapper = dom.select('.message-wrapper', el)
@@ -60,9 +61,11 @@ export default (pxContainer, parent, mouse, data)=> {
 		setTimeout(()=>leftTl.timeScale(1.5).play(0), delay)
 		setTimeout(()=>rightTl.timeScale(1.5).play(0), delay)
 		setTimeout(()=>mVideo.play(), delay+200)
+		clearTimeout(onCloseTimeout)
+		onCloseTimeout = setTimeout(()=>dom.event.on(parent, 'click', onCloseFunFact), delay+200)
 		parent.style.cursor = 'none'
-		dom.event.on(parent, 'click', onCloseFunFact)
 		dom.classes.add(cross.el, 'active')
+		
 	}
 	var close = ()=> {
 		scope.isOpen = false

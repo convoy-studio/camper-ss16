@@ -28,7 +28,6 @@ var babelify = require('babelify')
 var hbsfy = require('hbsfy')
 var svg = require('svg-browserify');
 
-
 // optims
 var pngquant = require('imagemin-pngquant')
 var imageminPngcrush = require('imagemin-pngcrush');

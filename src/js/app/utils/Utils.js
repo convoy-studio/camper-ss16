@@ -108,6 +108,17 @@ class Utils {
 		item.velocity.x *= item.config.friction
 		item.velocity.y *= item.config.friction
     }
+    static SpringToScale(item, toScale, index) {
+    	var dx = toScale.x - item.scale.x
+    	var dy = toScale.y - item.scale.y
+		var angle = Math.atan2(dy, dx)
+		var targetX = toScale.x - Math.cos(angle) * (item.config.length * index)
+		var targetY = toScale.y - Math.sin(angle) * (item.config.length * index)
+		item.velocityScale.x += (targetX - item.scale.x) * item.config.spring
+		item.velocityScale.y += (targetY - item.scale.y) * item.config.spring
+		item.velocityScale.x *= item.config.friction
+		item.velocityScale.y *= item.config.friction
+    }
 }
 
 export default Utils

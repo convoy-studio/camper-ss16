@@ -23,6 +23,7 @@
 			letter-spacing: 2px;
 			line-height: 80px;
 			text-align: center;
+			text-transform: uppercase;
 			.message-inner {
 				position: absolute;
 				width: 50%;
@@ -45,6 +46,17 @@
 			}
 		}
 	}
+	.main-btns-wrapper {
+		position: absolute;
+		z-index: 28;
+		.main-btn {
+			cursor: pointer;
+			position: absolute;
+			img {
+				position: absolute;
+			}
+		}
+	}
 	.selfie-stick-wrapper {
 		cursor: pointer;
 		position: absolute;
@@ -63,6 +75,12 @@
 			width: 100%;
 			& > div {
 				position: absolute;
+			}
+			.colorifier {
+				$size: 25.2%;
+				width: $size;
+				height: $size;
+				z-index: 3;
 			}
 			.screen-holder {
 				z-index: 1;

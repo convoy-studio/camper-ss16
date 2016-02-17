@@ -42,7 +42,18 @@
 				"a_vision": "A VISION OF"
 			},
 			"assets": [
-				"background.jpg"
+				"background.jpg",
+				"video-shots/arelluf-capas.jpg",
+				"video-shots/arelluf-dub.jpg",
+				"video-shots/arelluf-kobaraf.jpg",
+				"video-shots/arelluf-paradise.jpg",
+				"video-shots/arelluf-pelotas.jpg",
+				"video-shots/deia-dub.jpg",
+				"video-shots/deia-marta.jpg",
+				"video-shots/deia-mateo.jpg",
+				"video-shots/es-trenc-beluga.jpg",
+				"video-shots/es-trenc-isamu.jpg",
+				"video-shots/es-trenc-marta.jpg"
 			]
 		},
 
@@ -50,22 +61,24 @@
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/13bbb61195164873d823a3b91a2c82accefb3edd/deia-dub.mp4",
         	"ambient-color": {
         		"from": { "h": 188, "s": 85, "v": 61 },
-        		"to": { "h": 357, "s": 97, "v": 26 }
+        		"to": { "h": 357, "s": 97, "v": 26 },
+        		"selfie-stick": { "h": 359, "s": 93, "v": 51 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/62e54eac1d8989ab9de238fa3f7c6d8db4d9de8d/arelluf-kobaraf.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "Breaking up on a text message is not very deia."
         	}
         },
         "deia/mateo": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/e424889ac026f70e544af03035e7187f34941705/deia-mateo.mp4",
         	"ambient-color": {
         		"from": { "h": 37, "s": 89, "v": 83 },
-        		"to": { "h": 8, "s": 86, "v": 57 }
+        		"to": { "h": 8, "s": 86, "v": 57 },
+        		"selfie-stick": { "h": 8, "s": 86, "v": 57 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/950b6925fa4f85cfa8d466d84361671797c20c1a/deia-mateo.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "buys an atelier at deia.<br>starts career as an artist."
         	}
         },
 
@@ -73,22 +86,24 @@
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/23444d3c8693e59f8079f827dd182c5e33413877/es-trenc-beluga.mp4",
         	"ambient-color": {
         		"from": { "h": 212, "s": 10, "v": 69 },
-        		"to": { "h": 193, "s": 12, "v": 45 }
+        		"to": { "h": 193, "s": 12, "v": 45 },
+        		"selfie-stick": { "h": 193, "s": 0, "v": 45 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/70455ad73af7b7e35e9e674109929c3b70294064/es-trenc-beluga.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "ES TRENC PARTY BOY."
         	}
         },
         "es-trenc/isamu": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/6eafae7f1b3bc41d856973557a2f51598c8241a6/es-trenc-isamu.mp4",
         	"ambient-color": {
         		"from": { "h": 210, "s": 1, "v": 74 },
-        		"to": { "h": 21, "s": 35, "v": 72 }
+        		"to": { "h": 21, "s": 35, "v": 72 },
+        		"selfie-stick": { "h": 20, "s": 45, "v": 30 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/06679f3ebd696e9c42fd13cf9dbdaeffe9b1f873/es-trenc-isamu.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "UFO sighting at es trenc."
         	}
         },
 
@@ -96,51 +111,56 @@
 			"selfie-stick-video-url": "http://embed.wistia.com/deliveries/840a3f6729b1f52f446aae6daec939a3eca4c0c1/arelluf-capas.mp4",
         	"ambient-color": {
         		"from": { "h": 0, "s": 0, "v": 0 },
-        		"to": { "h": 8, "s": 76, "v": 91 }
+        		"to": { "h": 8, "s": 76, "v": 91 },
+        		"selfie-stick": { "h": 8, "s": 76, "v": 91 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/48ff1c58b86b08912681b4fdf3b7547c757766d7/arelluf-capas.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "MEANWHILE IN ARELLUF."
         	}
 		},
         "arelluf/pelotas": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/3dcfd70c7072692ea3a739aef5376b026b04b675/arelluf-pelotas.mp4",
         	"ambient-color": {
         		"from": { "h": 211, "s": 95, "v": 29 },
-        		"to": { "h": 22, "s": 35, "v": 79 }
+        		"to": { "h": 22, "s": 35, "v": 79 },
+        		"selfie-stick": { "h": 233, "s": 35, "v": 10 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/ac16d53c4f9e8fd6930779e237854687dcf241e8/arelluf-pelotas.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "WHAT HAPPENS IN ARELLUF STAYS IN ARELLUF."
         	}
         },
         "arelluf/marta": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/840a3f6729b1f52f446aae6daec939a3eca4c0c1/arelluf-capas.mp4",
         	"ambient-color": {
         		"from": { "h": 200, "s": 57, "v": 81 },
-        		"to": { "h": 201, "s": 100, "v": 69 }
+        		"to": { "h": 201, "s": 100, "v": 69 },
+        		"selfie-stick": { "h": 201, "s": 100, "v": 69 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/5b9d2706100e5ea0d317143e2374d6bd6c9607b1/arelluf-marta.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "BAD TRIP AT THE HOTEL POOL."
         	}
         },
         "arelluf/kobarah": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/2980f14cc8bd9912b14dca46a4cd4a85fa04774c/arelluf-kobaraf.mp4",
         	"ambient-color": {
         		"from": { "h": 264, "s": 69, "v": 41 },
-        		"to": { "h": 344, "s": 56, "v": 100 }
+        		"to": { "h": 344, "s": 56, "v": 100 },
+        		"selfie-stick": { "h": 344, "s": 41, "v": 100 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/62e54eac1d8989ab9de238fa3f7c6d8db4d9de8d/arelluf-kobaraf.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "Haters will say its photoshop."
         	}
         },
 		"arelluf/dub": {
 			"selfie-stick-video-url": "http://embed.wistia.com/deliveries/22b360c8ca399696985313dde99ba83d4ec972b7/arelluf-dub.mp4",
         	"ambient-color": {
         		"from": { "h": 196, "s": 52, "v": 33 },
-        		"to": { "h": 15, "s": 84, "v": 100 }
+        		"to": { "h": 15, "s": 84, "v": 100 },
+        		"selfie-stick": { "h": 15, "s": 84, "v": 100 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/987bdab012979822b818637837cc288414cef8f3/arelluf-dub.mp4",
         	"fact": {
@@ -151,11 +171,12 @@
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/a819c373f9777852f3967ce023bcfb0d9115386f/arelluf-paradise.mp4",
         	"ambient-color": {
         		"from": { "h": 59, "s": 19, "v": 99 },
-        		"to": { "h": 207, "s": 31, "v": 100 }
+        		"to": { "h": 207, "s": 31, "v": 100 },
+        		"selfie-stick": { "h": 183, "s": 71, "v": 64 }
         	},
         	"fun-fact-video-url": "http://embed.wistia.com/deliveries/5dc19726efa7b2e756c80534d43fa600cc61f178/arelluf-paradise.mp4",
         	"fact": {
-        		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE."
+        		"en": "SELFIE ON WATERSLIDE LIKE A BOSS."
         	}
         }
 

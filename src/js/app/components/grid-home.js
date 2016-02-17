@@ -4,6 +4,7 @@ import Utils from 'Utils'
 import AppConstants from 'AppConstants'
 import dom from 'dom-hand'
 import gridPositions from 'grid-positions'
+import mediaCell from 'media-cell'
 
 var grid = (props, parent, onItemEnded)=> {
 
@@ -24,9 +25,16 @@ var grid = (props, parent, onItemEnded)=> {
 	var linesVertical = dom.select(".lines-grid-container .vertical-lines", parent).children
 	var scope;
 	var currentSeat;
-	var items = []
+	var cells = []
 	var totalNum = props.data.grid.length
 	var videos = AppStore.getHomeVideos()
+
+	var seats = [
+		1, 3, 5,
+		7, 9, 11,
+		15, 17,
+		21, 23, 25
+	]
 
 	var vCanvasProps = {
 		autoplay: false,
@@ -35,12 +43,18 @@ var grid = (props, parent, onItemEnded)=> {
 		onEnded: videoEnded
 	}
 
+	var mCell;
+	var counter = 0;
 	for (var i = 0; i < totalNum; i++) {
 		var vParent = gridChildren[i]
-		var videoIndex = i % videos.length
-		var vCanvas = videoCanvas( videos[videoIndex], vCanvasProps )
-		vParent.appendChild(vCanvas.canvas)
-		items[i] = vCanvas
+		cells[i] = undefined
+		for (var j = 0; j < seats.length; j++) {
+			if(i == seats[j]) {
+				mCell = mediaCell(vParent, videos[counter])
+				cells[i] = mCell
+				counter++
+			}
+		}
 	}
 
 	var resize = (gGrid)=> {
@@ -50,14 +64,12 @@ var grid = (props, parent, onItemEnded)=> {
 		var originalVideoSize = AppConstants.HOME_VIDEO_SIZE
 		var blockSize = gGrid.blockSize
 
-		linesGridContainer.style.width = windowW + 'px'
-		linesGridContainer.style.height = windowH + 'px'
 		linesGridContainer.style.position = 'absolute'
 
 		var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
 		
 		var gPos = gGrid.positions
-		var parent, item;
+		var parent, cell;
 		var count = 0
 		var hl, vl;
 		for (var i = 0; i < gPos.length; i++) {
@@ -67,29 +79,21 @@ var grid = (props, parent, onItemEnded)=> {
 			if(i > 0) {
 				hl = scope.lines.horizontal[i-1]
 				hl.style.top = blockSize[1] * i + 'px'
+				hl.style.width = windowW + 'px'
 			}
 
 			for (var j = 0; j < row.length; j++) {
 				
-				parent = scope.children[count]
-				item = scope.items[count]
-
-				// block divs
-				parent.style.position = 'absolute'
-				parent.style.width = blockSize[0] + 'px'
-				parent.style.height = blockSize[1] + 'px'
-				parent.style.left = row[j][0] + 'px'
-				parent.style.top = row[j][1] + 'px'
-
-				item.canvas.width = blockSize[ 0 ]
-				item.canvas.height = blockSize[ 1 ]
-				item.resize(resizeVars.left, resizeVars.top, resizeVars.width, resizeVars.height)
-				item.drawOnce()
-
 				// vertical lines
 				if(i == 0 && j > 0) {
 					vl = scope.lines.vertical[j-1]
 					vl.style.left = blockSize[0] * j + 'px'
+					vl.style.height = windowH + 'px'
+				}
+
+				cell = scope.cells[count]
+				if(cell != undefined) {
+					cell.resize(blockSize, row[j], resizeVars)
 				}
 
 				count++
@@ -101,7 +105,7 @@ var grid = (props, parent, onItemEnded)=> {
 	scope = {
 		el: gridContainer,
 		children: gridChildren,
-		items: items,
+		cells: cells,
 		num: totalNum,
 		positions: [],
 		lines: {
@@ -109,31 +113,40 @@ var grid = (props, parent, onItemEnded)=> {
 			vertical: linesVertical
 		},
 		resize: resize,
+		init: ()=> {
+			for (var i = 0; i < cells.length; i++) {
+				if(cells[i] != undefined) {
+					cells[i].init()
+				}
+			};
+		},
 		transitionInItem: (index, type)=> {
-			var item = scope.items[index]
-			item.seat = index
+			// var item = scope.cells[index]
+			// item.seat = index
 
-			item.canvas.classList.add('enable')
+			// item.canvas.classList.add('enable')
 			
-			if(type == AppConstants.ITEM_VIDEO) {
-				item.play()
-			}else{
-				item.timeout(imageEnded, 2000)
-				item.seek(Utils.Rand(2, 10, 0))
-			}
+			// if(type == AppConstants.ITEM_VIDEO) {
+			// 	item.play()
+			// }else{
+			// 	item.timeout(imageEnded, 2000)
+			// 	item.seek(Utils.Rand(2, 10, 0))
+			// }
 		},
 		transitionOutItem: (item)=> {
-			item.canvas.classList.remove('enable')
+			// item.canvas.classList.remove('enable')
 
-			item.video.currentTime(0)
-			item.pause()
-			setTimeout(()=>{
-				item.drawOnce()
-			}, 500)
+			// item.video.currentTime(0)
+			// item.pause()
+			// setTimeout(()=>{
+			// 	item.drawOnce()
+			// }, 500)
 		},
 		clear: ()=> {
-			for (var i = 0; i < items.length; i++) {
-				items[i].clear()
+			for (var i = 0; i < cells.length; i++) {
+				if(cells[i] != undefined) {
+					cells[i].clear()
+				}
 			};
 		}
 	} 

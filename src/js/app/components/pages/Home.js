@@ -33,10 +33,10 @@ export default class Home extends Page {
 		this.imageTriggerCounter = 0
 
 		this.seats = [
-			0, 1, 2, 3, 4, 5, 6,
-			7, 8, 9, 10, 11, 12, 13,
-			14, 15, 16, 17, 18, 19, 20,
-			23, 24, 25
+			1, 3, 5,
+			7, 9, 11,
+			15, 17,
+			21, 23, 25
 		]
 
 		this.usedSeats = []
@@ -46,6 +46,7 @@ export default class Home extends Page {
 		this.imgCGrid = imageCanvasesGrid(this.element)
 		this.imgCGrid.load(this.props.data.bgurl)
 		this.grid = grid(this.props, this.element, this.onItemEnded)
+		this.grid.init()
 		// this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
 		// this.map = map(this.element, AppConstants.INTERACTIVE)
@@ -99,13 +100,6 @@ export default class Home extends Page {
 		// this.map.resize()
 
 		var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
-
-		// bg
-		// this.bg.style.position = 'absolute'
-		// this.bg.style.width = resizeVarsBg.width + 'px'
-		// this.bg.style.height = resizeVarsBg.height + 'px'
-		// this.bg.style.top = resizeVarsBg.top + 'px'
-		// this.bg.style.left = resizeVarsBg.left + 'px'
 
 		super.resize()
 	}

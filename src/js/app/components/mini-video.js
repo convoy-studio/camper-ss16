@@ -9,6 +9,7 @@ export default (props)=> {
 	var eListeners = []
 
 	var onCanPlay = ()=>{
+		scope.isLoaded = true
 		if(props.autoplay) video.play()
 		if(props.volume != undefined) video.volume = props.volume
 		size.width = video.videoWidth
@@ -125,6 +126,7 @@ export default (props)=> {
 		clear: clear,
 		clearAllEvents: clearAllEvents,
 		isPlaying: props.autoplay || false,
+		isLoaded: false,
 		load: (src, callback)=> {
 			onReadyCallback = callback
 			video.src = src

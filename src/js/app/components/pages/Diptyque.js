@@ -7,6 +7,7 @@ import dom from 'dom-hand'
 import arrowsWrapper from 'arrows-wrapper'
 import AppConstants from 'AppConstants'
 import selfieStick from 'selfie-stick'
+import mainBtns from 'main-diptyque-btns'
 
 export default class Diptyque extends Page {
 	constructor(props) {
@@ -22,13 +23,10 @@ export default class Diptyque extends Page {
 		super(props)
 
 		this.onMouseMove = this.onMouseMove.bind(this)
-		this.onClick = this.onClick.bind(this)
 		this.onArrowMouseEnter = this.onArrowMouseEnter.bind(this)
 		this.onArrowMouseLeave = this.onArrowMouseLeave.bind(this)
-		this.onCharacterMouseOver = this.onCharacterMouseOver.bind(this)
-		this.onCharacterMouseOut = this.onCharacterMouseOut.bind(this)
-		this.onCharacterClicked = this.onCharacterClicked.bind(this)
 		this.onSelfieStickClicked = this.onSelfieStickClicked.bind(this)
+		this.onMainBtnsEventHandler = this.onMainBtnsEventHandler.bind(this)
 	}
 	componentDidMount() {
 
@@ -45,15 +43,14 @@ export default class Diptyque extends Page {
 			this.getImageUrlById('character-bg')
 		)
 
-		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'), this.onCharacterMouseOver, this.onCharacterMouseOut, this.onCharacterClicked)
+		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
 		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data)
 		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
 		this.selfieStick = selfieStick(this.element, this.mouse, this.props.data)
+		this.mainBtns = mainBtns(this.element, this.props.data, this.mouse, this.onMainBtnsEventHandler)
 
 		dom.event.on(this.selfieStick.el, 'click', this.onSelfieStickClicked)
-
 		dom.event.on(window, 'mousemove', this.onMouseMove)
-		dom.event.on(window, 'click', this.onClick)
 
 		TweenMax.set(this.arrowsWrapper.background('left'), { x:-AppConstants.SIDE_EVENT_PADDING })
 		TweenMax.set(this.arrowsWrapper.background('right'), { x:AppConstants.SIDE_EVENT_PADDING })
@@ -89,22 +86,6 @@ export default class Diptyque extends Page {
 		// if(this.mouse.nX > 0.5) AppStore.Parent.style.cursor = 'pointer'
 		// else AppStore.Parent.style.cursor = 'auto'
 
-	}
-	onClick(e) {
-
-	}
-	onCharacterMouseOver() {
-		// console.log('over')
-	}
-	onCharacterMouseOut() {
-		// console.log('out')
-	}
-	onCharacterClicked() {
-		if(this.funFact.isOpen) {
-			this.funFact.close()
-		}else{
-			this.funFact.open()
-		}
 	}
 	onSelfieStickClicked(e) {
 		e.preventDefault()
@@ -142,6 +123,28 @@ export default class Diptyque extends Page {
 
 		this.arrowsWrapper.out(id)
 	}
+	onMainBtnsEventHandler(e) {
+		e.preventDefault()
+		var type = e.type
+		var target = e.currentTarget
+		var id = target.id
+		if(type == 'click' && id == 'fun-fact-btn') {
+			if(this.funFact.isOpen) {
+				this.funFact.close()
+			}else{
+				this.funFact.open()
+			}
+			return
+		}
+		if(type == 'mouseenter') {
+			this.mainBtns.over(id)
+			return
+		}
+		if(type == 'mouseleave') {
+			this.mainBtns.out(id)
+			return
+		}
+	}
 	update() {
 		if(!this.domIsReady) return
 		this.character.update(this.mouse)
@@ -149,6 +152,7 @@ export default class Diptyque extends Page {
 		this.rightPart.update(this.mouse)
 		this.selfieStick.update()
 		this.funFact.update()
+		this.mainBtns.update()
 
 		super.update()
 	}
@@ -162,6 +166,7 @@ export default class Diptyque extends Page {
 		this.funFact.resize()
 		this.arrowsWrapper.resize()
 		this.selfieStick.resize()
+		this.mainBtns.resize()
 
 		this.rightPart.holder.x = (windowW >> 1)
 
@@ -169,7 +174,6 @@ export default class Diptyque extends Page {
 	}
 	componentWillUnmount() {
 		dom.event.off(window, 'mousemove', this.onMouseMove)
-		dom.event.off(window, 'click', this.onClick)
 		dom.event.off(this.selfieStick.el, 'click', this.onSelfieStickClicked)
 		this.leftPart.clear()
 		this.rightPart.clear()
@@ -177,11 +181,13 @@ export default class Diptyque extends Page {
 		this.funFact.clear()
 		this.selfieStick.clear()
 		this.arrowsWrapper.clear()
+		this.mainBtns.clear()
 		this.mouse = null
 		this.leftPart = null
 		this.rightPart = null
 		this.character = null
 		this.arrowsWrapper = null
+		this.mainBtns = null
 		super.componentWillUnmount()
 	}
 }

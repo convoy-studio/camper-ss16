@@ -1,6 +1,6 @@
 import miniVideo from 'mini-video'
 
-var videoCanvas = ( src, props )=> {
+var videoCanvas = ( props )=> {
 
     var scope;
     var intervalId;
@@ -13,8 +13,8 @@ var videoCanvas = ( src, props )=> {
         loop: props.loop
     })
 
-
     var onCanPlay = ()=>{
+        scope.isLoaded = true
         if(props.autoplay) mVideo.play()
         if(dWidth == 0) dWidth = mVideo.width()
         if(dHeight == 0) dHeight = mVideo.height()
@@ -74,9 +74,8 @@ var videoCanvas = ( src, props )=> {
         mVideo.on('ended', ended)
     }
 
-    mVideo.load(src, onCanPlay)
-
     scope = {
+        isLoaded: false,
         canvas: canvas,
         video: mVideo,
         ctx: ctx,
@@ -86,7 +85,13 @@ var videoCanvas = ( src, props )=> {
         seek: seek,
         timeout: timeout,
         resize: resize,
-        clear: clear
+        clear: clear,
+        load: (src, cb)=> {
+            mVideo.load(src, ()=>{
+                onCanPlay()
+                cb()
+            })
+        }
     }
 
     return scope

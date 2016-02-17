@@ -4,17 +4,20 @@ import img from 'img'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import miniVideo from 'mini-video'
+import colorUtils from 'color-utils'
 
 export default (holder, mouse, data)=> {
 
 	var scope;
 	var isReady = false
-	var screenHolderSize = [0, 0], videoHolderSize = [0, 0], topOffset = 0;
+	var screenHolderSize = [0, 0], videoHolderSize = [0, 0], colorifierSize = [0, 0], topOffset = 0;
 	var el = dom.select('.selfie-stick-wrapper', holder)
 	var background = dom.select('.background', el)
 	var screenWrapper = dom.select('.screen-wrapper', el)
-	var screenHolder = dom.select('.screen-holder', el)
-	var videoHolder = dom.select('.video-holder', el)
+	var screenHolder = dom.select('.screen-holder', screenWrapper)
+	var videoHolder = dom.select('.video-holder', screenWrapper)
+	var colorifier = dom.select('.colorifier', screenWrapper)
+	var colorifierSvgPath = dom.select('svg path', colorifier)
 	var selfieStickWrapper = dom.select('.selfie-stick-wrapper', el)
 	var springTo = Utils.SpringTo
 	var translate = Utils.Translate
@@ -30,6 +33,16 @@ export default (holder, mouse, data)=> {
 			friction: 0.7
 		}
 	}
+
+	// check if mix-blend-mode is available
+	if ('mix-blend-mode' in colorifier.style) {
+		colorifier.style['mix-blend-mode'] = 'color'
+	}else{
+		colorifierSvgPath.style['opacity'] = 0.8
+	}
+	
+	var c = data['ambient-color']['selfie-stick']
+	colorifierSvgPath.style['fill'] = '#' + colorUtils.hsvToHex(c.h, c.s, c.v)
 
 	var onVideoEnded = ()=> {
 		scope.close()
@@ -69,8 +82,6 @@ export default (holder, mouse, data)=> {
 			scope.isOpened = false
 		},
 		update: ()=> {
-			var windowW = AppStore.Window.w
-			var windowH = AppStore.Window.h
 
 			if(scope.isOpened) {
 				animation.fposition.x = animation.iposition.x
@@ -90,7 +101,7 @@ export default (holder, mouse, data)=> {
 
 			animation.config.length += (0.01 - animation.config.length) * 0.05
 
-			translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)			
+			translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)
 		},
 		resize: ()=> {
 
@@ -107,9 +118,12 @@ export default (holder, mouse, data)=> {
 
 			screenHolderSize = dom.size(screenHolder)
 			videoHolderSize = dom.size(videoHolder)
+			colorifierSize = dom.size(colorifier)
 			topOffset = (windowW / AppConstants.MEDIA_GLOBAL_W) * 26
 			videoHolder.style.left = (screenHolderSize[0] >> 1) - (videoHolderSize[0] >> 1) + 'px'
 			videoHolder.style.top = topOffset + 'px'
+			colorifier.style.left = (screenHolderSize[0] >> 1) - (colorifierSize[0] * 0.52) + 'px'
+			colorifier.style.top = -0.5 + 'px'
 
 			animation.iposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
 			animation.iposition.y = windowH - (videoHolderSize[1] * 0.35)
