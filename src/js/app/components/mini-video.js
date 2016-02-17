@@ -38,6 +38,30 @@ export default (props)=> {
     	scope.isPlaying = false
     }
 
+    var volume = (val)=> {
+    	if(val) {
+    		scope.el.volume = val
+    	}else{
+    		return scope.el.volume
+    	}
+    }
+
+    var currentTime = (val)=> {
+    	if(val) {
+    		scope.el.currentTime = val
+    	}else{
+    		return scope.el.currentTime
+    	}
+    }
+
+    var width = ()=> {
+    	return scope.el.videoWidth
+    }
+
+    var height = ()=> {
+    	return scope.el.videoHeight	
+    }
+
     var ended = ()=>{
     	if(props.loop) play()
     }
@@ -91,6 +115,10 @@ export default (props)=> {
 		play: play,
 		seek: seek,
 		pause: pause,
+		volume: volume,
+		currentTime: currentTime,
+		width: width,
+		height: height,
 		addTo: addTo,
 		on: on,
 		off: off,
