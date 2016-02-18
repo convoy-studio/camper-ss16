@@ -28,7 +28,11 @@ export default (props)=> {
     }
 
     var seek = (time)=> {
-    	video.currentTime = time
+    	try {
+    		video.currentTime = time
+		}
+		catch(err) {
+		}
     }
 
     var pause = (time)=>{

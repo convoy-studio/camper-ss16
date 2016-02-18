@@ -51,7 +51,7 @@ export default class Diptyque extends Page {
 		)
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
-		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data)
+		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data, this.props)
 		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
 		this.selfieStick = selfieStick(this.element, this.mouse, this.props.data)
 		this.mainBtns = mainBtns(this.element, this.props.data, this.mouse, this.onMainBtnsEventHandler)
@@ -76,8 +76,11 @@ export default class Diptyque extends Page {
 		this.tlIn.from(this.rightPart.bgSprite, 1, { x: this.rightPart.bgSprite.x + 200, ease:Expo.easeOut, force3D:true }, 0.5)
 		this.tlIn.from(this.rightPart.bgSprite.scale, 1, { x: 3, ease:Expo.easeOut, force3D:true }, 0.4)
 
-		this.tlOut.to(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut, force3D:true }, 0)
-		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0)
+		this.tlOut.to(this.arrowsWrapper.left, 0.5, { x: -100, ease:Back.easeOut, force3D:true }, 0)
+		this.tlOut.to(this.arrowsWrapper.right, 0.5, { x: 100, ease:Back.easeOut, force3D:true }, 0)
+		this.tlOut.to(this.selfieStick.el, 0.5, { y: 500, ease:Back.easeOut, force3D:true }, 0)
+		this.tlOut.to(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut, force3D:true }, 0.1)
+		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0.1)
 
 		this.uiInTl = new TimelineMax()
 		this.uiInTl.from(this.arrowsWrapper.left, 1, { x: -100, ease:Back.easeOut, force3D:true }, 0.1)
@@ -200,6 +203,8 @@ export default class Diptyque extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
+		AppStore.off(AppConstants.OPEN_FUN_FACT, this.onOpenFact)
+		AppStore.off(AppConstants.CLOSE_FUN_FACT, this.onCloseFact)
 		dom.event.off(window, 'mousemove', this.onMouseMove)
 		dom.event.off(this.selfieStick.el, 'click', this.onSelfieStickClicked)
 		this.uiInTl.eventCallback("onComplete", null)

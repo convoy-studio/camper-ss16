@@ -37,6 +37,7 @@ class BaseComponent {
 		setTimeout(this.componentDidMount, 0)
 	}
 	remove() {
+		console.log(this.props)
 		this.componentWillUnmount()
 		this.element.remove()
 	}

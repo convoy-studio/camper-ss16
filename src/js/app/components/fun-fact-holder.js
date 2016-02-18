@@ -6,7 +6,7 @@ import dom from 'dom-hand'
 import Utils from 'Utils'
 import colorUtils from 'color-utils'
 
-export default (pxContainer, parent, mouse, data)=> {
+export default (pxContainer, parent, mouse, data, props)=> {
 	var scope;
 	var isReady = false
 	var onCloseTimeout;
@@ -14,6 +14,7 @@ export default (pxContainer, parent, mouse, data)=> {
 	var videoWrapper = dom.select('.video-wrapper', el)
 	var messageWrapper = dom.select('.message-wrapper', el)
 	var messageInner = dom.select('.message-inner', messageWrapper)
+	var pr = props;
 
 	var splitter = new SplitText(messageInner, {type:"words"})
 
@@ -55,8 +56,8 @@ export default (pxContainer, parent, mouse, data)=> {
 
 	var open = ()=> {
 		scope.isOpen = true
-		leftRects.open()
-		rightRects.open()
+		scope.leftRects.open()
+		scope.rightRects.open()
 		var delay = 350
 		setTimeout(()=>leftTl.timeScale(1.5).play(0), delay)
 		setTimeout(()=>rightTl.timeScale(1.5).play(0), delay)
@@ -68,8 +69,8 @@ export default (pxContainer, parent, mouse, data)=> {
 	}
 	var close = ()=> {
 		scope.isOpen = false
-		leftRects.close()
-		rightRects.close()
+		scope.leftRects.close()
+		scope.rightRects.close()
 		var delay = 50
 		setTimeout(()=>leftTl.timeScale(2).reverse(), delay)
 		setTimeout(()=>rightTl.timeScale(2).reverse(), delay)
@@ -82,6 +83,8 @@ export default (pxContainer, parent, mouse, data)=> {
 		isOpen: false,
 		open: open,
 		close: close,
+		leftRects: leftRects,
+		rightRects: rightRects,
 		resize: ()=>{
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
@@ -89,9 +92,9 @@ export default (pxContainer, parent, mouse, data)=> {
 
 			var size = [midWindowW + 1, windowH]
 
-			leftRects.resize(size[0], size[1], AppConstants.TOP)
-			rightRects.resize(size[0], size[1], AppConstants.BOTTOM)
-			rightRects.holder.x = windowW / 2
+			scope.leftRects.resize(size[0], size[1], AppConstants.TOP)
+			scope.rightRects.resize(size[0], size[1], AppConstants.BOTTOM)
+			scope.rightRects.holder.x = windowW / 2
 				
 			// if video isn't ready return
 			if(!isReady) return
@@ -136,11 +139,17 @@ export default (pxContainer, parent, mouse, data)=> {
 			Utils.Translate(cross.el, cross.x, cross.y, 1)
 		},
 		clear: ()=> {
+			dom.event.off(parent, 'click', onCloseFunFact)
+			dom.classes.remove(cross.el, 'active')
 			pxContainer.removeChild(holder)
-			leftRects.clear()
-			leftRects = null
-			rightRects.clear()
-			rightRects = null
+			leftTl.clear()
+			rightTl.clear()
+			scope.leftRects.clear()
+			scope.rightRects.clear()
+			scope.leftRects = null
+			scope.rightRects = null
+			leftTl = null
+			rightTl = null
 			holder = null
 		}
 	}

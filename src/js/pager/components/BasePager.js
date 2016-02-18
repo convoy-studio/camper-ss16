@@ -31,9 +31,7 @@ class BasePager extends BaseComponent {
 	}
 	willPageTransitionIn() {
 		this.switchPagesDivIndex()
-		setTimeout(()=>{
-			if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
-		}, 600)
+		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionIn()
 	}
 	willPageTransitionOut() {
 		if(this.components['new-component'] != undefined) this.components['new-component'].willTransitionOut()
@@ -89,13 +87,6 @@ class BasePager extends BaseComponent {
 		if(this.components[ref] !== undefined) {
 			this.components[ref].remove()
 		}
-	}
-	componentWillUnmount() {
-		PagerStore.off(PagerConstants.PAGE_TRANSITION_IN, this.willPageTransitionIn)
-		PagerStore.off(PagerConstants.PAGE_TRANSITION_OUT, this.willPageTransitionOut)
-		this.unmountComponent('old-component')
-		this.unmountComponent('new-component')
-		super.componentWillUnmount()
 	}
 }
 
