@@ -6,6 +6,7 @@ import funFact from 'fun-fact-holder'
 import dom from 'dom-hand'
 import arrowsWrapper from 'arrows-wrapper'
 import AppConstants from 'AppConstants'
+import AppActions from 'AppActions'
 import selfieStick from 'selfie-stick'
 import mainBtns from 'main-diptyque-btns'
 
@@ -27,8 +28,14 @@ export default class Diptyque extends Page {
 		this.onArrowMouseLeave = this.onArrowMouseLeave.bind(this)
 		this.onSelfieStickClicked = this.onSelfieStickClicked.bind(this)
 		this.onMainBtnsEventHandler = this.onMainBtnsEventHandler.bind(this)
+		this.onOpenFact = this.onOpenFact.bind(this)
+		this.onCloseFact = this.onCloseFact.bind(this)
+		this.uiTransitionInCompleted = this.uiTransitionInCompleted.bind(this)
 	}
 	componentDidMount() {
+
+		AppStore.on(AppConstants.OPEN_FUN_FACT, this.onOpenFact)
+		AppStore.on(AppConstants.CLOSE_FUN_FACT, this.onCloseFact)
 
 		this.mouse = new PIXI.Point()
 		this.mouse.nX = this.mouse.nY = 0
@@ -62,17 +69,32 @@ export default class Diptyque extends Page {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		this.tlIn.from(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut }, 0)
-		this.tlIn.from(this.leftPart.bgSprite, 1, { x: this.leftPart.bgSprite.x - 200, ease:Expo.easeOut }, 0.5)
-		this.tlIn.from(this.leftPart.bgSprite.scale, 1, { x: 3, ease:Expo.easeOut }, 0.4)
-		this.tlIn.from(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut }, 0)
-		this.tlIn.from(this.rightPart.bgSprite, 1, { x: this.rightPart.bgSprite.x + 200, ease:Expo.easeOut }, 0.5)
-		this.tlIn.from(this.rightPart.bgSprite.scale, 1, { x: 3, ease:Expo.easeOut }, 0.4)
+		this.tlIn.from(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut, force3D:true }, 0)
+		this.tlIn.from(this.leftPart.bgSprite, 1, { x: this.leftPart.bgSprite.x - 200, ease:Expo.easeOut, force3D:true }, 0.5)
+		this.tlIn.from(this.leftPart.bgSprite.scale, 1, { x: 3, ease:Expo.easeOut, force3D:true }, 0.4)
+		this.tlIn.from(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0)
+		this.tlIn.from(this.rightPart.bgSprite, 1, { x: this.rightPart.bgSprite.x + 200, ease:Expo.easeOut, force3D:true }, 0.5)
+		this.tlIn.from(this.rightPart.bgSprite.scale, 1, { x: 3, ease:Expo.easeOut, force3D:true }, 0.4)
 
-		this.tlOut.to(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut }, 0)
-		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut }, 0)
+		this.tlOut.to(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut, force3D:true }, 0)
+		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0)
+
+		this.uiInTl = new TimelineMax()
+		this.uiInTl.from(this.arrowsWrapper.left, 1, { x: -100, ease:Back.easeOut, force3D:true }, 0.1)
+		this.uiInTl.from(this.arrowsWrapper.right, 1, { x: 100, ease:Back.easeOut, force3D:true }, 0.1)
+		this.uiInTl.from(this.selfieStick.el, 1, { y: 500, ease:Back.easeOut, force3D:true }, 0.5)
+		this.uiInTl.pause(0)
+		this.uiInTl.eventCallback("onComplete", this.uiTransitionInCompleted);
 
 		super.setupAnimations()
+	}
+	uiTransitionInCompleted() {
+		this.uiInTl.eventCallback("onComplete", null)
+		this.selfieStick.transitionInCompleted()
+	}
+	didTransitionInComplete() {
+		this.uiInTl.timeScale(1.6).play()		
+		super.didTransitionInComplete()
 	}
 	onMouseMove(e) {
 		e.preventDefault()
@@ -82,10 +104,6 @@ export default class Diptyque extends Page {
 		this.mouse.y = e.clientY
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
-
-		// if(this.mouse.nX > 0.5) AppStore.Parent.style.cursor = 'pointer'
-		// else AppStore.Parent.style.cursor = 'auto'
-
 	}
 	onSelfieStickClicked(e) {
 		e.preventDefault()
@@ -93,6 +111,7 @@ export default class Diptyque extends Page {
 			this.selfieStick.close()
 		}else{
 			this.selfieStick.open()
+			this.mainBtns.activate()
 		}
 	}
 	onArrowMouseEnter(e) {
@@ -130,9 +149,9 @@ export default class Diptyque extends Page {
 		var id = target.id
 		if(type == 'click' && id == 'fun-fact-btn') {
 			if(this.funFact.isOpen) {
-				this.funFact.close()
+				AppActions.closeFunFact()
 			}else{
-				this.funFact.open()
+				AppActions.openFunFact()
 			}
 			return
 		}
@@ -144,6 +163,14 @@ export default class Diptyque extends Page {
 			this.mainBtns.out(id)
 			return
 		}
+	}
+	onOpenFact(){
+		this.funFact.open()
+		this.mainBtns.disactivate()
+	}
+	onCloseFact(){
+		this.funFact.close()
+		this.mainBtns.activate()
 	}
 	update() {
 		if(!this.domIsReady) return
@@ -175,6 +202,8 @@ export default class Diptyque extends Page {
 	componentWillUnmount() {
 		dom.event.off(window, 'mousemove', this.onMouseMove)
 		dom.event.off(this.selfieStick.el, 'click', this.onSelfieStickClicked)
+		this.uiInTl.eventCallback("onComplete", null)
+		this.uiInTl.clear()
 		this.leftPart.clear()
 		this.rightPart.clear()
 		this.character.clear()
@@ -182,6 +211,7 @@ export default class Diptyque extends Page {
 		this.selfieStick.clear()
 		this.arrowsWrapper.clear()
 		this.mainBtns.clear()
+		this.uiInTl = null
 		this.mouse = null
 		this.leftPart = null
 		this.rightPart = null

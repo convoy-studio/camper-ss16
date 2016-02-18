@@ -50,6 +50,18 @@ var AppActions = {
             item: child
         })            
     },
+    openFunFact: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.OPEN_FUN_FACT,
+            item: undefined
+        })
+    },
+    closeFunFact: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.CLOSE_FUN_FACT,
+            item: undefined
+        })  
+    }
 }
 
 export default AppActions

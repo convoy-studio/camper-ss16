@@ -21,6 +21,7 @@ export default (holder, mouse, data)=> {
 	var selfieStickWrapper = dom.select('.selfie-stick-wrapper', el)
 	var springTo = Utils.SpringTo
 	var translate = Utils.Translate
+	var tweenIn;
 	var animation = {
 		position: {x: 0, y: 0},
 		fposition: {x: 0, y: 0},
@@ -33,6 +34,8 @@ export default (holder, mouse, data)=> {
 			friction: 0.7
 		}
 	}
+
+	TweenMax.set(el, { rotation: '-1deg', transformOrigin:'50% 100%' })
 
 	// check if mix-blend-mode is available
 	if ('mix-blend-mode' in colorifier.style) {
@@ -57,6 +60,9 @@ export default (holder, mouse, data)=> {
 	var stickImg = img(AppStore.baseMediaPath() + 'image/selfiestick.png', ()=> {
 		dom.tree.add(screenHolder, stickImg)
 		mVideo.load(videoSrc, ()=> {
+			if(tweenIn != undefined){
+				tweenIn.play()
+			}
 			isReady = true
 			scope.resize()
 		})
@@ -104,7 +110,6 @@ export default (holder, mouse, data)=> {
 			translate(screenWrapper, animation.position.x, animation.position.y + animation.velocity.y, 1)
 		},
 		resize: ()=> {
-
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 				
@@ -122,8 +127,8 @@ export default (holder, mouse, data)=> {
 			topOffset = (windowW / AppConstants.MEDIA_GLOBAL_W) * 26
 			videoHolder.style.left = (screenHolderSize[0] >> 1) - (videoHolderSize[0] >> 1) + 'px'
 			videoHolder.style.top = topOffset + 'px'
-			colorifier.style.left = (screenHolderSize[0] >> 1) - (colorifierSize[0] * 0.52) + 'px'
-			colorifier.style.top = -0.5 + 'px'
+			colorifier.style.left = (screenHolderSize[0] >> 1) - (colorifierSize[0] * 0.58) + 'px'
+			colorifier.style.top = -0.7 + 'px'
 
 			animation.iposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)
 			animation.iposition.y = windowH - (videoHolderSize[1] * 0.35)
@@ -131,10 +136,16 @@ export default (holder, mouse, data)=> {
 			animation.position.y = animation.iposition.y
 
 		},
+		transitionInCompleted: ()=> {
+			if(!isReady) {
+				tweenIn = TweenMax.from(el, 0.6, { y: 500, paused:true, ease:Back.easeOut, force3D:true })
+			}
+		},
 		clear: ()=> {
 			mVideo.clear()
 			mVideo = null
 			animation = null
+			tweenIn = null
 		}
 	}
 

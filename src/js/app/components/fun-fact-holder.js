@@ -65,7 +65,6 @@ export default (pxContainer, parent, mouse, data)=> {
 		onCloseTimeout = setTimeout(()=>dom.event.on(parent, 'click', onCloseFunFact), delay+200)
 		parent.style.cursor = 'none'
 		dom.classes.add(cross.el, 'active')
-		
 	}
 	var close = ()=> {
 		scope.isOpen = false
@@ -87,7 +86,6 @@ export default (pxContainer, parent, mouse, data)=> {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 			var midWindowW = (windowW >> 1)
-
 
 			var size = [midWindowW + 1, windowH]
 
@@ -124,6 +122,8 @@ export default (pxContainer, parent, mouse, data)=> {
 
 				leftTl.pause(0)
 				rightTl.pause(0)
+				messageWrapper.style.opacity = 1
+				videoWrapper.style.opacity = 1
 			}, 5)
 
 		},

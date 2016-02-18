@@ -28,6 +28,8 @@ export default (parent, onMouseEnter, onMouseLeave)=> {
 	dom.event.on(arrows.right.el, 'mouseleave', onMouseLeave)
 
 	scope = {
+		left: arrows.left.el,
+		right: arrows.right.el,
 		background: (dir)=> {
 			return arrows[dir].background
 		},
