@@ -1,4 +1,5 @@
 @include font-face('FuturaMedium', '../font/futura/FuturaBT-Medium');
+@include font-face('Hobo', '../font/hobo/HoboStd');
 
 #font-charger {
 	left: -10000px;
@@ -7,5 +8,8 @@
 	@include opacity(0);
 	#FuturaMedium {
 		font-family: 'FuturaMedium';
+	}
+	#Hobo {
+		font-family: 'Hobo';
 	}
 }

@@ -147,25 +147,30 @@ a {
 }
 .map-wrapper {
     position: absolute;
-    z-index: 2;
+    z-index: 4;
     .titles-wrapper {
         color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-family: Hobo;
+        font-size: 13px;
         & > div {
+            white-space: nowrap;
             position: absolute;
+            z-index: 2;
         }
     }
     g#map-dots {
-        path {
+        circle {
+            position: absolute;
             cursor: pointer;
-            fill: $green;
-            stroke-width: 2;
-            @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform fill stroke-width);
+            fill: white;
+            @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform);
         }
-        path:hover {
+        circle:hover {
             fill: black;
-            stroke: white;
-            stroke-width: 1;
-            @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform fill stroke-width);
+            @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform);
         }
         .dot-path {
             &.animate {

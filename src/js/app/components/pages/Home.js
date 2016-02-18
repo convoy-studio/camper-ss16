@@ -49,7 +49,7 @@ export default class Home extends Page {
 		this.grid.init()
 		// this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
-		// this.map = map(this.element, AppConstants.INTERACTIVE)
+		this.map = map(this.element, AppConstants.INTERACTIVE)
 
 		super.componentDidMount()
 	}
@@ -97,7 +97,7 @@ export default class Home extends Page {
 		this.imgCGrid.resize(gGrid)
 		// this.bottomTexts.resize()
 		this.aroundBorder.resize()
-		// this.map.resize()
+		this.map.resize()
 
 		var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 
@@ -106,7 +106,7 @@ export default class Home extends Page {
 	componentWillUnmount() {
 		this.aroundBorder.clear()
 		this.grid.clear()
-		// this.map.clear()
+		this.map.clear()
 
 		this.grid = null
 		this.bottomTexts = null

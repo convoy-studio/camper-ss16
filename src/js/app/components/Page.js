@@ -22,7 +22,9 @@ export default class Page extends BasePage {
 		super.willTransitionIn()
 	}
 	willTransitionOut() {
-		AppStore.Canvas.style['z-index'] = 4
+		setTimeout(()=> {
+			AppStore.Canvas.style['z-index'] = 4
+		}, 500)
 		super.willTransitionOut()
 	}
 	didTransitionInComplete() {

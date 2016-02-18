@@ -31,8 +31,8 @@ var grid = (props, parent, onItemEnded)=> {
 
 	var seats = [
 		1, 3, 5,
-		7, 9, 11,
-		15, 17,
+		7, 9, 11, 13,
+		15, 
 		21, 23, 25
 	]
 

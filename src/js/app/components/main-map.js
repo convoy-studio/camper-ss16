@@ -62,9 +62,9 @@ export default (parent, type) => {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 
-			var mapW = 693, mapH = 645
+			var mapW = 693, mapH = 500
 			var mapSize = []
-			var resizeVars = Utils.ResizePositionProportionally(windowW*0.47, windowH*0.47, mapW, mapH)
+			var resizeVars = Utils.ResizePositionProportionally(windowW*0.35, windowH*0.35, mapW, mapH)
 			mapSize[0] = mapW * resizeVars.scale
 			mapSize[1] = mapH * resizeVars.scale
 
@@ -73,11 +73,11 @@ export default (parent, type) => {
 			el.style.left = (windowW >> 1) - (mapSize[0] >> 1) - 40 + 'px'
 			el.style.top = (windowH >> 1) - (mapSize[1] >> 1) + 'px'
 
-			titles['deia'].el.style.left = titlePosX(mapSize[0], 740) + 'px'
-			titles['deia'].el.style.top = titlePosY(mapSize[1], 250) + 'px'
-			titles['es-trenc'].el.style.left = titlePosX(mapSize[0], 1280) + 'px'
-			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 690) + 'px'
-			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 360) + 'px'
+			titles['deia'].el.style.left = titlePosX(mapSize[0], 750) + 'px'
+			titles['deia'].el.style.top = titlePosY(mapSize[1], 260) + 'px'
+			titles['es-trenc'].el.style.left = titlePosX(mapSize[0], 1250) + 'px'
+			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 650) + 'px'
+			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 426) + 'px'
 			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 400) + 'px'
 		},
 		highlightDots: (oldHash, newHash)=> {
@@ -125,18 +125,18 @@ export default (parent, type) => {
 				currentPaths[1].style.opacity = 0
 			}
 
-			stepEl.style.opacity = 1
+			// stepEl.style.opacity = 1
 
-			// find total length of shape
-			stepTotalLen = fillLine.getTotalLength()
-			fillLine.style['stroke-dashoffset'] = 0
-			fillLine.style['stroke-dasharray'] = stepTotalLen
+			// // find total length of shape
+			// stepTotalLen = fillLine.getTotalLength()
+			// fillLine.style['stroke-dashoffset'] = 0
+			// fillLine.style['stroke-dasharray'] = stepTotalLen
 			
-			// start animation of dashed line
-			dom.classes.add(dashedLine, 'animate')
+			// // start animation of dashed line
+			// dom.classes.add(dashedLine, 'animate')
 
-			// start animation
-			dom.classes.add(fillLine, 'animate')
+			// // start animation
+			// dom.classes.add(fillLine, 'animate')
 
 		},
 		resetHighlight: ()=> {
@@ -153,9 +153,9 @@ export default (parent, type) => {
 			}, 0)
 		},
 		updateProgress: (progress)=> {
-			if(fillLine == undefined) return
-			var dashOffset = (progress / 1) * stepTotalLen
-			fillLine.style['stroke-dashoffset'] = dashOffset
+			// if(fillLine == undefined) return
+			// var dashOffset = (progress / 1) * stepTotalLen
+			// fillLine.style['stroke-dashoffset'] = dashOffset
 		},
 		clear: ()=> {
 			if(type == AppConstants.INTERACTIVE) {
