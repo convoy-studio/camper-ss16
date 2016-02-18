@@ -148,13 +148,22 @@ a {
 .map-wrapper {
     position: absolute;
     z-index: 4;
+    svg text {
+        fill: white;
+        font-family: FuturaMedium;
+        font-size: 20px;
+        letter-spacing: 0.85px;
+        line-height: 15.85px;
+    }
     .titles-wrapper {
         color: white;
         position: absolute;
         top: 0;
         left: 0;
-        font-family: Hobo;
-        font-size: 13px;
+        font-family: FuturaMedium;
+        font-size: 14px;
+        letter-spacing: 0.85px;
+        line-height: 15.85px;
         & > div {
             white-space: nowrap;
             position: absolute;
@@ -168,10 +177,10 @@ a {
             fill: white;
             @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform);
         }
-        circle:hover {
-            fill: black;
-            @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform);
-        }
+        // circle:hover {
+        //     fill: black;
+        //     @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform);
+        // }
         .dot-path {
             &.animate {
                 @keyframes bounce {

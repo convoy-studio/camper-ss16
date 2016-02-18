@@ -1,14 +1,18 @@
 import AppStore from 'AppStore'
 import dom from 'dom-hand'
 import miniVideo from 'mini-video'
+import Router from 'Router'
+import AppActions from 'AppActions'
 
-export default (container, videoUrl)=> {
+export default (container, front, videoUrl)=> {
 
 	var scope;
 	var splitter = videoUrl.split('/')
 	var name = splitter[splitter.length-1].split('.')[0]
+	var nameSplit = name.split('-')
+	var nameParts = nameSplit.length == 3 ? [nameSplit[0]+'-'+nameSplit[1], nameSplit[2]] : nameSplit
 	var imgId = 'home-video-shots/' + name
-	var mCanvas = miniVideo({
+	var mVideo = miniVideo({
 		loop: true,
 		autoplay: false
 	})
@@ -17,22 +21,25 @@ export default (container, videoUrl)=> {
 
 	var onMouseEnter = (e)=> {
 		e.preventDefault()
-		if(mCanvas.isLoaded) {
-			mCanvas.play(0)
+		AppActions.cellMouseEnter(nameParts)
+		if(mVideo.isLoaded) {
+			mVideo.play(0)
 		}else{
-			mCanvas.load(videoUrl, ()=> {
-				mCanvas.play()
+			mVideo.load(videoUrl, ()=> {
+				mVideo.play()
 			})
 		}
 	}
 
 	var onMouseLeave = (e)=> {
 		e.preventDefault()
-		mCanvas.pause()
+		AppActions.cellMouseLeave(nameParts)
+		mVideo.pause(0)
 	}
 
 	var onClick = (e)=> {
 		e.preventDefault()
+		Router.setHash(nameParts[0] + '/' + nameParts[1])
 	}
 
 	var init = ()=> {
@@ -40,11 +47,11 @@ export default (container, videoUrl)=> {
 		img = document.createElement('img')
 		img.src = imgUrl
 		dom.tree.add(container, img)
-		dom.tree.add(container, mCanvas.el)
+		dom.tree.add(container, mVideo.el)
 
-		dom.event.on(container, 'mouseenter', onMouseEnter)
-		dom.event.on(container, 'mouseleave', onMouseLeave)
-		dom.event.on(container, 'click', onClick)
+		dom.event.on(front, 'mouseenter', onMouseEnter)
+		dom.event.on(front, 'mouseleave', onMouseLeave)
+		dom.event.on(front, 'click', onClick)
 
 		scope.isReady = true
 	}
@@ -60,31 +67,28 @@ export default (container, videoUrl)=> {
 
 			if(!scope.isReady) return
 
-			container.style.width = size[0] + 'px'
-			container.style.height = size[1] + 'px'
-			container.style.left = position[0] + 'px'
-			container.style.top = position[1] + 'px'
+			container.style.width = front.style.width = size[0] + 'px'
+			container.style.height = front.style.height = size[1] + 'px'
+			container.style.left = front.style.left = position[0] + 'px'
+			container.style.top = front.style.top = position[1] + 'px'
 
 			img.style.width = resizeVars.width + 'px'
 			img.style.height = resizeVars.height + 'px'
 			img.style.left = resizeVars.left + 'px'
 			img.style.top = resizeVars.top + 'px'
 
-			// img.style.width = resizeVars.width + 'px'
-			// img.style.height = resizeVars.height + 'px'
-			// img.style.left = resizeVars.left + 'px'
-			// img.style.top = resizeVars.top + 'px'
-
-			mCanvas.el.style.width = resizeVars.width + 'px'
-			mCanvas.el.style.height = resizeVars.height + 'px'
-			mCanvas.el.style.left = resizeVars.left + 'px'
-			mCanvas.el.style.top = resizeVars.top + 'px'
+			mVideo.el.style.width = resizeVars.width + 'px'
+			mVideo.el.style.height = resizeVars.height + 'px'
+			mVideo.el.style.left = resizeVars.left + 'px'
+			mVideo.el.style.top = resizeVars.top + 'px'
 
 		},
 		clear: ()=> {
-			dom.event.off(container, 'mouseenter', onMouseEnter)
-			dom.event.off(container, 'mouseleave', onMouseLeave)
-			dom.event.off(container, 'click', onClick)
+			mVideo.clear()
+			dom.event.off(front, 'mouseenter', onMouseEnter)
+			dom.event.off(front, 'mouseleave', onMouseLeave)
+			dom.event.off(front, 'click', onClick)
+			mVideo = null
 		}
 	}
 

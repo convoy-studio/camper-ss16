@@ -4,6 +4,7 @@ export default (props)=> {
 
 	var scope;
 	var video = document.createElement('video');
+	video.preload = ""
 	var onReadyCallback;
 	var size = { width: 0, height: 0 }
 	var eListeners = []
@@ -109,6 +110,13 @@ export default (props)=> {
 	    video = null
     }
 
+    var addSourceToVideo = (element, src, type)=> {
+	    var source = document.createElement('source');
+	    source.src = src;
+	    source.type = type;
+	    dom.tree.add(element, source)
+	}
+	
 	video.addEventListener('canplay', onCanPlay);
     video.addEventListener('canplaythrough', onCanPlay);
     video.addEventListener('ended', ended);
@@ -133,7 +141,7 @@ export default (props)=> {
 		isLoaded: false,
 		load: (src, callback)=> {
 			onReadyCallback = callback
-			video.src = src
+			addSourceToVideo(video, src, 'video/mp4')
 		}
 	}
 

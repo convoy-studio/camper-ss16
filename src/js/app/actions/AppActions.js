@@ -61,6 +61,18 @@ var AppActions = {
             actionType: AppConstants.CLOSE_FUN_FACT,
             item: undefined
         })  
+    },
+    cellMouseEnter: function(id) {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.CELL_MOUSE_ENTER,
+            item: id
+        }) 
+    },
+    cellMouseLeave: function(id) {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.CELL_MOUSE_LEAVE,
+            item: id
+        })
     }
 }
 

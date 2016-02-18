@@ -1,18 +1,10 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import Utils from 'Utils'
-import Router from 'Router'
 import dom from 'dom-hand'
 import template from 'Map_hbs'
 
 export default (parent, type) => {
-
-	var onDotClick = (e)=> {
-		e.preventDefault()
-		var id = e.target.id
-		var parentId = e.target.getAttribute('data-parent-id')
-		Router.setHash(parentId + '/' + id)
-	}
 
 	// render map
 	var mapWrapper = dom.select('.map-wrapper', parent)
@@ -30,12 +22,32 @@ export default (parent, type) => {
 	var titlesWrapper = dom.select('.titles-wrapper', el)
 	var mapdots = dom.select.all('#map-dots .dot-path', el)
 	var footsteps = dom.select.all('#footsteps g', el)
+	var currentDot;
 
-	if(type == AppConstants.INTERACTIVE) {
+	var findDotById = (parent, child)=> {
 		for (var i = 0; i < mapdots.length; i++) {
 			var dot = mapdots[i]
-			dom.event.on(dot, 'click', onDotClick)
-		};
+			if(parent == dot.id) {
+				if(child == dot.getAttribute('data-parent-id')) {
+					return dot
+				}
+			}
+		}
+	}
+
+	var onCellMouseEnter = (item)=> {
+		currentDot = findDotById(item[1], item[0])
+		dom.classes.add(currentDot, 'animate')
+	}
+	var onCellMouseLeave = (item)=> {
+		dom.classes.remove(currentDot, 'animate')
+	}
+
+	if(type == AppConstants.INTERACTIVE) {
+
+		AppStore.on(AppConstants.CELL_MOUSE_ENTER, onCellMouseEnter)
+		AppStore.on(AppConstants.CELL_MOUSE_LEAVE, onCellMouseLeave)
+
 	}
 
 	var titles = {
@@ -73,12 +85,12 @@ export default (parent, type) => {
 			el.style.left = (windowW >> 1) - (mapSize[0] >> 1) - 40 + 'px'
 			el.style.top = (windowH >> 1) - (mapSize[1] >> 1) + 'px'
 
-			titles['deia'].el.style.left = titlePosX(mapSize[0], 750) + 'px'
-			titles['deia'].el.style.top = titlePosY(mapSize[1], 260) + 'px'
+			titles['deia'].el.style.left = titlePosX(mapSize[0], 800) + 'px'
+			titles['deia'].el.style.top = titlePosY(mapSize[1], 330) + 'px'
 			titles['es-trenc'].el.style.left = titlePosX(mapSize[0], 1250) + 'px'
-			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 650) + 'px'
+			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 850) + 'px'
 			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 426) + 'px'
-			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 400) + 'px'
+			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 500) + 'px'
 		},
 		highlightDots: (oldHash, newHash)=> {
 			selectedDots = []
@@ -159,10 +171,8 @@ export default (parent, type) => {
 		},
 		clear: ()=> {
 			if(type == AppConstants.INTERACTIVE) {
-				for (var i = 0; i < mapdots.length; i++) {
-					var dot = mapdots[i]
-					dot.removeEventListener('click', onDotClick)
-				};
+				AppStore.off(AppConstants.CELL_MOUSE_ENTER, onCellMouseEnter)
+				AppStore.off(AppConstants.CELL_MOUSE_LEAVE, onCellMouseLeave)
 			}
 			titles = null
 		}

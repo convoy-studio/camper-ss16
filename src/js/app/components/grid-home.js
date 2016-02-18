@@ -19,8 +19,10 @@ var grid = (props, parent, onItemEnded)=> {
 	}
 
 	var gridContainer = dom.select(".grid-container", parent)
+	var gridFrontContainer = dom.select(".grid-front-container", parent)
 	var linesGridContainer = dom.select('.lines-grid-container', parent)
 	var gridChildren = gridContainer.children
+	var gridFrontChildren = gridFrontContainer.children
 	var linesHorizontal = dom.select(".lines-grid-container .horizontal-lines", parent).children
 	var linesVertical = dom.select(".lines-grid-container .vertical-lines", parent).children
 	var scope;
@@ -47,10 +49,11 @@ var grid = (props, parent, onItemEnded)=> {
 	var counter = 0;
 	for (var i = 0; i < totalNum; i++) {
 		var vParent = gridChildren[i]
+		var fParent = gridFrontChildren[i]
 		cells[i] = undefined
 		for (var j = 0; j < seats.length; j++) {
 			if(i == seats[j]) {
-				mCell = mediaCell(vParent, videos[counter])
+				mCell = mediaCell(vParent, fParent, videos[counter])
 				cells[i] = mCell
 				counter++
 			}

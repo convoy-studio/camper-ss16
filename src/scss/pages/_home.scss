@@ -6,7 +6,7 @@
 		z-index: 2;
 		top: 0;
 		& > div {
-			cursor: pointer;
+			// cursor: pointer;
 			position: absolute;
 			overflow: hidden;
 			img {
@@ -27,6 +27,16 @@
 		// 		@include anim(.3s, 0s, $easeOutBack, scaleX(1) scaleY(1) scaleZ(1), 50%, 50%, transform opacity);
 		// 	}
 		// }
+	}
+	.grid-front-container {
+		position: absolute;
+		z-index: 6;
+		top: 0;
+		left: 0;
+		& > div {
+			cursor: pointer;
+			position: absolute;
+		}
 	}
 	.grid-background-container {
 		position: absolute;

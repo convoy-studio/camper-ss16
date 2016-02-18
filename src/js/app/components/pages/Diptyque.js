@@ -166,6 +166,10 @@ export default class Diptyque extends Page {
 			this.mainBtns.out(id)
 			return
 		}
+		if(type == 'click' && id == 'shop-btn') {
+			window.open(this.props.data['shop-url'], '_blank')
+			return
+		}
 	}
 	onOpenFact(){
 		this.funFact.open()
