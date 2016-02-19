@@ -67,35 +67,77 @@
 		font-size: 12px;
 		letter-spacing: 0.73px;
 		line-height: $globalLineHeight;
-
-		& > div {
+		position: absolute;
+		z-index: 4;
+		top: 0;
+		left: 0;
+		.titles-wrapper {
+			color: $green;
 			position: absolute;
+			$margin: 6px;
+			width: 100%;
+			text-align: center;
+			top: 40px;
+			z-index: 1;
+			li {
+				cursor: pointer;
+				font-family: Hobo;
+				font-size: 12px;
+				letter-spacing: 1.35px;
+				line-height: 15.85px;
+				margin: 0 $margin;
+				@include inline-block;
+			}
 		}
-		.left-text, .right-text {
+		.texts-wrapper {
+			position: absolute;
+			@extend .full;
+			text-align: center;
 			& > div {
+				color: $green;
+				font-family: FuturaMedium;
+				font-size: 14px;
+				letter-spacing: 0.87px;
+				line-height: 18px;
 				position: absolute;
-			}
-			.front-wrapper {
-				z-index: 1;
-				padding: 0px 40px;
-			}
-			.background {
-				@extend .full;
-				background-color: #fff;
+				padding: 0 10%;
 			}
 		}
-		.right-text {
-			.front-wrapper {
-				padding: 0;
+		.background {
+			@extend .full;
+			background-color: #fff;
+			// border: 2px solid $green;
+		}
+		#social-wrapper{
+			position: absolute;
+			$w: 18px;
+			$margin: 6px;
+			li {
+				width: $w;
+				height: $w;
+				margin: 0 $margin;
+				@include inline-block;
+				position: relative;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				svg > * {
+					fill: $green;
+				}
 			}
-			.vision {
-				font-size: 15.12px;
-				text-align: center;
-				margin-bottom: 14px;
+			li.twitter {
+				width: $w + 3px;
+				height: $w + 3px;
 			}
-			.logo {
-				width: 230px;
+			li.facebook {
+				width: $w - 1px;
+				height: $w - 1px;
+				top: -1px;
 			}
+			// @include anim(.4s, .0s, $easeInOutExpo, translateX(0px), 50%, 50%);
+			// &.hide {
+			// 	@include anim(.4s, .0s, $easeInOutExpo, translateX(80px), 50%, 50%);
+			// }
 		}
 	}
 	.around-border-container {

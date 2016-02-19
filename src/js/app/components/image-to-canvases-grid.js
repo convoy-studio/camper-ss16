@@ -36,6 +36,7 @@ export default (container)=> {
 	}
 
 	scope = {
+		el: el,
 		resize: (gGrid)=> {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h

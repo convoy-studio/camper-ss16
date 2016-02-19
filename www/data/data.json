@@ -38,8 +38,12 @@
 	"routing": {
 		"/": {
 			"texts": {
-				"txt_a": "Back to the roots. Inspirations for our new collection comes from the balearic island of Mallorca, the founding ground of Camper. Visit three different spots of the island - Deia, Es Trenc and Arelluf - as interpreted by creative director, Romain Kremer.",
-				"a_vision": "A VISION OF"
+				"en": {
+					"generic": "Back to the roots. Inspirations for our new collection comes from the balearic island of mallorca, the founding ground of Camper. Visit three different spots of the island - Deia, Es Trenc and Arelluf - as interpreted by creative director, Romain Kremer.",
+					"deia": "The village of Deia has long attracted both retirees and rock stars with its picturesque scenery and chill vibe. The seemingly sleepy countryside has a bohemian spirit unique to this mountain enclave. #DeiaByCamper",
+					"arelluf": "The fist-pumping ragers of Arenal and unbridled debauchery of Magaluf meet in Arelluf, an imagined but epic part of our vision of this beloved island. It’s all neon and non-stop partying in the summer sun – quite literally a hot mess. #ArellufByCamper",
+					"es-trenc": "This coastal wilderness boasts breathtaking beaches and a serene atmosphere. The seaside has an untamed yet peaceful feeling that is both inspiring and soothing. #EsTrencByCamper"
+				}
 			},
 			"assets": [
 				"background.jpg",
@@ -152,7 +156,7 @@
         	"shop-url": "http://www.camper.com/int/men/shoes/pelotas_arelluf_ss2016"
         },
         "arelluf/marta": {
-        	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/840a3f6729b1f52f446aae6daec939a3eca4c0c1/arelluf-marta.mp4",
+        	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/9b9471dcbe1f94ff7b3508841f68ff15be192ee4/arelluf-marta.mp4",
         	"ambient-color": {
         		"from": { "h": 200, "s": 57, "v": 81 },
         		"to": { "h": 201, "s": 100, "v": 69 },

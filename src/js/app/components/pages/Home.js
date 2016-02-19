@@ -13,13 +13,21 @@ import gridPositions from 'grid-positions'
 export default class Home extends Page {
 	constructor(props) {
 		var content = AppStore.pageContent()
+		var generaInfos = AppStore.generalInfos()
+		var texts = content.texts[AppStore.lang()]
+		props.data.facebookUrl = generaInfos['facebook_url']
+		props.data.twitterUrl = generaInfos['twitter_url']
+		props.data.instagramUrl = generaInfos['instagram_url']
 		props.data.grid = []
 		props.data.grid.length = 28
 		props.data['lines-grid'] = { horizontal: [], vertical: [] }
 		props.data['lines-grid'].horizontal.length = 3
 		props.data['lines-grid'].vertical.length = 6
-		props.data['text_a'] = content.texts['txt_a']
-		props.data['a_vision'] = content.texts['a_vision']
+		props.data['generic'] = texts.generic
+		props.data['deia-txt'] = texts['deia']
+		props.data['arelluf-txt'] = texts['arelluf']
+		props.data['es-trenc-txt'] = texts['es-trenc']
+
 		super(props)
 		var bgUrl = this.getImageUrlById('background')
 		this.props.data.bgurl = bgUrl
@@ -41,17 +49,32 @@ export default class Home extends Page {
 
 		this.usedSeats = []
 
-		// this.bg = dom.select('.bg-wrapper', this.element)
-
 		this.imgCGrid = imageCanvasesGrid(this.element)
 		this.imgCGrid.load(this.props.data.bgurl)
 		this.grid = grid(this.props, this.element, this.onItemEnded)
 		this.grid.init()
-		// this.bottomTexts = bottomTexts(this.element)
+		this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
 		this.map = map(this.element, AppConstants.INTERACTIVE)
 
 		super.componentDidMount()
+	}
+	setupAnimations() {
+		var windowW = AppStore.Window.w
+
+		this.tlIn.from(this.aroundBorder.el, 1, { opacity:0, ease:Expo.easeInOut }, 0)
+		this.tlIn.from(this.aroundBorder.letters, 1, { opacity:0, ease:Expo.easeInOut }, 0)
+		this.tlIn.from(this.imgCGrid.el, 1, { opacity:0, ease:Expo.easeInOut }, 0)
+		this.tlIn.staggerFrom(this.grid.children, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.1)
+		this.tlIn.staggerFrom(this.grid.lines.horizontal, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
+		this.tlIn.staggerFrom(this.grid.lines.vertical, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
+		this.tlIn.from(this.bottomTexts.el, 1, { x:windowW * 0.4, ease:Expo.easeInOut }, 0.5)
+
+		super.setupAnimations()
+	}
+	didTransitionInComplete() {
+		this.bottomTexts.openTxtById('generic')
+		super.didTransitionInComplete()
 	}
 	triggerNewItem(type) {
 		var index = this.seats[Utils.Rand(0, this.seats.length - 1, 0)]
@@ -95,7 +118,7 @@ export default class Home extends Page {
 
 		this.grid.resize(gGrid)
 		this.imgCGrid.resize(gGrid)
-		// this.bottomTexts.resize()
+		this.bottomTexts.resize()
 		this.aroundBorder.resize()
 		this.map.resize()
 
@@ -107,6 +130,7 @@ export default class Home extends Page {
 		this.aroundBorder.clear()
 		this.grid.clear()
 		this.map.clear()
+		this.bottomTexts.clear()
 
 		this.grid = null
 		this.bottomTexts = null

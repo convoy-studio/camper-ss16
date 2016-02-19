@@ -153,7 +153,7 @@ export default (parent, type) => {
 		},
 		resetHighlight: ()=> {
 			setTimeout(()=>{
-				stepEl.style.opacity = 0
+				// stepEl.style.opacity = 0
 				currentPaths[1].style.opacity = 1
 				currentPaths[2].style.opacity = 1
 				dom.classes.remove(fillLine, 'animate')

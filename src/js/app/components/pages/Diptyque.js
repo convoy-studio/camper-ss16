@@ -83,8 +83,8 @@ export default class Diptyque extends Page {
 		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0.1)
 
 		this.uiInTl = new TimelineMax()
-		this.uiInTl.from(this.arrowsWrapper.left, 1, { x: -100, ease:Back.easeOut, force3D:true }, 0.1)
-		this.uiInTl.from(this.arrowsWrapper.right, 1, { x: 100, ease:Back.easeOut, force3D:true }, 0.1)
+		this.uiInTl.from(this.arrowsWrapper.left, 1, { x: -100, ease:Expo.easeOut, force3D:true }, 0.1)
+		this.uiInTl.from(this.arrowsWrapper.right, 1, { x: 100, ease:Expo.easeOut, force3D:true }, 0.1)
 		this.uiInTl.from(this.selfieStick.el, 1, { y: 500, ease:Back.easeOut, force3D:true }, 0.5)
 		this.uiInTl.pause(0)
 		this.uiInTl.eventCallback("onComplete", this.uiTransitionInCompleted);

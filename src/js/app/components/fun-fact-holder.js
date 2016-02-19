@@ -5,6 +5,7 @@ import miniVideo from 'mini-video'
 import dom from 'dom-hand'
 import Utils from 'Utils'
 import colorUtils from 'color-utils'
+import AppActions from 'AppActions'
 
 export default (pxContainer, parent, mouse, data, props)=> {
 	var scope;
@@ -51,10 +52,11 @@ export default (pxContainer, parent, mouse, data, props)=> {
 
 	var onCloseFunFact = ()=> {
 		if(!scope.isOpen) return
-		scope.close()
+		AppActions.closeFunFact()
 	}
 
 	var open = ()=> {
+		el.style['z-index'] = 29
 		scope.isOpen = true
 		scope.leftRects.open()
 		scope.rightRects.open()
@@ -68,6 +70,7 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		dom.classes.add(cross.el, 'active')
 	}
 	var close = ()=> {
+		el.style['z-index'] = 27
 		scope.isOpen = false
 		scope.leftRects.close()
 		scope.rightRects.close()

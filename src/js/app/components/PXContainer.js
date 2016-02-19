@@ -32,16 +32,16 @@ export default class PXContainer {
 		// this.drawBackground(this.currentColor)
 		// this.stage.addChild(this.background)
 
-		this.stats = new Stats();
-		// this.stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
+		// this.stats = new Stats();
+		// // this.stats.setMode( 1 ); // 0: fps, 1: ms, 2: mb
 
-		// align top-left
-		this.stats.domElement.style.position = 'absolute';
-		this.stats.domElement.style.left = '0px';
-		this.stats.domElement.style.top = '0px';
-		this.stats.domElement.style['z-index'] = 999999
+		// // align top-left
+		// this.stats.domElement.style.position = 'absolute';
+		// this.stats.domElement.style.left = '0px';
+		// this.stats.domElement.style.top = '0px';
+		// this.stats.domElement.style['z-index'] = 999999
 
-		document.body.appendChild( this.stats.domElement );
+		// document.body.appendChild( this.stats.domElement );
 
 	}
 	drawBackground(color) {

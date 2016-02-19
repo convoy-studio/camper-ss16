@@ -49,6 +49,12 @@ html {
     position: absolute;
 }
 
+#preloader {
+    position: absolute;
+    z-index: 6;
+    @include opacity(0);
+}
+
 #px-container {
     position: absolute;
     z-index: 5;

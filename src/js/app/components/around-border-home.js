@@ -19,6 +19,8 @@ var aroundBorder = (parent)=> {
 	var rightLetters = dom.select('.right', $lettersContainer).children
 
 	scope = {
+		el: $container,
+		letters: $lettersContainer,
 		resize: ()=> {
 			var borderSize = 10
 			var windowW = AppStore.Window.w

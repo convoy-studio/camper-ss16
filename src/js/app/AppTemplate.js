@@ -20,8 +20,6 @@ class AppTemplate extends BaseComponent {
 		super.componentWillMount()
 	}
 	componentDidMount() {
-		
-		
 		this.frontContainer = new FrontContainer()
 		this.frontContainer.render('#app-template')
 

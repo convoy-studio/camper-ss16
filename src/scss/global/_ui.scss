@@ -149,19 +149,19 @@ a {
     position: absolute;
     z-index: 4;
     svg text {
-        fill: white;
+        fill: $green;
         font-family: FuturaMedium;
         font-size: 20px;
         letter-spacing: 0.85px;
         line-height: 15.85px;
     }
     .titles-wrapper {
-        color: white;
+        color: $green;
         position: absolute;
         top: 0;
         left: 0;
-        font-family: FuturaMedium;
-        font-size: 14px;
+        font-family: Hobo;
+        font-size: 13px;
         letter-spacing: 0.85px;
         line-height: 15.85px;
         & > div {
@@ -173,25 +173,20 @@ a {
     g#map-dots {
         circle {
             position: absolute;
-            cursor: pointer;
-            fill: white;
+            fill: $green;
             @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform);
         }
-        // circle:hover {
-        //     fill: black;
-        //     @include anim(.6s, .0s, $easeOutElastic, scale(3.6), 50%, 50%, transform);
-        // }
         .dot-path {
             &.animate {
                 @keyframes bounce {
                     from {
-                        fill: $green;
+                        fill: white;
                         stroke-width: 2;
                         @include anim(.2s, .0s, $easeOutExpo, scale(1.6), 50%, 50%, transform fill stroke-width);
                     }
                     to {
-                        fill: $green;
-                        stroke: white;
+                        fill: white;
+                        stroke: $green;
                         stroke-width: 2;
                         @include anim(.2s, .0s, $easeOutElastic, scale(3), 50%, 50%, transform fill stroke-width);
                     }

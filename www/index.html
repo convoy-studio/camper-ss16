@@ -61,6 +61,15 @@
     <div id="Hobo">test</div>
 </div>
 
+<div id="preloader">
+    
+    <svg width="900" height="350" viewBox="0 0 1097.917 496.527">
+        <path id="motionPath" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="7.0195,7.0195" d="M10.417,464.527c0,0,333.333,29.861,627.083-81.944s426.39-345.833,426.39-345.833"/>
+        <g transform="translate(-10, -10)"><path id="plane" d="M18.817,11.193L9.577,0.5L8.043,0.507l3.875,10.713l-7.665,0.03L0.409,7.434 l0.048,12.26l3.815-3.846l7.665-0.031L8.147,26.562l1.533-0.007l9.154-10.765l7.687-0.03c1.257-0.005,2.273-1.028,2.268-2.287c-0.005-1.302-1.028-2.317-2.286-2.311L18.817,11.193z"/></g>
+    </svg>
+
+</div>
+
 <!--[if lt IE 7 ]> <div id="app-container" class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <div id="app-container" class="ie7"> <![endif]-->
 <!--[if IE 8 ]>    <div id="app-container" class="ie8"> <![endif]-->
@@ -79,8 +88,8 @@
 <script src="lib/browser-polyfill.min.js"></script>
 <script src="lib/es5-shim.min.js"></script>
 <script src="lib/preloadjs-0.6.2.min.js"></script>
-<script src="lib/modernizr.js"></script>
 <script src="lib/stats.min.js"></script>
+<script src="lib/MorphSVGPlugin.min.js"></script>
 <script src="lib/SplitText.min.js"></script>
 <!--[if !(IE 7|IE 8)]><!--><script src="lib/pixi.min.js"></script><!--<![endif]-->
 <!--[if lte IE 8]>
@@ -89,7 +98,6 @@
     (function(){var style=document.createStyleSheet(),select=function(selector,maxCount){var all=document.all,l=all.length,i,resultSet=[];style.addRule(selector,"foo:bar");for(i=0;i<l;i+=1){if(all[i].currentStyle.foo==="bar"){resultSet.push(all[i]);if(resultSet.length>maxCount){break}}}style.removeRule(0);return resultSet};if(document.querySelectorAll||document.querySelector){return}document.querySelectorAll=function(selector){return select(selector,Infinity)};document.querySelector=function(selector){return select(selector,1)[0]||null}}());
     </script>
 <![endif]-->
-<script src="//fast.wistia.net/assets/external/E-v1.js" async></script>
 <script type="text/javascript" src="vendor/vendor.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 

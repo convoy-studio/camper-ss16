@@ -5,37 +5,113 @@ import dom from 'dom-hand'
 var bottomTexts = (parent)=> {
 
 	var scope;
-	var bottomTextsContainer = dom.select('.bottom-texts-container', parent)
-	var leftBlock = dom.select('.left-text', bottomTextsContainer)
-	var rightBlock = dom.select('.right-text', bottomTextsContainer)
-	var leftFront = dom.select('.front-wrapper', leftBlock)
-	var rightFront = dom.select('.front-wrapper', rightBlock)
+	var el = dom.select('.bottom-texts-container', parent)
+	var socialWrapper = dom.select('#social-wrapper', el)
+	var titlesWrapper = dom.select('.titles-wrapper', el)
+	var allTitles = dom.select.all('li', titlesWrapper)
+	var textsEls = dom.select.all('.texts-wrapper .txt', el)
+	var texts = []
+	var ids = ['generic', 'deia', 'arelluf', 'es-trenc']
+	var oldTl;
+	var firstTime = true
+
+	var onTitleClicked = (e)=> {
+		e.preventDefault()
+		var id = e.currentTarget.id
+		scope.openTxtById(id)
+	}
+
+	var i, t;
+	for (var i = 0; i < allTitles.length; i++) {
+		t = allTitles[i]
+		dom.event.on(t, 'click', onTitleClicked)
+	}
+
+	var id, e, i, split;
+	for (i = 0; i < ids.length; i++) {
+		id = ids[i]
+		e = textsEls[i]
+		
+		texts[i] = {
+			id: id,
+			el: e
+		}
+	}
 
 	var resize = ()=> {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		var blockSize = [ windowW / AppConstants.GRID_ROWS, windowH / AppConstants.GRID_COLUMNS ]
+		var blockSize = [ windowW / AppConstants.GRID_COLUMNS, windowH / AppConstants.GRID_ROWS ]
 
-		leftBlock.style.width = blockSize[0] * 2 + 'px'
-		leftBlock.style.height = blockSize[1] + 'px'
-		rightBlock.style.width = blockSize[0] * 2 + 'px'
-		rightBlock.style.height = blockSize[1] + 'px'
+		var padding = 40
+		var borderAround
+		blockSize[0] *= 2 
+		blockSize[1] *= 2 
+		blockSize[0] -= padding
+		blockSize[1] -= padding
+		var innerBlockSize = [blockSize[0] - 10, blockSize[1] - 10]
+		var textW = innerBlockSize[0] * 0.8
 
-		leftBlock.style.top = windowH - blockSize[1] + 'px'
-		rightBlock.style.top = windowH - blockSize[1] + 'px'
-		rightBlock.style.left = windowW - (blockSize[0] * 2) + 'px'
+		el.style.width = innerBlockSize[0] + 'px'
+		el.style.height = innerBlockSize[1] + 'px'
+		el.style.left = windowW - blockSize[0] - (padding >> 1) + 'px'
+		el.style.top = windowH - blockSize[1] - (padding >> 1) + 'px'
 
-		setTimeout(()=>{
-			leftFront.style.top = (blockSize[1] >> 1) - (leftFront.clientHeight >> 1) + 'px'
-			rightFront.style.top = (blockSize[1] >> 1) - (rightFront.clientHeight >> 1) + 'px'
-			rightFront.style.left = ((blockSize[0] << 1) >> 1) - (rightFront.clientWidth >> 1) + 'px'
-		})
+		setTimeout(()=> {
+			var socialSize = dom.size(socialWrapper)
+			var titlesSize = dom.size(titlesWrapper)
+
+			var i, text, s, split, tl;
+			for (i = 0; i < texts.length; i++) {
+				text = texts[i]
+				s = dom.size(text.el)
+				text.el.style.top = (innerBlockSize[1] >> 1) - (s[1] >> 1) + 'px'
+				split = new SplitText(text.el, {type:"lines"}).lines
+				if(text.tl != undefined) text.tl.clear()
+				tl = new TimelineMax()
+				tl.staggerFrom(split, 1, { y:5, scaleY:2, opacity:0, force3D:true, transformOrigin:'50% 0%', ease:Expo.easeOut }, 0.05, 0)
+				tl.pause(0)
+				text.tl = tl
+			}
+
+			socialWrapper.style.left = (innerBlockSize[0] >> 1) - (socialSize[0] >> 1) + 'px'
+			socialWrapper.style.top = innerBlockSize[1] - socialSize[1] - (padding >> 1) + 'px'
+
+		}, 0)
 
 	}
 
 	scope = {
-		resize: resize
+		el: el,
+		resize: resize,
+		openTxtById: (id)=> {
+			var i, text;
+			for (i = 0; i < texts.length; i++) {
+				text = texts[i]
+				if(id == text.id) {
+					if(oldTl != undefined) oldTl.timeScale(2.6).reverse()
+					setTimeout(()=>text.tl.timeScale(1.2).play(), 600)
+					oldTl = text.tl
+					return
+				}
+			}
+		},
+		clear: ()=> {
+			var i, t;
+			for (i = 0; i < allTitles.length; i++) {
+				t = allTitles[i]
+				dom.event.off(t, 'click', onTitleClicked)
+			}
+			for (i = 0; i < texts.length; i++) {
+				t = texts[i]
+				t.tl.clear()
+			}
+			ids = null
+			texts = null
+			allTitles = null
+			textsEls = null
+		}
 	}
 
 	return scope
