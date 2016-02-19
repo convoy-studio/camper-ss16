@@ -55,8 +55,12 @@ export default (pxContainer, bgUrl)=> {
 		clear: ()=> {
 			pxContainer.removeChild(holder)
 			holder.removeChild(mask)
+			holder.addChild(sprite)
 			mask.clear()
 			sprite.destroy()
+			holder = null
+			mask = null
+			sprite = null
 		}
 	}
 	return scope

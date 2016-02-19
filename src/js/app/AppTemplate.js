@@ -20,6 +20,7 @@ class AppTemplate extends BaseComponent {
 		super.componentWillMount()
 	}
 	componentDidMount() {
+
 		this.frontContainer = new FrontContainer()
 		this.frontContainer.render('#app-template')
 
@@ -43,6 +44,8 @@ class AppTemplate extends BaseComponent {
 		super.componentDidMount()
 	}
 	onReady() {
+		AppStore.FrontBlock = document.getElementById('front-block')
+
 		AppStore.on(AppConstants.WINDOW_RESIZE, this.resize)
 		this.animate()
 	}

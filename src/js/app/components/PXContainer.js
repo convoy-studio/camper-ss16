@@ -61,7 +61,7 @@ export default class PXContainer {
 		this.stage.removeChild(child)
 	}
 	update() {
-		this.stats.update()
+		// this.stats.update()
 	    this.renderer.render(this.stage)
 	}
 	resize() {

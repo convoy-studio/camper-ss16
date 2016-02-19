@@ -3,6 +3,7 @@ import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
 import PxHelper from 'PxHelper'
+import dom from 'dom-hand'
 
 export default class Page extends BasePage {
 	constructor(props) {

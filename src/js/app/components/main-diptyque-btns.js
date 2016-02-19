@@ -53,7 +53,7 @@ export default (container, data, mouse, onMouseEventsHandler)=> {
 		}
 	}
 
-	var shopImg = img('image/shop.png', ()=> {
+	var shopImg = img('image/shop/'+AppStore.lang()+'.png', ()=> {
 		shopAnim = animParams(shopBtn, shopImg, shopImgWrapper)
 		buttons['shop-btn'].anim = shopAnim
 		shopSize = [shopImg.width, shopImg.height]

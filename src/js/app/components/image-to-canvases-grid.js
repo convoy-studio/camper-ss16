@@ -15,6 +15,11 @@ export default (container)=> {
 	var grid;
 	var image;
 	var isReady = false
+	var anim = {
+		x:0,
+		y:0
+	}
+
 
 	// var items = []
 	// for (var i = 0; i < canvases.length; i++) {
@@ -85,6 +90,13 @@ export default (container)=> {
 			// 		count++
 			// 	}
 			// }
+		},
+		update: (mouse)=> {
+
+			anim.x += (((mouse.nX-0.5)*40) - anim.x) * 0.05
+			anim.y += (((mouse.nY-0.5)*20) - anim.y) * 0.05
+			Utils.Translate(image, anim.x, anim.y, 1)
+
 		},
 		load: (url, cb)=> {
 			onImgLoadedCallback = cb

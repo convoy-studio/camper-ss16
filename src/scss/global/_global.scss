@@ -55,6 +55,15 @@ html {
     @include opacity(0);
 }
 
+#front-block {
+    @extend .full;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    visibility: hidden;
+}
+
 #px-container {
     position: absolute;
     z-index: 5;

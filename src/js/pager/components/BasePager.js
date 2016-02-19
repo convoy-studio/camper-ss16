@@ -40,6 +40,8 @@ class BasePager extends BaseComponent {
 		PagerActions.onTransitionOutComplete()
 	}
 	didPageTransitionInComplete() {
+		AppStore.Parent.style.cursor = 'auto'
+		AppStore.FrontBlock.style.visibility = 'hidden';
 		PagerActions.onTransitionInComplete()
 		PagerActions.pageTransitionDidFinish()
 	}
@@ -73,6 +75,7 @@ class BasePager extends BaseComponent {
 		page.render(id, el, template, props.data)
 		this.components['old-component'] = this.components['new-component']
 		this.components['new-component'] = page
+
 		if(PagerStore.pageTransitionState === PagerConstants.PAGE_TRANSITION_IN_PROGRESS) {
 			this.components['old-component'].forceUnmount()
 		}

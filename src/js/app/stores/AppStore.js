@@ -207,6 +207,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     },
     Parent: undefined,
     Canvas: undefined,
+    FrontBlock: undefined,
     Orientation: AppConstants.LANDSCAPE,
     Detector: {
         isMobile: undefined

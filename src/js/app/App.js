@@ -22,7 +22,7 @@ class App {
 		AppStore.Preloader = new Preloader()
 
 		var p = document.getElementById('preloader')
-		p.style.opacity = 1
+		
 		var plane = dom.select('#plane', p)
 		var path = MorphSVGPlugin.pathDataToBezier("#motionPath")
 		var tl = new TimelineMax()
@@ -58,6 +58,7 @@ class App {
 			var el = this.loaderAnim.el
 			el.style.left = (windowW >> 1) - (size[0]) + 'px'
 			el.style.top = (windowH >> 1) + (size[1] * 0) + 'px'
+			this.loaderAnim.el.style.opacity = 1
 		}, 0)
 	}
 	loadMainAssets() {
@@ -72,6 +73,7 @@ class App {
 		setTimeout(()=> {
 			TweenMax.to(this.loaderAnim.el, 0.5, { opacity:0, force3D:true, ease:Expo.easeOut })
 			setTimeout(()=> {
+				AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
 				this.loaderAnim.tl.clear()
 				this.loaderAnim = null
 				AppActions.pageHasherChanged()	

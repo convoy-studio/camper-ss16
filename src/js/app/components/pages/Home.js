@@ -34,11 +34,15 @@ export default class Home extends Page {
 
 		this.triggerNewItem = this.triggerNewItem.bind(this)
 		this.onItemEnded = this.onItemEnded.bind(this)
+		this.onMouseMove = this.onMouseMove.bind(this)
 	}
 	componentDidMount() {
 		this.lastGridItemIndex;
 		this.videoTriggerCounter = 200
 		this.imageTriggerCounter = 0
+
+		this.mouse = new PIXI.Point()
+		this.mouse.nX = this.mouse.nY = 0
 
 		this.seats = [
 			1, 3, 5,
@@ -56,6 +60,8 @@ export default class Home extends Page {
 		this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
 		this.map = map(this.element, AppConstants.INTERACTIVE)
+
+		dom.event.on(window, 'mousemove', this.onMouseMove)
 
 		super.componentDidMount()
 	}
@@ -96,18 +102,28 @@ export default class Home extends Page {
 			}
 		};
 	}
+	onMouseMove(e) {
+		e.preventDefault()
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+		this.mouse.x = e.clientX
+		this.mouse.y = e.clientY
+		this.mouse.nX = (e.clientX / windowW) * 1
+		this.mouse.nY = (e.clientY / windowH) * 1
+	}
 	update() {
 		if(!this.transitionInCompleted) return
-		this.videoTriggerCounter += 1
-		if(this.videoTriggerCounter > 800) {
-			this.videoTriggerCounter = 0
-			this.triggerNewItem(AppConstants.ITEM_VIDEO)
-		}
-		this.imageTriggerCounter += 1
-		if(this.imageTriggerCounter > 30) {
-			this.imageTriggerCounter = 0
-			this.triggerNewItem(AppConstants.ITEM_IMAGE)
-		}
+		// this.videoTriggerCounter += 1
+		// if(this.videoTriggerCounter > 800) {
+		// 	this.videoTriggerCounter = 0
+		// 	this.triggerNewItem(AppConstants.ITEM_VIDEO)
+		// }
+		// this.imageTriggerCounter += 1
+		// if(this.imageTriggerCounter > 30) {
+		// 	this.imageTriggerCounter = 0
+		// 	this.triggerNewItem(AppConstants.ITEM_IMAGE)
+		// }
+		this.imgCGrid.update(this.mouse)
 		super.update()
 	}
 	resize() {
@@ -127,6 +143,8 @@ export default class Home extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
+		dom.event.off(window, 'mousemove', this.onMouseMove)
+
 		this.aroundBorder.clear()
 		this.grid.clear()
 		this.map.clear()

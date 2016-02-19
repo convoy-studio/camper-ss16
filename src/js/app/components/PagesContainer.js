@@ -24,6 +24,10 @@ class PagesContainer extends BasePager {
 		super.componentDidMount()
 	}
 	didHasherChange() {
+
+		AppStore.Parent.style.cursor = 'wait'
+		AppStore.FrontBlock.style.visibility = 'visible';
+		
 		var newHash = Router.getNewHash()
 		var oldHash = Router.getOldHash()
 		if(oldHash == undefined) {
