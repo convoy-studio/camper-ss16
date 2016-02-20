@@ -1,0 +1,30 @@
+<div class="feed">
+	
+	{{#each feed}}
+		<div data-id="{{id}}" data-person="{{person}}" class="post">
+    		<div class="top-wrapper">
+    			<div class="left">
+    				<img src="{{icon}}">
+    				<div class="title">{{person}}</div>
+    			</div>
+    			<div class="clear-float"></div>
+    			<div class="right">
+    				<div class="time">{{time}}</div>
+    			</div>
+    		</div>
+    		<div class="media-wrapper">
+    			{{#if media.is-video}}
+					<div class='video-wrapper'>
+						<div class="wistia_embed wistia_async_{{media.url}} playerColor=1eea79 playbar=false smallPlayButton=false volumeControl=false fullscreenButton=false" style="width:100%; height:100%; min-height: 350px;">&nbsp;</div>
+					</div>
+				{{/if}}
+				{{^if media.is-video}}
+					<div class='image-wrapper'>
+						<img src="{{media.url}}">
+					</div>
+				{{/if}}
+    		</div>
+		</div>
+  	{{/each}}
+
+</div>

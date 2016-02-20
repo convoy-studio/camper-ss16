@@ -21,7 +21,12 @@ button {
     text-indent: 0;
     cursor: pointer;
 }
-img { border:0; }
+img { 
+    border:0;
+    border-style:none;
+    outline : none;
+    border: none;
+}
 svg, svg * {
     backface-visibility: hidden;
 }
@@ -179,19 +184,21 @@ a {
         .dot-path {
             &.animate {
                 @keyframes bounce {
-                    from {
-                        fill: white;
-                        stroke-width: 2;
-                        @include anim(.2s, .0s, $easeOutExpo, scale(1.6), 50%, 50%, transform fill stroke-width);
+                    0% {
+                        // fill: white;
+                        // stroke-width: 2;
+                        @include transform(scale(1.6));
+                        // @include anim(.2s, .0s, $easeOutExpo, scale(1.6), 50%, 50%, transform fill stroke-width);
                     }
-                    to {
-                        fill: white;
-                        stroke: $green;
-                        stroke-width: 2;
-                        @include anim(.2s, .0s, $easeOutElastic, scale(3), 50%, 50%, transform fill stroke-width);
+                    100% {
+                        // fill: white;
+                        // stroke: $green;
+                        // stroke-width: 2;
+                        @include transform(scale(3));
+                        // @include anim(.2s, .0s, $easeOutElastic, scale(3), 50%, 50%, transform fill stroke-width);
                     }
                 }
-                animation: bounce .1s $easeInOutExpo alternate infinite;
+                animation: bounce .15s $easeInOutExpo alternate infinite;
             }
         }
     }

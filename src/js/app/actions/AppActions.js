@@ -73,6 +73,18 @@ var AppActions = {
             actionType: AppConstants.CELL_MOUSE_LEAVE,
             item: id
         })
+    },
+    openFeed: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.OPEN_FEED,
+            item: undefined
+        })  
+    },
+    openGrid: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.OPEN_GRID,
+            item: undefined
+        })  
     }
 }
 

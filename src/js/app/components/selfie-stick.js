@@ -39,7 +39,12 @@ export default (holder, mouse, data)=> {
 
 	// check if mix-blend-mode is available
 	if ('mix-blend-mode' in colorifier.style) {
-		colorifier.style['mix-blend-mode'] = 'color'
+		// check if safari because color filter isn't working on it
+		if(AppStore.Detector.isSafari) {
+			colorifier.style['mix-blend-mode'] = 'multiply'
+		}else{
+			colorifier.style['mix-blend-mode'] = 'color'
+		}
 	}else{
 		colorifierSvgPath.style['opacity'] = 0.8
 	}

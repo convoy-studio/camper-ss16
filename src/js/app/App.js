@@ -74,6 +74,7 @@ class App {
 			TweenMax.to(this.loaderAnim.el, 0.5, { opacity:0, force3D:true, ease:Expo.easeOut })
 			setTimeout(()=> {
 				AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
+				dom.tree.remove(this.loaderAnim.el)
 				this.loaderAnim.tl.clear()
 				this.loaderAnim = null
 				AppActions.pageHasherChanged()	

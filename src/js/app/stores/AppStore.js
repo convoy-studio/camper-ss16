@@ -186,6 +186,9 @@ var AppStore = assign({}, EventEmitter2.prototype, {
     getPreviewUrlByHash: function(hash) {
         return AppStore.baseMediaPath() + 'image/diptyque/' + hash + '/preview.gif'
     },
+    getFeed: function() {
+        return data.feed
+    },
     lang: function() {
         var defaultLang = true
         for (var i = 0; i < data.langs.length; i++) {

@@ -139,7 +139,7 @@ var tasks = {
             })))
             .pipe(postcss([
                 autoprefixer({
-                    browsers: 'last 2 versions, Explorer >= 9, > 5%'
+                    browsers: 'last 2 versions, Explorer >= 7, > 5%'
                 })
             ]))
             // we don't serve the source files

@@ -1,0 +1,125 @@
+html.mobile {
+
+	overflow-y: auto;
+
+	$headerH: 50px;
+
+	header {
+		z-index: 9999999;
+		width: 100%;
+		height: $headerH;
+		background-color: $green;
+		position: fixed;
+		.logo {
+			$size: 70px;
+			width: $size;
+			height: $size;
+			position: absolute;
+			left: 50%;
+			margin-left: -$size/2;
+			top: 50%;
+			margin-top: -10px;
+		}
+	}
+
+	footer {
+		z-index: 9999999;
+		$footerH: 60px;
+		width: 100%;
+		height: $footerH;
+		background-color: $green;
+		position: fixed;
+		bottom: 0;
+		text-transform: uppercase;
+		ul {
+			li {
+				cursor: pointer;
+				$fontSize: 11px;
+				font-size: $fontSize;
+				color: #000000;
+				letter-spacing: 0.91px;
+				line-height: 21.7px;
+				border: 1px solid white;
+				height: $footerH;
+				position: absolute;
+				.wrapper {
+					width: 100%;
+					height: 100%;
+					text-align: center;
+					position: absolute;
+					top: 50%;
+					margin-top: -$fontSize;
+				}
+				&.com {
+					background-color: black;
+					.wrapper {
+						$s: 50px;
+						width: $s;
+						height: $s;
+						left: 50%;
+						margin-left: -$s/2;
+						position: absolute;
+					}
+				}
+			}
+		}
+	}
+
+	.feed {
+		padding-top: $headerH;
+		width: 100%;
+
+		.post {
+			width: 100%;
+			.media-wrapper {
+
+			}
+			.top-wrapper {
+				text-transform: uppercase;
+				$h: 52px;
+				width: 100%;
+				height: $h;
+				position: relative;
+				& > div {
+					@extend .full;
+					position: absolute;
+				}
+				.left {
+					width: 50%;
+					img {
+						position: relative;
+    					top: 11px;
+						$s: 32px;
+						float: left;
+						width: $s;
+						height: $s;
+    					margin-right: 10px;
+    					margin-left: 10px;
+					}
+					.title {
+						float: left;
+						position: relative;
+    					top: 20px;
+						font-size: 12px;
+						letter-spacing: 0.66px;
+						line-height: 15.85px;
+					}
+				}
+				.right {
+					left: 50%;
+					width: 50%;
+					color: $green;
+					.time {
+						font-size: 10px;
+						letter-spacing: 0.49px;
+						line-height: 15.85px;
+						position: absolute;
+						top: 20px;
+						right: 10px;
+					}
+				}
+			}
+		}
+	}
+
+}
