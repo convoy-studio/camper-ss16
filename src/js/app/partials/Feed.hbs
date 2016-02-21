@@ -24,7 +24,20 @@
 					</div>
 				{{/if}}
     		</div>
+    		<div class="icons-wrapper">
+    			
+    		</div>
+    		<div class="comments-wrapper">
+    			{{#comments}}
+    				<div class="comment">
+	    				<div class="name">{{person-name}}</div>
+	    				<div class="text">{{{person-text}}}</div>
+    				</div>
+    			{{/comments}}
+    		</div>
 		</div>
   	{{/each}}
+
+  	<div class="bottom-part"></div>
 
 </div>

@@ -64,15 +64,38 @@ html.mobile {
 			}
 		}
 	}
-
+	.bottom-part {
+		height: $headerH*2;
+	}
 	.feed {
 		padding-top: $headerH;
 		width: 100%;
 
 		.post {
 			width: 100%;
+			margin-bottom: 10px;
 			.media-wrapper {
 
+			}
+			.icons-wrapper {
+				height: $headerH;
+			}
+			.comments-wrapper {
+				padding: 0 10px;
+				.comment {
+					font-size: 12px;
+					letter-spacing: 0.64px;
+					line-height: 15.85px;
+					.name {
+						text-transform: uppercase;
+						color: black;
+						float: left;
+						padding-right: 4%;
+					}
+					.text {
+						color: $green;
+					}
+				}
 			}
 			.top-wrapper {
 				text-transform: uppercase;

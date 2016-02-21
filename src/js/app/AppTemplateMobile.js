@@ -39,7 +39,7 @@ class AppTemplateMobile extends BaseComponent {
 			}
 			if(feed.media.type == 'video' && feed.media.id == 'fun-fact') {
 				feed.media['is-video'] = true
-				feed.media.url = scope['wistia-character-id']
+				feed.media.url = scope['wistia-fun-id']
 			}
 			if(feed.media.type == 'video' && feed.media.id == 'character') {
 				feed.media['is-video'] = true

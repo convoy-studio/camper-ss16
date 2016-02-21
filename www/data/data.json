@@ -95,8 +95,8 @@
 			},
 			"comments": [
 				{
-					"person": "mateo",
-					"text": "Estreno Campers para nuestro weekend en Deia @Marta"
+					"person-name": "mateo",
+					"person-text": "Estreno Campers para nuestro weekend en Deia @Marta"
 				}
 			]
 		},{
@@ -109,8 +109,8 @@
 			},
 			"comments": [
 				{
-					"person": "mateo",
-					"text": "Profile pic? maybe? maybe baby?"
+					"person-name": "mateo",
+					"person-text": "Profile pic? maybe? maybe baby?"
 				}
 			]
 		},{
@@ -123,8 +123,8 @@
 			},
 			"comments": [
 				{
-					"person": "mateo",
-					"text": "Me being me… Hehe :) <span>#camper</span>"
+					"person-name": "mateo",
+					"person-text": "Me being me… Hehe :) <span>#camper</span>"
 				}
 			]
 		},{
@@ -137,8 +137,11 @@
 			},
 			"comments": [
 				{
-					"person": "marta",
-					"text": "Porque esa cara de emo?? @Mateo lolll"
+					"person-name": "marta",
+					"person-text": "Porque esa cara de emo?? @Mateo lolll"
+				},{
+					"person-name": "marta",
+					"person-text": "Porque esa cara de emo?? @Mateo lolll"
 				}
 			]
 		}
@@ -214,7 +217,8 @@
         		"en": "Breaking up on a text message is not very deia"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/dub_deia_ss2016",
-        	"wistia-character-id": "azjc2jh62j"
+        	"wistia-character-id": "azjc2jh62j",
+        	"wistia-fun-id": "6p32lyvdqo"
         },
         "deia/mateo": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/e424889ac026f70e544af03035e7187f34941705/deia-mateo.mp4",
@@ -228,7 +232,8 @@
         		"en": "buys an atelier at deia.<br>starts career as an artist"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/mateo_deia_ss2016",
-        	"wistia-character-id": "6het1knik3"
+        	"wistia-character-id": "6het1knik3",
+        	"wistia-fun-id": "6p32lyvdqo"
         },
 
         "deia/marta": {
@@ -243,7 +248,8 @@
         		"en": "buys an atelier at deia.<br>starts career as an artist"
         	},
         	"shop-url": "http://www.camper.com/int/women/shoes/marta_deia_ss2016",
-        	"wistia-character-id": "toro2pe469"
+        	"wistia-character-id": "toro2pe469",
+        	"wistia-fun-id": "bgkx7gmk13"
         },
 
         "es-trenc/beluga": {
@@ -258,7 +264,8 @@
         		"en": "ES TRENC PARTY BOY"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/beluga_es_trenc_ss2016",
-        	"wistia-character-id": "fo112zh7pv"
+        	"wistia-character-id": "fo112zh7pv",
+        	"wistia-fun-id": "97bvpzhtnb"
         },
         "es-trenc/isamu": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/6eafae7f1b3bc41d856973557a2f51598c8241a6/es-trenc-isamu.mp4",
@@ -272,7 +279,8 @@
         		"en": "UFO sighting at es trenc"
         	},
         	"shop-url": "http://www.camper.com/int/women/shoes/isamu_es_trenc_ss2016",
-        	"wistia-character-id": "1xsabq7yey"
+        	"wistia-character-id": "1xsabq7yey",
+        	"wistia-fun-id": "xnlnyee83o"
         },
 
 		"arelluf/capas": {
@@ -287,7 +295,8 @@
         		"en": "MEANWHILE IN ARELLUF"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/capas_arelluf_ss2016",
-        	"wistia-character-id": "z7or68da1v"
+        	"wistia-character-id": "z7or68da1v",
+        	"wistia-fun-id": "kfc0u1vvhp"
 		},
         "arelluf/pelotas": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/3dcfd70c7072692ea3a739aef5376b026b04b675/arelluf-pelotas.mp4",
@@ -301,7 +310,8 @@
         		"en": "WHAT HAPPENS IN ARELLUF STAYS IN ARELLUF"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/pelotas_arelluf_ss2016",
-        	"wistia-character-id": "f9do2qlwnj"
+        	"wistia-character-id": "f9do2qlwnj",
+        	"wistia-fun-id": "kyjkbwcn6v"
         },
         "arelluf/marta": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/9b9471dcbe1f94ff7b3508841f68ff15be192ee4/arelluf-marta.mp4",
@@ -315,7 +325,8 @@
         		"en": "BAD TRIP AT THE HOTEL POOL"
         	},
         	"shop-url": "http://www.camper.com/int/women/shoes/marta_arelluf_ss2016",
-        	"wistia-character-id": "ppkmfdl5jq"
+        	"wistia-character-id": "ppkmfdl5jq",
+        	"wistia-fun-id": "r64ij2ojh3"
         },
         "arelluf/kobarah": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/2980f14cc8bd9912b14dca46a4cd4a85fa04774c/arelluf-kobarah.mp4",
@@ -329,7 +340,8 @@
         		"en": "Haters will say its photoshop"
         	},
         	"shop-url": "http://www.camper.com/int/women/shoes/kobarah_arelluf_ss2016",
-        	"wistia-character-id": "9xe5vjzybo"
+        	"wistia-character-id": "9xe5vjzybo",
+        	"wistia-fun-id": "o79dqphpsl"
         },
 		"arelluf/dub": {
 			"selfie-stick-video-url": "http://embed.wistia.com/deliveries/22b360c8ca399696985313dde99ba83d4ec972b7/arelluf-dub.mp4",
@@ -343,7 +355,8 @@
         		"en": "WHEN YOU CAN'T KEEP THE ARROW ON THE CENTER LINE"
         	},
         	"shop-url": "http://www.camper.com/int/men/shoes/dub_arelluf_ss2016",
-        	"wistia-character-id": "dlg5azy5ar"
+        	"wistia-character-id": "dlg5azy5ar",
+        	"wistia-fun-id": "qphj9p3t5h"
         },
         "arelluf/paradise": {
         	"selfie-stick-video-url": "http://embed.wistia.com/deliveries/a819c373f9777852f3967ce023bcfb0d9115386f/arelluf-paradise.mp4",
@@ -357,7 +370,8 @@
         		"en": "SELFIE ON WATERSLIDE LIKE A BOSS"
         	},
         	"shop-url": "http://www.camper.com/int/women/shoes/paradise_arelluf_ss2016",
-        	"wistia-character-id": "h89y0kuwy2"
+        	"wistia-character-id": "h89y0kuwy2",
+        	"wistia-fun-id": "343t1sn2np"
         }
 
 	}
