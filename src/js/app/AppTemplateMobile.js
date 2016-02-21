@@ -6,6 +6,7 @@ import MobileTemplate from 'Mobile_hbs'
 import FeedTemplate from 'Feed_hbs'
 import footer from 'mobile-footer'
 import dom from 'dom-hand'
+import scrolltop from 'simple-scrolltop'
 
 class AppTemplateMobile extends BaseComponent {
 	constructor() {
@@ -19,6 +20,7 @@ class AppTemplateMobile extends BaseComponent {
 		this.resize = this.resize.bind(this)
 		this.onOpenFeed = this.onOpenFeed.bind(this)
 		this.onOpenGrid = this.onOpenGrid.bind(this)
+		this.onScroll = this.onScroll.bind(this)
 
 		// find urls for each feed
 		this.feed = AppStore.getFeed()
@@ -57,9 +59,15 @@ class AppTemplateMobile extends BaseComponent {
 		super.componentWillMount()
 	}
 	componentDidMount() {
+		this.posts = []
+		this.totalPageHeight = 0
+		this.pageEnded = false
+		this.currentFeedIndex = 0
+		this.allFeeds = []
 
 		this.footer = footer(this.element, this.scope)
 		this.mainContainer = dom.select('.main-container', this.element)
+		this.feedEl = dom.select('.feed', this.mainContainer)
 
 		AppActions.openFeed()
 
@@ -71,20 +79,92 @@ class AppTemplateMobile extends BaseComponent {
 	}
 	onReady() {
 		AppStore.on(AppConstants.WINDOW_RESIZE, this.resize)
+		dom.event.on(window, 'scroll', this.onScroll)
+	}
+	onScroll(e) {
+		e.preventDefault()
+
+		requestAnimationFrame(()=> {
+			var windowH = AppStore.Window.h
+			var currentScroll = scrolltop() + windowH
+			if(currentScroll > this.totalPageHeight) {
+				this.onPageEnd()
+			}
+		})
+
 	}
 	onOpenFeed() {
-		this.currentPage = document.createElement('div')
+		var currentFeed = this.getLastFeeds()
+		this.updateFeedToDom(currentFeed)
+		this.preparePosts()
+	}
+	updateFeedToDom(feed) {
 		var scope = {
-			feed: this.feed
+			feed: feed
 		}
+		var h = document.createElement('div')
 		var t = FeedTemplate(scope)
-		this.currentPage.innerHTML = t
-		dom.tree.add(this.mainContainer, this.currentPage)
+		h.innerHTML = t
+		dom.tree.add(this.feedEl, h)
+	}
+	getLastFeeds() {
+		var counter = 0
+		var feed = []
+		for (var i = this.currentFeedIndex; i < this.currentFeedIndex+4; i++) {
+			var f = this.feed[i]
+			counter++
+			feed.push(f)
+		}
+		this.currentFeedIndex += counter
+		return feed
+	}
+	preparePosts() {
+		this.posts = []
+		var posts = dom.select.all('.post', this.feedEl)
+		for (var i = 0; i < posts.length; i++) {
+			var el = posts[i]
+			this.posts[i] = {
+				el: el,
+				mediaWrapper: dom.select('.media-wrapper', el),
+				iconsWrapper: dom.select('.icons-wrapper', el),
+				commentsWrapper: dom.select('.comments-wrapper', el),
+				topWrapper: dom.select('.top-wrapper', el)
+			}
+		}
+		this.resize()
 	}
 	onOpenGrid() {
 		console.log('grid')
 	}
+	onPageEnd() {
+		if(this.pageEnded) return
+		if(this.currentFeedIndex >= this.feed.length) return
+		var currentFeed = this.getLastFeeds()
+		this.updateFeedToDom(currentFeed)
+		this.preparePosts()
+		setTimeout(()=>{
+			this.pageEnded = false
+		}, 50)
+		this.pageEnded = true
+	}
 	resize() {
+
+		var windowW = AppStore.Window.w
+		var windowH = AppStore.Window.h
+
+		this.totalPageHeight = 0
+		for (var i = 0; i < this.posts.length; i++) {
+			var post = this.posts[i]
+			var topSize = dom.size(post.topWrapper)
+			var iconsSize = dom.size(post.iconsWrapper)
+			var commentsSize = dom.size(post.commentsWrapper)
+			post.mediaWrapper.style.width = windowW + 'px'
+			post.mediaWrapper.style.height = windowW + 'px'
+			this.totalPageHeight += windowW
+			this.totalPageHeight += iconsSize[1]
+			this.totalPageHeight += commentsSize[1]
+			this.totalPageHeight += topSize[1]
+		}
 
 		this.footer.resize()
 

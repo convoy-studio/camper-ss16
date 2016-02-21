@@ -40,6 +40,7 @@ html.mobile {
 				letter-spacing: 0.91px;
 				line-height: 21.7px;
 				border: 1px solid white;
+				border-top: 2px solid white;
 				height: $footerH;
 				position: absolute;
 				.wrapper {
@@ -75,7 +76,9 @@ html.mobile {
 			width: 100%;
 			margin-bottom: 10px;
 			.media-wrapper {
-
+				.video-wrapper {
+					@extend .full;
+				}
 			}
 			.icons-wrapper {
 				height: $headerH;
