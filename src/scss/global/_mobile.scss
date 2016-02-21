@@ -68,6 +68,15 @@ html.mobile {
 	.bottom-part {
 		height: $headerH*2;
 	}
+
+	.index {
+		position: absolute;
+		top: 50px;
+		.block {
+			position: absolute;
+			border: 1px solid white;
+		}
+	}
 	.feed {
 		padding-top: $headerH;
 		width: 100%;

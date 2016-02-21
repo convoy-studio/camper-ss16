@@ -4,6 +4,7 @@ import AppConstants from 'AppConstants'
 import AppActions from 'AppActions'
 import MobileTemplate from 'Mobile_hbs'
 import FeedTemplate from 'Feed_hbs'
+import IndexTemplate from 'Index_hbs'
 import footer from 'mobile-footer'
 import dom from 'dom-hand'
 import scrolltop from 'simple-scrolltop'
@@ -25,6 +26,7 @@ class AppTemplateMobile extends BaseComponent {
 		this.onScroll = this.onScroll.bind(this)
 
 		// find urls for each feed
+		this.index = []
 		this.feed = AppStore.getFeed()
 		var baseUrl = AppStore.baseMediaPath()
 		var i, feed, folder, icon, pageId, scope;
@@ -49,6 +51,9 @@ class AppTemplateMobile extends BaseComponent {
 				feed.media['is-video'] = true
 				feed.media.url = scope['wistia-character-id']
 			}
+			if(feed.media.type == 'image') {
+				this.index.push(feed)
+			}
 		}
 
 		AppStore.on(AppConstants.OPEN_FEED, this.onOpenFeed) 
@@ -70,8 +75,10 @@ class AppTemplateMobile extends BaseComponent {
 		this.footer = footer(this.element, this.scope)
 		this.mainContainer = dom.select('.main-container', this.element)
 		this.feedEl = dom.select('.feed', this.mainContainer)
+		this.indexEl = dom.select('.index', this.mainContainer)
 
 		AppActions.openFeed()
+		// AppActions.openGrid()
 
 		setTimeout(()=>{
 			this.onReady()
@@ -81,7 +88,6 @@ class AppTemplateMobile extends BaseComponent {
 	}
 	onReady() {
 		AppStore.on(AppConstants.WINDOW_RESIZE, this.resize)
-		dom.event.on(window, 'scroll', this.onScroll)
 	}
 	onScroll(e) {
 		e.preventDefault()
@@ -94,11 +100,6 @@ class AppTemplateMobile extends BaseComponent {
 			}
 		})
 
-	}
-	onOpenFeed() {
-		var currentFeed = this.getLastFeeds()
-		this.updateFeedToDom(currentFeed)
-		this.preparePosts()
 	}
 	updateFeedToDom(feed) {
 		var scope = {
@@ -135,8 +136,41 @@ class AppTemplateMobile extends BaseComponent {
 		}
 		this.resize()
 	}
+	onOpenFeed() {
+		this.removeGrid()
+		this.isFeed = true
+		var currentFeed = this.getLastFeeds()
+		this.updateFeedToDom(currentFeed)
+		this.preparePosts()
+		dom.event.on(window, 'scroll', this.onScroll)
+		this.resize()
+	}
 	onOpenGrid() {
-		console.log('grid')
+		this.removeFeed()
+		this.isFeed = false
+		dom.event.off(window, 'scroll', this.onScroll)
+		var scope = {
+			index: this.index
+		}
+		var t = IndexTemplate(scope)
+		this.indexEl.innerHTML = t
+		this.indexes = dom.select.all('.block', this.indexEl)
+		this.resize()
+	}
+	removeFeed(){
+		if(this.posts == undefined) return
+		this.currentFeedIndex = 0
+		for (var i = 0; i < this.posts.length; i++) {
+			var post = this.posts[i]
+			dom.tree.remove(post.el)
+		}
+	}
+	removeGrid(){
+		if(this.indexes == undefined) return
+		for (var i = 0; i < this.indexes.length; i++) {
+			var post = this.indexes[i]
+			dom.tree.remove(post)
+		}	
 	}
 	onPageEnd() {
 		if(this.pageEnded) return
@@ -154,18 +188,36 @@ class AppTemplateMobile extends BaseComponent {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
-		this.totalPageHeight = 0
-		for (var i = 0; i < this.posts.length; i++) {
-			var post = this.posts[i]
-			var topSize = dom.size(post.topWrapper)
-			var iconsSize = dom.size(post.iconsWrapper)
-			var commentsSize = dom.size(post.commentsWrapper)
-			post.mediaWrapper.style.width = windowW + 'px'
-			post.mediaWrapper.style.height = windowW + 'px'
-			this.totalPageHeight += windowW
-			this.totalPageHeight += iconsSize[1]
-			this.totalPageHeight += commentsSize[1]
-			this.totalPageHeight += topSize[1]
+		if(this.isFeed) {
+			this.totalPageHeight = 0
+			for (var i = 0; i < this.posts.length; i++) {
+				var post = this.posts[i]
+				var topSize = dom.size(post.topWrapper)
+				var iconsSize = dom.size(post.iconsWrapper)
+				var commentsSize = dom.size(post.commentsWrapper)
+				post.mediaWrapper.style.width = windowW + 'px'
+				post.mediaWrapper.style.height = windowW + 'px'
+				this.totalPageHeight += windowW
+				this.totalPageHeight += iconsSize[1]
+				this.totalPageHeight += commentsSize[1]
+				this.totalPageHeight += topSize[1]
+			}
+		}else{
+			var w = windowW / 3
+			var counter = 0
+			var h = 0
+			for (var i = 0; i < this.indexes.length; i++) {
+				var index = this.indexes[i]
+				index.style.width = w + 'px'
+				index.style.height = w + 'px'
+				index.style.left = w * counter + 'px'
+				index.style.top = h + 'px'
+				counter++
+				if(counter >= 3) {
+					h += w
+					counter = 0
+				}
+			}
 		}
 
 		this.footer.resize()
