@@ -17,6 +17,8 @@ class AppTemplateMobile extends BaseComponent {
 		this.scope.infos = AppStore.globalContent()
 		this.scope.labUrl = generaInfos['lab_url']
 
+		this.scope.generic = AppStore.getRoutePathScopeById('/').texts[AppStore.lang()].generic
+
 		this.resize = this.resize.bind(this)
 		this.onOpenFeed = this.onOpenFeed.bind(this)
 		this.onOpenGrid = this.onOpenGrid.bind(this)

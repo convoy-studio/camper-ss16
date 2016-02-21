@@ -6,8 +6,8 @@
 		"lab_url": "http://www.camper.com/lab",
 		"lang": {
 			"en": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Shop",
@@ -16,8 +16,8 @@
 				"map_txt": "MAP"
 			},
 			"fr": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Acheter",
@@ -26,8 +26,8 @@
 				"map_txt": "MAP"
 			},
 			"es": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Comprar",
@@ -36,8 +36,8 @@
 				"map_txt": "MAP"
 			},
 			"it": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Acquisiti",
@@ -46,8 +46,8 @@
 				"map_txt": "MAP"
 			},
 			"de": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Shop",
@@ -56,8 +56,8 @@
 				"map_txt": "MAP"
 			},
 			"pt": {
-				"home": "HOME",
-				"grid": "GRID",
+				"home": "MAP",
+				"grid": "INDEX",
 				"lab": "LAB",
 				"camper_lab": "Camper Lab",
 				"shop_title": "Compre",
