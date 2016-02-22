@@ -213,19 +213,13 @@ var tasks = {
 
     optimizeImages: function() {
 
-        // var paths = {
-        //     files: './deploy/**',
-        //     filesDest: './deploy/www/image',
-        // };
+        var dir = './www/image'
 
-        var paths = {
-            files: './www/**',
-            filesDest: './www/image',
-        };
+        return gulp.src("")
+            .pipe(shell([
+                'imageoptim --jpeg-mini --image-alpha --quit --no-color --directory '+dir
+            ]));
 
-        return gulp.src(paths.files, {base: paths.filesDest})
-            .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-            .pipe(gulp.dest(paths.filesDest));
     },
 
     generateSizeImages: function() {

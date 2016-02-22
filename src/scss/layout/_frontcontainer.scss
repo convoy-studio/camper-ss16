@@ -61,6 +61,13 @@
 				}
 			}
 		}
+		.shop-wrapper {
+			overflow: visible;
+			ul.submenu-wrapper {
+				position: relative;
+				top: 15px;
+			}
+		}
 	}
 	footer {
 		& > * {

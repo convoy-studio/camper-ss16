@@ -13,7 +13,7 @@
 				position: absolute;
 				z-index: 2;
 				@include opacity(1);
-				@include simpleAnim(.2s, .0s, $easeOutExpo);
+				@include simpleAnim(.6s, .0s, $easeOutExpo);
 			}
 			video {
 				position: absolute;

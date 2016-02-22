@@ -158,7 +158,7 @@ a {
             fill: $green;
             stroke: white;
         }
-        svg #mallorca-logo {
+        svg #mallorca-logo path {
             @include simpleAnim($time, .0s, $ease);
             fill: white;
         }
@@ -245,5 +245,47 @@ a {
             }
         }
 
+    }
+}
+.text-btn {
+    text-transform: uppercase;
+    @include simpleUpperText();
+    position: absolute;
+    white-space: nowrap;
+    .text-title {
+        @include simpleAnim(.6s, 0s, $easeInOutExpo);
+    }
+    .rects-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        & > div {
+            position: absolute;
+            width: 100%;
+        }
+        .bg-box {
+            height: 100%;
+            background-color: $green;
+        }
+        .bg-line {
+            $h: 2px;
+            border: 1px dashed $green;
+            top: 50%;
+            margin-top: -$h;
+        }
+    }
+    .inside-wrapper {
+        position: relative;
+        overflow: hidden;
+        @extend .full;
+    }
+    .background {
+        position: absolute;
+        top: -111%;
+        left: -23%;
+        width: 140%;
+        height: 300%;
     }
 }

@@ -22,6 +22,7 @@ export default (parent, type) => {
 	var titlesWrapper = dom.select('.titles-wrapper', el)
 	var mapdots = dom.select.all('#map-dots .dot-path', el)
 	var footsteps = dom.select.all('#footsteps g', el)
+	var mallorcaLogo = dom.select('#mallorca-logo path', el)
 	var currentDot;
 
 	// fix buggy origin position
