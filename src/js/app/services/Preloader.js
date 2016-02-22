@@ -34,7 +34,7 @@ class Preloader  {
 	}
 	getImageSize(id) {
 		var content = this.getContentById(id)
-		return { width: content.width, height: content.height }
+		return { width: content.naturalWidth, height: content.naturalHeight }
 	}
 }
 

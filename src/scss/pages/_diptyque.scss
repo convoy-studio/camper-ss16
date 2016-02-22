@@ -29,7 +29,7 @@
 			@include opacity(0);
 			.message-inner {
 				position: absolute;
-				width: 50%;
+				width: 65%;
 			}
 		}
 		.cursor-cross {
@@ -67,6 +67,7 @@
 		cursor: pointer;
 		position: absolute;
 		z-index: 30;
+		@include opacity(0);
 		.screen-wrapper {
 			z-index: 1;
 		}

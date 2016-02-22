@@ -74,7 +74,7 @@ export default class Home extends Page {
 		this.tlIn.staggerFrom(this.grid.children, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.1)
 		this.tlIn.staggerFrom(this.grid.lines.horizontal, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
 		this.tlIn.staggerFrom(this.grid.lines.vertical, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
-		this.tlIn.from(this.bottomTexts.el, 1, { x:windowW * 0.4, ease:Expo.easeInOut }, 0.5)
+		this.tlIn.from(this.bottomTexts.el, 1, { x:windowW * 0.4, ease:Expo.easeInOut, force3D:true }, 0.4)
 
 		super.setupAnimations()
 	}

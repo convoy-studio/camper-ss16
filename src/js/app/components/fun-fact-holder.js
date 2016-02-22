@@ -130,6 +130,11 @@ export default (pxContainer, parent, mouse, data, props)=> {
 				rightTl.pause(0)
 				messageWrapper.style.opacity = 1
 				videoWrapper.style.opacity = 1
+
+				if(scope.isOpen) {
+					leftTl.pause(leftTl.totalDuration())
+					rightTl.pause(rightTl.totalDuration())
+				}
 			}, 5)
 
 		},
@@ -139,6 +144,14 @@ export default (pxContainer, parent, mouse, data, props)=> {
 			var newy = mouse.y - (cross.size[1] >> 1)
 			cross.x += (newx - cross.x) * 0.5
 			cross.y += (newy - cross.y) * 0.5
+
+			if(mouse.y > 70) {
+				parent.style.cursor = 'none'
+				cross.el.style.opacity = 1
+			}else{
+				parent.style.cursor = 'auto'
+				cross.el.style.opacity = 0
+			}
 			Utils.Translate(cross.el, cross.x, cross.y, 1)
 		},
 		clear: ()=> {

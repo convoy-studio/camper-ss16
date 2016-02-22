@@ -19,7 +19,7 @@ export default class Diptyque extends Page {
 		props.data['previous-page'] = previousDiptyque
 		props.data['next-preview-url'] = AppStore.getPreviewUrlByHash(nextDiptyque)
 		props.data['previous-preview-url'] = AppStore.getPreviewUrlByHash(previousDiptyque)
-		props.data['fact-txt'] = props.data.fact[AppStore.lang()]
+		props.data['fact-txt'] = props.data.fact['en']
 
 		super(props)
 
@@ -42,15 +42,16 @@ export default class Diptyque extends Page {
 
 		this.leftPart = diptyquePart(
 			this.pxContainer,
-			this.getImageUrlById('shoe-bg'),
-			
+			this.getImageUrlById('shoe-bg')
 		)
 		this.rightPart = diptyquePart(
 			this.pxContainer,
 			this.getImageUrlById('character-bg')
 		)
 
-		this.character = character(this.rightPart.holder, this.getImageUrlById('character'), this.getImageSizeById('character'))
+		var imgExt = AppStore.getImageDeviceExtension()
+
+		this.character = character(this.rightPart.holder, this.getImageUrlById('character'+imgExt), this.getImageSizeById('character'+imgExt))
 		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data, this.props)
 		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
 		this.selfieStick = selfieStick(this.element, this.mouse, this.props.data)

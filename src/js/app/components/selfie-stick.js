@@ -64,6 +64,7 @@ export default (holder, mouse, data)=> {
 
 	var stickImg = img(AppStore.baseMediaPath() + 'image/selfiestick.png', ()=> {
 		dom.tree.add(screenHolder, stickImg)
+
 		mVideo.load(videoSrc, ()=> {
 			if(tweenIn != undefined){
 				tweenIn.play()
@@ -140,6 +141,9 @@ export default (holder, mouse, data)=> {
 			animation.position.x = animation.iposition.x
 			animation.position.y = animation.iposition.y
 
+			if(el.style.opacity != 1) {
+				setTimeout(()=> { el.style.opacity = 1 }, 500)
+			}
 		},
 		transitionInCompleted: ()=> {
 			if(!isReady) {

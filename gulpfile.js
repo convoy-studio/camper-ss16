@@ -32,6 +32,10 @@ var svg = require('svg-browserify');
 var pngquant = require('imagemin-pngquant')
 var imageminPngcrush = require('imagemin-pngcrush');
 
+var recursive = require('recursive-readdir');
+
+var gm = require('gm');
+
 // vinyl
 var buffer = require('vinyl-buffer')
 var transform = require('vinyl-transform')
@@ -209,15 +213,59 @@ var tasks = {
 
     optimizeImages: function() {
 
+        // var paths = {
+        //     files: './deploy/**',
+        //     filesDest: './deploy/www/image',
+        // };
+
         var paths = {
-            files: './deploy/**',
-            filesDest: './deploy/www/image',
+            files: './www/**',
+            filesDest: './www/image',
         };
 
         return gulp.src(paths.files, {base: paths.filesDest})
             .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
             .pipe(gulp.dest(paths.filesDest));
     },
+
+    generateSizeImages: function() {
+
+        var from_directory = './www/image';
+
+        recursive(from_directory, [], (err, files)=> {
+
+            var characterOriginalSizeH = 960
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i]
+                if(file.indexOf('character.png') > -1) {
+                    var s = file.split('/')
+                    var filename = s[s.length-1]
+                    var name = filename.split('.')[0]
+                    var ext = filename.split('.')[1]
+                    var baseUrl = file.replace(filename, '')
+                    var path_2x = baseUrl + name + '@2x' + '.' + ext
+                    var path_1x = baseUrl + name + '@1x' + '.' + ext
+
+                    gm(file)
+                        .resize(characterOriginalSizeH - 200, null)
+                        .autoOrient()
+                        .write(path_2x, function(err){
+                            if (err) return console.dir(arguments)
+                        })
+                    gm(file)
+                        .resize(characterOriginalSizeH - 400, null)
+                        .autoOrient()
+                        .write(path_1x, function(err){
+                            if (err) return console.dir(arguments)
+                        })
+
+                }
+            };
+
+        });
+
+    },
+
     deployDir: function() {
         return gulp.src("")
             .pipe(shell([
@@ -340,6 +388,7 @@ gulp.task('build-app', tasks.buildApp);
 gulp.task('deploy-copy-mobile', tasks.deployCopyMobile);
 gulp.task('concat-app-scripts', tasks.concatAppScripts);
 gulp.task('concat-app-scripts-mobile', tasks.concatAppScriptsMobile);
+gulp.task('generate-size-images', tasks.generateSizeImages);
 
 gulp.task('build', [
     'browser-sync',
@@ -374,4 +423,5 @@ gulp.task('mobile', [ 'build', 'watch']);
 // gulp deploy : for a minified production build
 // gulp deploy_mobile : for a minified production build for mobile
 // gulp optimize-images : optimise image on deploy
+// gulp generate-size-images : generate different size images for retina and no-retina
 

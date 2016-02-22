@@ -180,6 +180,9 @@ a {
             position: absolute;
             fill: $green;
             @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 50%, 50%, transform);
+            &.fix-buggy-origin-position {
+                @include anim(.4s, .0s, $easeOutExpo, scale(1.2), 0%, 0%, transform);
+            }
         }
         .dot-path {
             &.animate {
@@ -194,7 +197,7 @@ a {
                         // fill: white;
                         // stroke: $green;
                         // stroke-width: 2;
-                        @include transform(scale(3));
+                        @include transform(scale(5));
                         // @include anim(.2s, .0s, $easeOutElastic, scale(3), 50%, 50%, transform fill stroke-width);
                     }
                 }

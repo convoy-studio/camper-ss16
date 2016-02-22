@@ -11,22 +11,21 @@
 			overflow: hidden;
 			img {
 				position: absolute;
-				z-index: 0;
+				z-index: 2;
+				@include opacity(1);
+				@include simpleAnim(.2s, .0s, $easeOutExpo);
 			}
 			video {
 				position: absolute;
 				z-index: 1;
 			}
+			&.over {
+				img {
+					@include opacity(0);
+					@include simpleAnim(.6s, .0s, $easeOutExpo);
+				}
+			}
 		}
-		// canvas {
-		// 	@include transform(translate3d(0, 0, 0));
-		// 	@include opacity(0);
-		// 	@include anim(.12s, 0s, $easeOutExpo, scaleX(0.8) scaleY(0.8) scaleZ(0.8), 50%, 50%, transform opacity);
-		// 	&.enable {
-		// 		@include opacity(1);
-		// 		@include anim(.3s, 0s, $easeOutBack, scaleX(1) scaleY(1) scaleZ(1), 50%, 50%, transform opacity);
-		// 	}
-		// }
 	}
 	.grid-front-container {
 		position: absolute;
@@ -79,6 +78,9 @@
 			text-align: center;
 			top: 40px;
 			z-index: 4;
+			@include max-screen-height($MQ_HEIGHT_SMALL) {
+				top: 30px;
+			}
 			li {
 				cursor: pointer;
 				font-family: Hobo;
@@ -102,6 +104,11 @@
 				line-height: 18px;
 				position: absolute;
 				padding: 0 10%;
+				@include max-screen-height($MQ_HEIGHT_SMALL) {
+					font-size: 12px;
+					line-height: 16px;
+				}
+
 			}
 		}
 		.background {

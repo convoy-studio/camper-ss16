@@ -70,7 +70,7 @@ var grid = (props, parent, onItemEnded)=> {
 		linesGridContainer.style.position = 'absolute'
 
 		var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
-		
+
 		var gPos = gGrid.positions
 		var parent, cell;
 		var count = 0
@@ -81,7 +81,7 @@ var grid = (props, parent, onItemEnded)=> {
 			// horizontal lines
 			if(i > 0) {
 				hl = scope.lines.horizontal[i-1]
-				hl.style.top = blockSize[1] * i + 'px'
+				hl.style.top = Math.floor(blockSize[1] * i) + 'px'
 				hl.style.width = windowW + 'px'
 			}
 
@@ -90,7 +90,7 @@ var grid = (props, parent, onItemEnded)=> {
 				// vertical lines
 				if(i == 0 && j > 0) {
 					vl = scope.lines.vertical[j-1]
-					vl.style.left = blockSize[0] * j + 'px'
+					vl.style.left = Math.floor(blockSize[0] * j) + 'px'
 					vl.style.height = windowH + 'px'
 				}
 

@@ -1,6 +1,7 @@
 import AppStore from 'AppStore'
 import Utils from 'Utils'
 import AppConstants from 'AppConstants'
+import Router from 'Router'
 
 export default (pxContainer, bgUrl)=> {
 

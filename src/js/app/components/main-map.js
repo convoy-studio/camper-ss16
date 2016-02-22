@@ -24,6 +24,15 @@ export default (parent, type) => {
 	var footsteps = dom.select.all('#footsteps g', el)
 	var currentDot;
 
+	// fix buggy origin position
+	if(AppStore.Detector.isFirefox) {
+		var i, dot;
+		for (i = 0; i < mapdots.length; i++) {
+			dot = mapdots[i]
+			dom.classes.add(dot, 'fix-buggy-origin-position')
+		}
+	}
+
 	var findDotById = (parent, child)=> {
 		for (var i = 0; i < mapdots.length; i++) {
 			var dot = mapdots[i]

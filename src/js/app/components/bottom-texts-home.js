@@ -12,7 +12,7 @@ var bottomTexts = (parent)=> {
 	var textsEls = dom.select.all('.texts-wrapper .txt', el)
 	var texts = []
 	var ids = ['generic', 'deia', 'arelluf', 'es-trenc']
-	var oldTl;
+	var oldTl, currentOpenId;
 	var firstTime = true
 
 	var onTitleClicked = (e)=> {
@@ -78,6 +78,10 @@ var bottomTexts = (parent)=> {
 			socialWrapper.style.left = (innerBlockSize[0] >> 1) - (socialSize[0] >> 1) + 'px'
 			socialWrapper.style.top = innerBlockSize[1] - socialSize[1] - (padding >> 1) + 'px'
 
+			if(currentOpenId != undefined) {
+				scope.openTxtById(currentOpenId, true)
+			}
+
 		}, 0)
 
 	}
@@ -85,13 +89,21 @@ var bottomTexts = (parent)=> {
 	scope = {
 		el: el,
 		resize: resize,
-		openTxtById: (id)=> {
+		openTxtById: (id, force)=> {
+			currentOpenId = id
+			var f = force || false
 			var i, text;
 			for (i = 0; i < texts.length; i++) {
 				text = texts[i]
 				if(id == text.id) {
 					if(oldTl != undefined) oldTl.timeScale(2.6).reverse()
-					setTimeout(()=>text.tl.timeScale(1.2).play(), 600)
+
+					if(f) {
+						text.tl.pause(text.tl.totalDuration())
+					}else{
+						setTimeout(()=>text.tl.timeScale(1.2).play(), 600)
+					}
+
 					oldTl = text.tl
 					return
 				}

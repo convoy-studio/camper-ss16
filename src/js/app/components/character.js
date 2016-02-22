@@ -1,4 +1,5 @@
 import AppStore from 'AppStore'
+import Router from 'Router'
 
 export default (holder, characterUrl, textureSize)=> {
 
@@ -11,6 +12,8 @@ export default (holder, characterUrl, textureSize)=> {
 
 	var mask = new PIXI.Graphics();
 	holder.addChild(mask)
+
+	var targetId = Router.getNewHash().target
 
 	sprite.mask = mask
 
@@ -35,8 +38,13 @@ export default (holder, characterUrl, textureSize)=> {
 			mask.drawRect(0, 0, size[0], size[1]);
 			mask.endFill();
 
+
 			setTimeout(()=> {
-				var scale = ((windowH - 100) / textureSize.height) * 1
+				var scale;
+				
+				if(targetId == 'paradise') scale = (((windowW >> 1)+100) / textureSize.width) * 1
+				else scale = ((windowH - 100) / textureSize.height) * 1
+
 				sprite.scale.x = sprite.scale.y = scale
 				sprite.x = size[0] >> 1
 				sprite.y = size[1] - ((textureSize.height * scale) >> 1) + 10

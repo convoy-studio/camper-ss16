@@ -4,6 +4,7 @@ import {EventEmitter2} from 'eventemitter2'
 import assign from 'object-assign'
 import data from 'GlobalData'
 import Router from 'Router'
+import isRetina from 'is-retina'
 
 function _getContentScope() {
     var hashObj = Router.getNewHash()
@@ -17,7 +18,7 @@ function _getPageAssetsToLoad() {
 
     if(type != AppConstants.HOME) {
         var filenames = [
-            'character.png',
+            'character' + _getImageDeviceExtension() +'.png',
             'character-bg.jpg',
             'shoe-bg.jpg'
         ]
@@ -50,7 +51,7 @@ function _addBasePathsToUrls(urls, pageId, targetId, type) {
         id += fileName
         manifest[i] = {
             id: id,
-            src: basePath + fileName + _getImageExtensionByDeviceRatio() + '.' + extension
+            src: basePath + fileName + '.' + extension
         }
     }
     return manifest
@@ -61,9 +62,14 @@ function _getPageAssetsBasePathById(id, assetGroupId) {
 function _getHomePageAssetsBasePath() {
     return AppStore.baseMediaPath() + 'image/home/'
 }
-function _getImageExtensionByDeviceRatio() {
-    // return '@' + _getDeviceRatio() + 'x'
-    return ''
+function _getImageDeviceExtension() {
+    var retina = _isRetina()
+    var str = '@1x'
+    // if(retina == true) str = '@2x'
+    return str
+}
+function _isRetina() {
+    return isRetina()
 }
 function _getDeviceRatio() {
     var scale = (window.devicePixelRatio == undefined) ? 1 : window.devicePixelRatio
@@ -183,6 +189,7 @@ var AppStore = assign({}, EventEmitter2.prototype, {
             }
         };
     },
+    getImageDeviceExtension: _getImageDeviceExtension,
     getPreviewUrlByHash: function(hash) {
         return AppStore.baseMediaPath() + 'image/diptyque/' + hash + '/preview.gif'
     },

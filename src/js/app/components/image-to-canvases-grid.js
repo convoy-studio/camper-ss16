@@ -50,12 +50,12 @@ export default (container)=> {
 
 			if(!isReady) return
 
-			var resizeVarsBg = Utils.ResizePositionProportionally(windowW, windowH, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
+			var resizeVarsBg = Utils.ResizePositionProportionally(windowW*1.1, windowH*1.1, AppConstants.MEDIA_GLOBAL_W, AppConstants.MEDIA_GLOBAL_H)
 			image.style.position = 'absolute'
 			image.style.width = resizeVarsBg.width + 'px'
 			image.style.height = resizeVarsBg.height + 'px'
-			image.style.top = resizeVarsBg.top + 'px'
-			image.style.left = resizeVarsBg.left + 'px'
+			image.style.top = resizeVarsBg.top - 10 + 'px'
+			image.style.left = resizeVarsBg.left - 20 + 'px'
 
 			// var blockSize = gGrid.blockSize
 			// var imageBlockSize = [ resizeVarsBg.width / gGrid.columns, resizeVarsBg.height / gGrid.rows ]

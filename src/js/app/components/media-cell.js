@@ -18,14 +18,19 @@ export default (container, front, videoUrl)=> {
 	})
 	var size, position, resizeVars;
 	var img;
+	var isMouseEnter = false;
 
 	var onMouseEnter = (e)=> {
 		e.preventDefault()
+		isMouseEnter = true
 		AppActions.cellMouseEnter(nameParts)
 		if(mVideo.isLoaded) {
+			dom.classes.add(container, 'over')
 			mVideo.play(0)
 		}else{
 			mVideo.load(videoUrl, ()=> {
+				if(!isMouseEnter) return
+				dom.classes.add(container, 'over')
 				mVideo.play()
 			})
 		}
@@ -33,6 +38,8 @@ export default (container, front, videoUrl)=> {
 
 	var onMouseLeave = (e)=> {
 		e.preventDefault()
+		isMouseEnter = false
+		dom.classes.remove(container, 'over')
 		AppActions.cellMouseLeave(nameParts)
 		mVideo.pause(0)
 	}
