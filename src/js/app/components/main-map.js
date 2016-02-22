@@ -79,6 +79,7 @@ export default (parent, type) => {
 	}
 
 	scope = {
+		el: mapWrapper,
 		resize: ()=> {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h

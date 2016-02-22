@@ -82,6 +82,10 @@ export default class Home extends Page {
 		this.bottomTexts.openTxtById('generic')
 		super.didTransitionInComplete()
 	}
+	willTransitionIn() {
+		setTimeout(()=>dom.classes.add(this.map.el, 'green-mode'), 1000)
+		super.willTransitionIn()
+	}
 	triggerNewItem(type) {
 		var index = this.seats[Utils.Rand(0, this.seats.length - 1, 0)]
 		for (var i = 0; i < this.usedSeats.length; i++) {
@@ -143,6 +147,7 @@ export default class Home extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
+		dom.classes.remove(this.map.el, 'green-mode')
 		dom.event.off(window, 'mousemove', this.onMouseMove)
 
 		this.aroundBorder.clear()

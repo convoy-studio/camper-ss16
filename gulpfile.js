@@ -403,7 +403,7 @@ gulp.task('deploy', gulpsync.sync([
     'deployDir',
     'deployCopy',
     'optimize-json',
-    'concat-app-scripts',
+    // 'concat-app-scripts',
     'browser-exit'
 ]));
 

@@ -10,13 +10,13 @@ export default (parent, onMouseEnter, onMouseLeave)=> {
 	var arrows = {
 		left: {
 			el: leftArrow,
-			icons: dom.select.all('svg', leftArrow),
+			icon: dom.select('svg', leftArrow),
 			iconsWrapper: dom.select('.icons-wrapper', leftArrow),
 			background: dom.select('.background', leftArrow)
 		},
 		right: {
 			el: rightArrow,
-			icons: dom.select.all('svg', rightArrow),
+			icon: dom.select('svg', rightArrow),
 			iconsWrapper: dom.select('.icons-wrapper', rightArrow),
 			background: dom.select('.background', rightArrow)
 		}
@@ -38,7 +38,7 @@ export default (parent, onMouseEnter, onMouseLeave)=> {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 
-			var arrowSize = dom.size(arrows.left.icons[1])
+			var arrowSize = dom.size(arrows.left.icon)
 			var offsetY = 20
 			var bgWidth = AppConstants.SIDE_EVENT_PADDING
 

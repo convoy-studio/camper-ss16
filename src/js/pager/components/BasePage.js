@@ -15,14 +15,13 @@ export default class BasePage extends BaseComponent {
 		setTimeout(() => this.props.isReady(this.props.hash), 0)
 	}
 	setupAnimations() {
-
 		// reset
 		this.tlIn.pause(0)
 		this.tlOut.pause(0)
 	}
 	willTransitionIn() {
 		this.tlIn.eventCallback("onComplete", this.didTransitionInComplete)
-		this.tlIn.timeScale(1.4)
+		this.tlIn.timeScale(1.6)
 		setTimeout(()=>this.tlIn.play(0), 800)
 	}
 	willTransitionOut() {
@@ -30,7 +29,7 @@ export default class BasePage extends BaseComponent {
 			this.didTransitionOutComplete()
 		}else{
 			this.tlOut.eventCallback("onComplete", this.didTransitionOutComplete)
-			this.tlOut.timeScale(1.2)
+			this.tlOut.timeScale(1.8)
 			setTimeout(()=>this.tlOut.play(0), 500)
 		}
 	}

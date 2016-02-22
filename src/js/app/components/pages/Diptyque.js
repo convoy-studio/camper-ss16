@@ -31,11 +31,15 @@ export default class Diptyque extends Page {
 		this.onOpenFact = this.onOpenFact.bind(this)
 		this.onCloseFact = this.onCloseFact.bind(this)
 		this.uiTransitionInCompleted = this.uiTransitionInCompleted.bind(this)
+
+		this.transitionInCompleted = false
 	}
 	componentDidMount() {
 
 		AppStore.on(AppConstants.OPEN_FUN_FACT, this.onOpenFact)
 		AppStore.on(AppConstants.CLOSE_FUN_FACT, this.onCloseFact)
+
+		this.uiInTl = new TimelineMax()
 
 		this.mouse = new PIXI.Point()
 		this.mouse.nX = this.mouse.nY = 0
@@ -67,6 +71,10 @@ export default class Diptyque extends Page {
 		this.domIsReady = true
 	}
 	setupAnimations() {
+		this.updateTimelines()
+		super.setupAnimations()
+	}
+	updateTimelines() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
 
@@ -82,21 +90,19 @@ export default class Diptyque extends Page {
 		this.tlOut.to(this.selfieStick.el, 0.5, { y: 500, ease:Back.easeOut, force3D:true }, 0)
 		this.tlOut.to(this.leftPart.holder, 1, { x: -windowW >> 1, ease:Expo.easeInOut, force3D:true }, 0.1)
 		this.tlOut.to(this.rightPart.holder, 1, { x: windowW, ease:Expo.easeInOut, force3D:true }, 0.1)
-
-		this.uiInTl = new TimelineMax()
+		
 		this.uiInTl.from(this.arrowsWrapper.left, 1, { x: -100, ease:Expo.easeOut, force3D:true }, 0.1)
 		this.uiInTl.from(this.arrowsWrapper.right, 1, { x: 100, ease:Expo.easeOut, force3D:true }, 0.1)
 		this.uiInTl.from(this.selfieStick.el, 1, { y: 500, ease:Back.easeOut, force3D:true }, 0.5)
 		this.uiInTl.pause(0)
 		this.uiInTl.eventCallback("onComplete", this.uiTransitionInCompleted);
-
-		super.setupAnimations()
 	}
 	uiTransitionInCompleted() {
 		this.uiInTl.eventCallback("onComplete", null)
 		this.selfieStick.transitionInCompleted()
 	}
 	didTransitionInComplete() {
+		this.transitionInCompleted = true
 		this.uiInTl.timeScale(1.6).play()		
 		super.didTransitionInComplete()
 	}
@@ -194,6 +200,16 @@ export default class Diptyque extends Page {
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
+
+		if(this.transitionInCompleted) {
+			this.tlIn.clear()
+			this.tlOut.clear()
+			this.uiInTl.eventCallback("onComplete", null)
+			this.updateTimelines()
+			this.tlOut.pause(0)
+			this.tlIn.pause(this.tlIn.totalDuration())
+			this.uiInTl.pause(this.uiInTl.totalDuration())
+		}
 
 		this.leftPart.resize()
 		this.rightPart.resize()

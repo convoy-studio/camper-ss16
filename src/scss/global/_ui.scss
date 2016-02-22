@@ -98,13 +98,7 @@ a {
     position: absolute;
     polygon { fill: white; }
     svg, .background, .icons-wrapper { position: absolute; }
-    svg:first-child {
-        $size: $iconsSize;
-        width: $size;
-        height: $size;
-        z-index: 1;
-    }
-    svg:nth-child(2) {
+    svg {
         $size: $iconsSize;
         width: $size;
         height: $size;
@@ -112,19 +106,11 @@ a {
         @include opacity(1);
         @include anim(.3s, .0s, $easeInOutExpo, scale(1, 1) translateX(0px), 50%, 50%, transform opacity);
     }
-    &.left svg:nth-child(2) { 
+    &.left svg { 
         left: -10px;
     }
-    &.right svg:nth-child(2) {
+    &.right svg {
         left: 10px;
-    }
-    &.left svg:first-child {
-        @include opacity(0);
-        @include anim(.1s, .0s, $easeInOutExpo, scaleX(2) translateX(10px), 50%, 50%, transform opacity);
-    }
-    &.right svg:first-child {
-        @include opacity(0);
-        @include anim(.1s, .0s, $easeInOutExpo, scaleX(2) translateX(-10px), 50%, 50%, transform opacity);   
     }
     .background {
         position: absolute;
@@ -132,15 +118,11 @@ a {
         background-size: 100%;
     }
     &.hovered {
-        svg:first-child {
-            @include opacity(0);
-            @include anim(.4s, .2s, $easeOutElastic, scale(1) translateX(0px), 50%, 50%, transform opacity);
-        }
-        &.left svg:nth-child(2) { 
+        &.left svg { 
             @include opacity(0);
             @include anim(.4s, .0s, $easeOutExpo, scale(1.2, 0.5) translateX(-10px), 50%, 50%, transform opacity);
         }
-        &.right svg:nth-child(2) {
+        &.right svg {
             @include opacity(0);
             @include anim(.4s, .0s, $easeOutExpo, scale(1.2, 0.5) translateX(10px), 50%, 50%, transform opacity);
         }
@@ -153,6 +135,35 @@ a {
 .map-wrapper {
     position: absolute;
     z-index: 4;
+
+    &.green-mode {
+        $time: 1.4s;
+        $ease: $easeOutCirc;
+        svg text {
+            @include simpleAnim($time, .0s, $ease);
+            fill: white;
+        }
+        .titles-wrapper {
+            @include simpleAnim($time, .0s, $ease);
+            color: white;
+        }
+        g#map-dots {
+            circle {
+                @include simpleAnim($time, .0s, $ease);
+                fill: white;
+            }
+        }
+        svg #map-bg {
+            @include simpleAnim($time, .0s, $ease);
+            fill: $green;
+            stroke: white;
+        }
+        svg #mallorca-logo {
+            @include simpleAnim($time, .0s, $ease);
+            fill: white;
+        }
+    }
+
     svg text {
         fill: $green;
         font-family: FuturaMedium;
@@ -166,7 +177,7 @@ a {
         top: 0;
         left: 0;
         font-family: Hobo;
-        font-size: 13px;
+        font-size: 11px;
         letter-spacing: 0.85px;
         line-height: 15.85px;
         & > div {
