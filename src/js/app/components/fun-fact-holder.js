@@ -16,6 +16,9 @@ export default (pxContainer, parent, mouse, data, props)=> {
 	var messageWrapper = dom.select('.message-wrapper', el)
 	var messageInner = dom.select('.message-inner', messageWrapper)
 	var pr = props;
+	var tlTimeout;
+	var firstResize = true;
+	var containerScale = 3;
 
 	var splitter = new SplitText(messageInner, {type:"words"})
 
@@ -82,6 +85,14 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		dom.classes.remove(cross.el, 'active')
 	}
 
+	var resizeInnerSize = (wW, wH)=> {
+		var messageInnerSize = dom.size(messageInner)
+		if(!scope.isOpen) messageInnerSize[1] = messageInnerSize[1]/containerScale
+		console.log(messageInnerSize)
+		messageInner.style.left = ((wW>>1) >> 1) - (messageInnerSize[0] >> 1) + 'px'
+		messageInner.style.top = (wH >> 1) - (messageInnerSize[1] >> 1) + 'px'
+	}
+
 	scope = {
 		isOpen: false,
 		open: open,
@@ -112,19 +123,19 @@ export default (pxContainer, parent, mouse, data, props)=> {
 			mVideo.el.style.top = videoWrapperResizeVars.top + 'px'
 			mVideo.el.style.left = videoWrapperResizeVars.left + 'px'
 
-			setTimeout(()=> {
-				var messageInnerSize = dom.size(messageInner)
-				messageInner.style.left = (midWindowW >> 1) - (messageInnerSize[0] >> 1) + 'px'
-				messageInner.style.top = (windowH >> 1) - (messageInnerSize[1] >> 1) + 'px'
-			}, 0)
+			setTimeout(()=>{
+				resizeInnerSize(windowW, windowH)
+			}, 10)
 
-			setTimeout(()=> {
+			clearTimeout(tlTimeout)
+			tlTimeout = setTimeout(()=> {
+
 				leftTl.clear()
 				rightTl.clear()
 
-				leftTl.fromTo(messageWrapper, 1.4, { y:windowH, scaleY:3, transformOrigin:'50% 0%' }, { y:0, scaleY:1, transformOrigin:'50% 0%', force3D:true, ease:Expo.easeInOut }, 0)
-				leftTl.staggerFrom(splitter.words, 1, { y:1400, scaleY:6, force3D:true, ease:Expo.easeOut }, 0.06, 0.2)
-				rightTl.fromTo(videoWrapper, 1.4, { y:-windowH*2, scaleY:3, transformOrigin:'50% 100%' }, { y:0, scaleY:1, transformOrigin:'50% 100%', force3D:true, ease:Expo.easeInOut }, 0)
+				leftTl.fromTo(messageWrapper, 1.4, { y:windowH, scaleY:containerScale, transformOrigin:'50% 0%' }, { y:0, scaleY:1, transformOrigin:'50% 0%', force3D:true, ease:Expo.easeInOut }, 0)
+				leftTl.staggerFromTo(splitter.words, 1, { y:1600, scaleY:6, force3D:true }, { y:0, scaleY:1, force3D:true, ease:Expo.easeOut }, 0.06, 0.2)
+				rightTl.fromTo(videoWrapper, 1.4, { y:-windowH*2, scaleY:containerScale, transformOrigin:'50% 100%' }, { y:0, scaleY:1, transformOrigin:'50% 100%', force3D:true, ease:Expo.easeInOut }, 0)
 
 				leftTl.pause(0)
 				rightTl.pause(0)
@@ -134,7 +145,11 @@ export default (pxContainer, parent, mouse, data, props)=> {
 				if(scope.isOpen) {
 					leftTl.pause(leftTl.totalDuration())
 					rightTl.pause(rightTl.totalDuration())
+				}else{
+					leftTl.pause(0)
+					rightTl.pause(0)
 				}
+				firstResize = false
 			}, 5)
 
 		},

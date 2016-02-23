@@ -204,6 +204,7 @@ export default class Diptyque extends Page {
 		if(this.transitionInCompleted) {
 			this.tlIn.clear()
 			this.tlOut.clear()
+			this.uiInTl.clear()
 			this.uiInTl.eventCallback("onComplete", null)
 			this.updateTimelines()
 			this.tlOut.pause(0)

@@ -1,9 +1,16 @@
 import AppStore from 'AppStore'
 import Router from 'Router'
+import isRetina from 'is-retina'
 
 export default (holder, characterUrl, textureSize)=> {
 
 	var scope;
+
+	var imgScale = isRetina() ? 0.5 : 1
+	var tsize = {
+		width: textureSize.width*imgScale,
+		height: textureSize.height*imgScale
+	}
 
 	var tex = PIXI.Texture.fromImage(characterUrl)
 	var sprite = new PIXI.Sprite(tex)
@@ -42,12 +49,12 @@ export default (holder, characterUrl, textureSize)=> {
 			setTimeout(()=> {
 				var scale;
 				
-				if(targetId == 'paradise') scale = (((windowW >> 1)+100) / textureSize.width) * 1
-				else scale = ((windowH - 100) / textureSize.height) * 1
+				if(targetId == 'paradise') scale = (((windowW >> 1)+100) / tsize.width) * 1
+				else scale = ((windowH - 100) / tsize.height) * 1
 
 				sprite.scale.x = sprite.scale.y = scale
 				sprite.x = size[0] >> 1
-				sprite.y = size[1] - ((textureSize.height * scale) >> 1) + 10
+				sprite.y = size[1] - ((tsize.height * scale) >> 1) + 10
 				sprite.ix = sprite.x
 				sprite.iy = sprite.y
 			})

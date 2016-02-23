@@ -65,7 +65,7 @@ function _getHomePageAssetsBasePath() {
 function _getImageDeviceExtension() {
     var retina = _isRetina()
     var str = '@1x'
-    // if(retina == true) str = '@2x'
+    if(retina == true) str = '@2x'
     return str
 }
 function _isRetina() {

@@ -271,9 +271,10 @@ a {
         }
         .bg-line {
             $h: 2px;
-            border: 1px dashed $green;
+            height: $h;
             top: 50%;
             margin-top: -$h;
+            background-color: $green;
         }
     }
     .inside-wrapper {
