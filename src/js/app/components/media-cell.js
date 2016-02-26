@@ -16,7 +16,7 @@ export default (container, front, videoUrl)=> {
 		loop: true,
 		autoplay: false
 	})
-	var size, position, resizeVars;
+	var size, position, resizeVideoVars, resizeImageVars;
 	var img;
 	var isMouseEnter = false;
 
@@ -66,11 +66,12 @@ export default (container, front, videoUrl)=> {
 	scope = {
 		isReady: false,
 		init: init,
-		resize: (s, p, rv)=> {
+		resize: (s, p, rvv, riv)=> {
 
 			size = s == undefined ? size : s
 			position = p == undefined ? position : p
-			resizeVars = rv == undefined ? resizeVars : rv
+			resizeVideoVars = rvv == undefined ? resizeVideoVars : rvv
+			resizeImageVars = riv == undefined ? resizeImageVars : riv
 
 			if(!scope.isReady) return
 
@@ -79,15 +80,15 @@ export default (container, front, videoUrl)=> {
 			container.style.left = front.style.left = position[0] + 'px'
 			container.style.top = front.style.top = position[1] + 'px'
 
-			img.style.width = resizeVars.width + 'px'
-			img.style.height = resizeVars.height + 'px'
-			img.style.left = resizeVars.left + 'px'
-			img.style.top = resizeVars.top + 'px'
+			img.style.width = resizeImageVars.width + 'px'
+			img.style.height = resizeImageVars.height + 'px'
+			img.style.left = resizeImageVars.left + 'px'
+			img.style.top = resizeImageVars.top + 'px'
 
-			mVideo.el.style.width = resizeVars.width + 'px'
-			mVideo.el.style.height = resizeVars.height + 'px'
-			mVideo.el.style.left = resizeVars.left + 'px'
-			mVideo.el.style.top = resizeVars.top + 'px'
+			mVideo.el.style.width = resizeVideoVars.width + 'px'
+			mVideo.el.style.height = resizeVideoVars.height + 'px'
+			mVideo.el.style.left = resizeVideoVars.left + 'px'
+			mVideo.el.style.top = resizeVideoVars.top + 'px'
 
 		},
 		clear: ()=> {

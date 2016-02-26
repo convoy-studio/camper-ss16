@@ -11,7 +11,7 @@ var bottomTexts = (parent)=> {
 	var allTitles = dom.select.all('li', titlesWrapper)
 	var textsEls = dom.select.all('.texts-wrapper .txt', el)
 	var texts = []
-	var ids = ['generic', 'deia', 'arelluf', 'es-trenc']
+	var ids = ['generic', 'deia', 'es-trenc', 'arelluf']
 	var oldTl, currentOpenId;
 	var firstTime = true
 

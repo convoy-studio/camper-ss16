@@ -11,6 +11,7 @@ class App {
 	constructor() {
 		this.onAppReady = this.onAppReady.bind(this)
 		this.loadMainAssets = this.loadMainAssets.bind(this)
+		this.onPlaneUpdate = this.onPlaneUpdate.bind(this)
 		this.resize = this.resize.bind(this)
 	}
 	init() {
@@ -26,6 +27,7 @@ class App {
 		var plane = dom.select('#plane', p)
 		var path = MorphSVGPlugin.pathDataToBezier("#motionPath")
 		var tl = new TimelineMax()
+		tl.eventCallback('onUpdate', this.onPlaneUpdate)
 		tl.to(plane, 5, {bezier:{values:path, type:"cubic", autoRotate:true}, ease:Linear.easeOut}, 0)
 		tl.pause()
 		this.loaderAnim = {
@@ -49,6 +51,10 @@ class App {
 		// Start routing
 		this.router.beginRouting()
 	}
+	onPlaneUpdate() {
+		var scale = 2.2 - (this.loaderAnim.tl.progress() * 1.5)
+		TweenMax.set(this.loaderAnim.plane, { scale:scale, force3D:true, transformOrigin: '50% 50%' })
+	}
 	resize() {
 		var windowW = AppStore.Window.w
 		var windowH = AppStore.Window.h
@@ -69,15 +75,19 @@ class App {
 		else AppStore.Preloader.load(manifest, this.onAppReady)
 	}
 	onAppReady() {
+		// return
 		this.loaderAnim.tl.timeScale(2.4).tweenTo(this.loaderAnim.tl.totalDuration() - 0.1)
 		setTimeout(()=> {
 			TweenMax.to(this.loaderAnim.el, 0.5, { opacity:0, force3D:true, ease:Expo.easeOut })
 			setTimeout(()=> {
 				AppStore.off(AppConstants.WINDOW_RESIZE, this.resize)
 				dom.tree.remove(this.loaderAnim.el)
+				this.loaderAnim.tl.eventCallback('onUpdate', null)
 				this.loaderAnim.tl.clear()
+				this.loaderAnim.tl = null
 				this.loaderAnim = null
-				AppActions.pageHasherChanged()	
+				setTimeout(()=>AppActions.appStart())
+				setTimeout(()=>AppActions.pageHasherChanged())
 			}, 200)
 		}, 1500)
 	}

@@ -57,6 +57,8 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		if(!scope.isOpen) return
 		AppActions.closeFunFact()
 	}
+	
+	mVideo.on('ended', onCloseFunFact)
 
 	var open = ()=> {
 		el.style['z-index'] = 29
@@ -72,14 +74,16 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		parent.style.cursor = 'none'
 		dom.classes.add(cross.el, 'active')
 	}
-	var close = ()=> {
+	var close = (force)=> {
 		el.style['z-index'] = 27
 		scope.isOpen = false
 		scope.leftRects.close()
 		scope.rightRects.close()
 		var delay = 50
-		setTimeout(()=>leftTl.timeScale(2).reverse(), delay)
-		setTimeout(()=>rightTl.timeScale(2).reverse(), delay)
+		var t = 2
+		if(force) t = 4
+		setTimeout(()=>leftTl.timeScale(t).reverse(), delay)
+		setTimeout(()=>rightTl.timeScale(t).reverse(), delay)
 		parent.style.cursor = 'auto'
 		dom.event.off(parent, 'click', onCloseFunFact)
 		dom.classes.remove(cross.el, 'active')
@@ -88,7 +92,6 @@ export default (pxContainer, parent, mouse, data, props)=> {
 	var resizeInnerSize = (wW, wH)=> {
 		var messageInnerSize = dom.size(messageInner)
 		if(!scope.isOpen) messageInnerSize[1] = messageInnerSize[1]/containerScale
-		console.log(messageInnerSize)
 		messageInner.style.left = ((wW>>1) >> 1) - (messageInnerSize[0] >> 1) + 'px'
 		messageInner.style.top = (wH >> 1) - (messageInnerSize[1] >> 1) + 'px'
 	}
@@ -106,9 +109,11 @@ export default (pxContainer, parent, mouse, data, props)=> {
 
 			var size = [midWindowW + 1, windowH]
 
-			scope.leftRects.resize(size[0], size[1], AppConstants.TOP)
-			scope.rightRects.resize(size[0], size[1], AppConstants.BOTTOM)
-			scope.rightRects.holder.x = windowW / 2
+			if(scope.leftRects != undefined || scope.rightRects != undefined) {
+				scope.leftRects.resize(size[0], size[1], AppConstants.TOP)
+				scope.rightRects.resize(size[0], size[1], AppConstants.BOTTOM)
+				scope.rightRects.holder.x = windowW / 2
+			}
 				
 			// if video isn't ready return
 			if(!isReady) return
@@ -125,10 +130,12 @@ export default (pxContainer, parent, mouse, data, props)=> {
 
 			setTimeout(()=>{
 				resizeInnerSize(windowW, windowH)
-			}, 10)
+			}, 3)
 
 			clearTimeout(tlTimeout)
 			tlTimeout = setTimeout(()=> {
+
+				if(leftTl == undefined || rightTl == undefined) return
 
 				leftTl.clear()
 				rightTl.clear()
@@ -150,7 +157,7 @@ export default (pxContainer, parent, mouse, data, props)=> {
 					rightTl.pause(0)
 				}
 				firstResize = false
-			}, 5)
+			}, 1)
 
 		},
 		update: ()=> {

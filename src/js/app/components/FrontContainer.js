@@ -6,20 +6,18 @@ import AppActions from 'AppActions'
 import headerLinks from 'header-links'
 import socialLinks from 'social-links'
 import Router from 'Router'
+import dom from 'dom-hand'
 
 class FrontContainer extends BaseComponent {
 	constructor() {
 		super()
-
-		// this.onPageChange = this.onPageChange.bind(this)
+		this.onAppStarted = this.onAppStarted.bind(this)
 	}
 	render(parent) {
 		var scope = {}
 		var generaInfos = AppStore.generalInfos()
 		scope.infos = AppStore.globalContent()
-		scope.labUrl = generaInfos['lab_url']
-		scope.menShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/men/shoes/new-collection'
-		scope.womenShopUrl = 'http://www.camper.com/'+JS_lang+'_'+JS_country+'/women/shoes/new-collection'
+		scope.general = generaInfos
 
 		super.render('FrontContainer', parent, template, scope)
 	}
@@ -27,18 +25,16 @@ class FrontContainer extends BaseComponent {
 		super.componentWillMount()
 	}
 	componentDidMount() {
-
-		// AppStore.on(AppConstants.PAGE_HASHER_CHANGED, this.onPageChange)
-
+		this.headerEl = dom.select('header', this.element)
+		AppStore.on(AppConstants.APP_START, this.onAppStarted)
 		this.headerLinks = headerLinks(this.element)
-
 		super.componentDidMount()
-
 	}
-	onPageChange() {
+	onAppStarted() {
+		AppStore.off(AppConstants.APP_START, this.onAppStarted)
+		dom.classes.add(this.headerEl, 'show')
 	}
 	resize() {
-
 		if(!this.domIsReady) return
 		this.headerLinks.resize()
 

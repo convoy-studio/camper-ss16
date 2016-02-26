@@ -8,6 +8,8 @@ import IndexTemplate from 'Index_hbs'
 import footer from 'mobile-footer'
 import dom from 'dom-hand'
 import scrolltop from 'simple-scrolltop'
+import Utils from 'Utils'
+import colorUtils from 'color-utils'
 
 class AppTemplateMobile extends BaseComponent {
 	constructor() {
@@ -17,13 +19,14 @@ class AppTemplateMobile extends BaseComponent {
 		var generaInfos = AppStore.generalInfos()
 		this.scope.infos = AppStore.globalContent()
 		this.scope.labUrl = generaInfos['lab_url']
-
 		this.scope.generic = AppStore.getRoutePathScopeById('/').texts[AppStore.lang()].generic
+		this.scope.mobilemap = AppStore.baseMediaPath() + 'image/mobile_map.jpg'
 
 		this.resize = this.resize.bind(this)
 		this.onOpenFeed = this.onOpenFeed.bind(this)
 		this.onOpenGrid = this.onOpenGrid.bind(this)
 		this.onScroll = this.onScroll.bind(this)
+		this.onIconClicked = this.onIconClicked.bind(this)
 
 		// find urls for each feed
 		this.index = []
@@ -36,9 +39,13 @@ class AppTemplateMobile extends BaseComponent {
 			icon = folder + 'icon.jpg'
 			pageId = feed.id + '/' + feed.person 
 			scope = AppStore.getRoutePathScopeById(pageId)
+			// console.log(scope)
 			feed.icon = icon
+			feed.shopUrl = scope['shop-url']
 			if(feed.media.type == 'image' && feed.media.id == 'shoe') {
 				feed.media.url = folder + 'mobile/' + 'shoe.jpg'
+				feed.comments[0]['person-text'] += ' <a target="_blank" href="'+feed.shopUrl+'">#Shop'+Utils.CapitalizeFirstLetter(feed.comments[0]['person-name'])+'</a>'
+				feed.media['is-shop'] = true
 			}
 			if(feed.media.type == 'image' && feed.media.id == 'character') {
 				feed.media.url = folder + 'mobile/' + 'character.jpg'
@@ -79,7 +86,6 @@ class AppTemplateMobile extends BaseComponent {
 		this.indexEl = dom.select('.index', this.mainContainer)
 
 		AppActions.openFeed()
-		// AppActions.openGrid()
 
 		setTimeout(()=>{
 			this.onReady()
@@ -122,17 +128,35 @@ class AppTemplateMobile extends BaseComponent {
 		this.currentFeedIndex += counter
 		return feed
 	}
+	onIconClicked(e) {
+		e.preventDefault()
+		var target = e.currentTarget
+		var randomColor = colorUtils.randomColor()
+		var path = dom.select('path', target)
+		path.style.fill = randomColor
+		dom.classes.add(target, 'highlight')
+		setTimeout(()=> {
+			dom.classes.remove(target, 'highlight')
+		}, 300)
+	}
 	preparePosts() {
 		this.posts = []
 		var posts = dom.select.all('.post', this.feedEl)
-		for (var i = 0; i < posts.length; i++) {
-			var el = posts[i]
+		var i, el, icons, icon;
+		for (i = 0; i < posts.length; i++) {
+			el = posts[i]
+			icons = dom.select.all('#icon', el)
+			for (var j = 0; j < icons.length; j++) {
+				icon = icons[j]
+				dom.event.on(icon, 'click', this.onIconClicked)
+			}
 			this.posts[i] = {
 				el: el,
 				mediaWrapper: dom.select('.media-wrapper', el),
 				iconsWrapper: dom.select('.icons-wrapper', el),
 				commentsWrapper: dom.select('.comments-wrapper', el),
-				topWrapper: dom.select('.top-wrapper', el)
+				topWrapper: dom.select('.top-wrapper', el),
+				icons: icons
 			}
 		}
 		this.resize()

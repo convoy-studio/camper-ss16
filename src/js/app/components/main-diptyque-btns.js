@@ -2,69 +2,56 @@ import dom from 'dom-hand'
 import AppStore from 'AppStore'
 import img from 'img'
 import Utils from 'Utils'
+import AppConstants from 'AppConstants'
 
-export default (container, data, mouse, onMouseEventsHandler)=> {
+export default (container, data, mouse, onMouseEventsHandler, pxContainer)=> {
 
-	var animParams = (parent, el, imgWrapper)=> {
+	var animParams = (s, dir)=> {
 		var tl = new TimelineMax()
-		tl.fromTo(imgWrapper, 1, {scaleX:1.7, scaleY:1.3, rotation:'2deg', y:-20, opacity:0, transformOrigin: '50% 50%', force3D:true }, { scaleX:1, scaleY:1, rotation:'0deg', y:0, opacity:1, transformOrigin: '50% 50%', force3D:true, ease:Back.easeInOut}, 0)
+		tl.fromTo(s.scale, 1, { x:1.7, y:1.3 }, { x:globalScale, y:globalScale, ease:Back.easeInOut}, 0)
+		tl.fromTo(s, 1, { alpha:0, rotation:Math.PI*0.08*dir }, { alpha:1, rotation:0, ease:Expo.easeInOut}, 0)
 		tl.pause(0)
-		return {
-			parent: parent,
-			imgWrapper: imgWrapper,
-			tl: tl,
-			el: el,
-			time: 0,
-			position: {x: 0, y: 0},
-			fposition: {x: 0, y: 0},
-			iposition: {x: 0, y: 0},
-			// scale: {x: 0, y: 0},
-			// fscale: {x: 0, y: 0},
-			// iscale: {x: 0, y: 0},
-			velocity: {x: 0, y: 0},
-			// velocityScale: {x: 0, y: 0},
-			rotation: 0,
-			config: {
-				length: 0,
-				spring: 0.8,
-				friction: 0.4
-			}
+		s.fposition = {x: 0, y: 0}
+		s.iposition = {x: 0, y: 0}
+		s.velocity = {x: 0, y: 0}
+		s.time = 0
+		s.tl = tl
+		s.config = {
+			length: 0,
+			spring: 1.1,
+			friction: 0.4
 		}
 	}
 
 	var scope;
+	var globalScale = 0.6
 	var el = dom.select('.main-btns-wrapper', container)
 	var shopBtn = dom.select('#shop-btn', el)
 	var funBtn = dom.select('#fun-fact-btn', el)
-	var shopImgWrapper  = dom.select('.img-wrapper', shopBtn)
-	var funImgWrapper = dom.select('.img-wrapper', funBtn)
 	var shopSize, funSize;
 	var loadCounter = 0
 	var buttonSize = [0, 0]
 	var springTo = Utils.SpringTo
-	var translate = Utils.Translate
-	var shopAnim, funAnim, currentAnim;
-	var buttons = {
-		'shop-btn': {
-			anim: undefined
-		},
-		'fun-fact-btn': {
-			anim: undefined
-		}
-	}
+	var shopSprite, funSprite, currentAnim;
 
-	var shopImg = img('image/shop/'+AppStore.lang()+'.png', ()=> {
-		shopAnim = animParams(shopBtn, shopImg, shopImgWrapper)
-		buttons['shop-btn'].anim = shopAnim
+	var shopImg = img(AppStore.baseMediaPath() + 'image/shop/'+AppStore.lang()+'.png', ()=> {
+		var sprite = new PIXI.Sprite(PIXI.Texture.fromImage(shopImg.src))
+		sprite.anchor.x = sprite.anchor.y = 0.5
+		pxContainer.addChild(sprite)
+		animParams(sprite, -1)
+		shopSprite = sprite
 		shopSize = [shopImg.width, shopImg.height]
-		dom.tree.add(shopImgWrapper, shopImg)
 		scope.resize()
 	})
-	var funImg = img('image/fun-facts.png', ()=> {
-		funAnim = animParams(funBtn, funImg, funImgWrapper)
-		buttons['fun-fact-btn'].anim = funAnim
+	var funImg = img(AppStore.baseMediaPath() + 'image/fun-facts.png', ()=> {
+		var sprite = new PIXI.Sprite(PIXI.Texture.fromImage(funImg.src))
+		sprite.anchor.x = sprite.anchor.y = 0.5
+		pxContainer.addChild(sprite)
+		animParams(sprite, 1)
+
+		funSprite = sprite
 		funSize = [funImg.width, funImg.height]
-		dom.tree.add(funImgWrapper, funImg)
+
 		scope.resize()
 	})
 
@@ -75,18 +62,19 @@ export default (container, data, mouse, onMouseEventsHandler)=> {
 	dom.event.on(funBtn, 'mouseleave', onMouseEventsHandler)
 	dom.event.on(funBtn, 'click', onMouseEventsHandler)
 
-	var updateAnim = (anim)=> {
-		if(anim == undefined) return
-		anim.time += 0.1
-		anim.fposition.x = anim.iposition.x
-		anim.fposition.y = anim.iposition.y
-		anim.fposition.x += (mouse.nX - 0.5) * 80
-		anim.fposition.y += (mouse.nY - 0.5) * 200
+	var updateAnim = (s)=> {
+		if(s == undefined) return
+		s.time += 0.1
+		s.fposition.x = s.iposition.x
+		s.fposition.y = s.iposition.y
+		s.fposition.x += (mouse.nX - 0.5) * 140
+		s.fposition.y += (mouse.nY - 0.5) * 200
 
-		springTo(anim, anim.fposition, 1)
-		anim.config.length += (0.01 - anim.config.length) * 0.1
+		springTo(s, s.fposition, 1)
+		s.config.length += (0.01 - s.config.length) * 0.1
 		
-		translate(anim.el, anim.position.x + anim.velocity.x, anim.position.y + anim.velocity.y, 1)
+		s.x += s.velocity.x
+		s.y += s.velocity.y
 	}
 
 	scope = {
@@ -95,7 +83,6 @@ export default (container, data, mouse, onMouseEventsHandler)=> {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 			var midW = windowW >> 1
-			var scale = 0.8
 			
 			buttonSize[0] = midW * 0.9
 			buttonSize[1] = windowH
@@ -106,10 +93,10 @@ export default (container, data, mouse, onMouseEventsHandler)=> {
 				shopBtn.style.left = (midW >> 1) - (buttonSize[0] >> 1) + 'px'
 				shopBtn.style.top = (windowH >> 1) - (buttonSize[1] >> 1) + 'px'
 				
-				shopImgWrapper.style.width = shopSize[0]*scale + 'px'
-				shopImgWrapper.style.height = shopSize[1]*scale + 'px'
-				shopImgWrapper.style.left = (buttonSize[0] >> 1) - (shopSize[0]*scale >> 1) + 'px'
-				shopImgWrapper.style.top = (buttonSize[1] >> 1) - (shopSize[1]*scale >> 1) + 'px'
+				shopSprite.x = shopSprite.iposition.x = midW >> 1
+				shopSprite.y = shopSprite.iposition.y = windowH >> 1
+
+				shopSprite.scale.x = shopSprite.scale.x = globalScale
 			}
 			if(funSize != undefined) {
 				funBtn.style.width = buttonSize[0] + 'px'
@@ -117,49 +104,52 @@ export default (container, data, mouse, onMouseEventsHandler)=> {
 				funBtn.style.left = midW + (midW >> 1) - (buttonSize[0] >> 1) + 'px'
 				funBtn.style.top = (windowH >> 1) - (buttonSize[1] >> 1) + 'px'
 
-				funImgWrapper.style.width = funSize[0]*scale + 'px'
-				funImgWrapper.style.height = funSize[1]*scale + 'px'
-				funImgWrapper.style.left = (buttonSize[0] >> 1) - (funSize[0]*scale >> 1) + 'px'
-				funImgWrapper.style.top = (buttonSize[1] >> 1) - (funSize[1]*scale >> 1) + 'px'
+				funSprite.x = funSprite.iposition.x = midW + (midW >> 1)
+				funSprite.y = funSprite.iposition.y = windowH >> 1
+				funSprite.scale.x = funSprite.scale.x = globalScale
 			}
 		},
 		over: (id)=> {
 			if(!scope.isActive) return
-			currentAnim = buttons[id].anim
-			currentAnim.tl.timeScale(2.6).play(0)
+			currentAnim = (id == 'shop-btn') ? shopSprite : funSprite
+			currentAnim.tl.timeScale(2.8).play(0)
 			currentAnim.config.length = 400
 		},
 		out: (id)=> {
 			if(!scope.isActive) return
-			currentAnim = buttons[id].anim
-			currentAnim.tl.timeScale(3).reverse()
+			currentAnim = (id == 'shop-btn') ? shopSprite : funSprite
+			currentAnim.tl.timeScale(3.2).reverse()
 		},
 		update: ()=> {
 			if(!scope.isActive) return
-			if(shopAnim == undefined) return 
-			updateAnim(shopAnim)
-			updateAnim(funAnim)
+			if(shopSprite == undefined) return 
+			updateAnim(shopSprite)
+			updateAnim(funSprite)
 		},
 		activate: ()=> {
 			scope.isActive = true
 		},
 		disactivate: ()=> {
 			scope.isActive = false
-			shopAnim.tl.timeScale(3).reverse()
-			funAnim.tl.timeScale(3).reverse()
+			shopSprite.tl.timeScale(3).reverse()
+			funSprite.tl.timeScale(3).reverse()
 		},
 		clear: ()=> {
-			shopAnim.tl.clear()
-			funAnim.tl.clear()
+			pxContainer.removeChild(shopSprite)
+			pxContainer.removeChild(funSprite)
+			shopSprite.tl.clear()
+			funSprite.tl.clear()
+			shopSprite.destroy()
+			funSprite.destroy()
 			dom.event.off(shopBtn, 'mouseenter', onMouseEventsHandler)
 			dom.event.off(shopBtn, 'mouseleave', onMouseEventsHandler)
 			dom.event.off(shopBtn, 'click', onMouseEventsHandler)
 			dom.event.off(funBtn, 'mouseenter', onMouseEventsHandler)
 			dom.event.off(funBtn, 'mouseleave', onMouseEventsHandler)
 			dom.event.off(funBtn, 'click', onMouseEventsHandler)
-			shopAnim = null
-			funAnim = null
-			buttons = null
+			shopSprite = null
+			funSprite = null
+			currentAnim = null
 		}
 	}
 

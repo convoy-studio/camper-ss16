@@ -13,6 +13,11 @@ class Router {
 		this.newHashFounded = false
 		hasher.newHash = undefined
 		hasher.oldHash = undefined
+
+		// remove the analytics parameters
+		var hash = window.location.hash.split('?')
+		window.location.hash = hash[0]
+
 		hasher.initialized.add(this.didHasherChange.bind(this))
 		hasher.changed.add(this.didHasherChange.bind(this))
 		this.setupCrossroads()

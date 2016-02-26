@@ -65,11 +65,13 @@ var grid = (props, parent, onItemEnded)=> {
 		var windowH = AppStore.Window.h
 
 		var originalVideoSize = AppConstants.HOME_VIDEO_SIZE
+		var originalImageSize = AppConstants.HOME_IMAGE_SIZE
 		var blockSize = gGrid.blockSize
 
 		linesGridContainer.style.position = 'absolute'
 
-		var resizeVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
+		var resizeVideoVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalVideoSize[0], originalVideoSize[1])
+		var resizeImageVars = Utils.ResizePositionProportionally(blockSize[0], blockSize[1], originalImageSize[0], originalImageSize[1])
 
 		var gPos = gGrid.positions
 		var parent, cell;
@@ -96,7 +98,7 @@ var grid = (props, parent, onItemEnded)=> {
 
 				cell = scope.cells[count]
 				if(cell != undefined) {
-					cell.resize(blockSize, row[j], resizeVars)
+					cell.resize(blockSize, row[j], resizeVideoVars, resizeImageVars)
 				}
 
 				count++

@@ -218,31 +218,31 @@ a {
     }
     g#footsteps {
 
-        @keyframes dash {
-            from {
-                stroke-dashoffset: 500;
-            }
-            to {
-                stroke-dashoffset: 100;
-            }
-        }
+        // @keyframes dash {
+        //     from {
+        //         stroke-dashoffset: 500;
+        //     }
+        //     to {
+        //         stroke-dashoffset: 100;
+        //     }
+        // }
         
         g {
             @include opacity(0);
-            @include simpleAnim(.0s, .0s, $easeOutExpo);
+            // @include simpleAnim(.0s, .0s, $easeOutExpo);
 
-            path:first-child {
-                stroke-width: 2px;
-                &.animate {
-                    animation: dash 15s linear alternate infinite;
-                }
-            }
-            path:last-child, path:nth-child(2) {
-                stroke-width: 3px;
-                &.animate {
-                    @include simpleAnim(1s, .0s, linear);
-                }
-            }
+            // path:first-child {
+            //     stroke-width: 2px;
+            //     &.animate {
+            //         @include simpleAnim(1s, .0s, linear);
+            //     }
+            // }
+            // path:last-child {
+            //     stroke-width: 2px;
+            //     &.animate {
+            //         @include simpleAnim(1s, .0s, linear);
+            //     }
+            // }
         }
 
     }

@@ -85,6 +85,12 @@ var AppActions = {
             actionType: AppConstants.OPEN_GRID,
             item: undefined
         })  
+    },
+    appStart: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.APP_START,
+            item: undefined
+        })    
     }
 }
 

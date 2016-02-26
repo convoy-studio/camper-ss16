@@ -63,6 +63,9 @@ export default (holder, mouse, data)=> {
 	var videoSrc = data['selfie-stick-video-url']
 
 	var stickImg = img(AppStore.baseMediaPath() + 'image/selfiestick.png', ()=> {
+
+		if(scope.ignoreOpen) return
+
 		dom.tree.add(screenHolder, stickImg)
 
 		mVideo.load(videoSrc, ()=> {
@@ -77,6 +80,7 @@ export default (holder, mouse, data)=> {
 	scope = {
 		el: el,
 		isOpened: false,
+		ignoreOpen: false,
 		open: ()=> {
 			animation.config.length = 100,
 			animation.config.spring = 0.9,
@@ -133,7 +137,7 @@ export default (holder, mouse, data)=> {
 			topOffset = (windowW / AppConstants.MEDIA_GLOBAL_W) * 26
 			videoHolder.style.left = (screenHolderSize[0] >> 1) - (videoHolderSize[0] >> 1) + 'px'
 			videoHolder.style.top = topOffset + 'px'
-			colorifier.style.left = (screenHolderSize[0] >> 1) - (colorifierSize[0] * 0.58) + 'px'
+			colorifier.style.left = (screenHolderSize[0] >> 1) - (colorifierSize[0] * 0.575) + 'px'
 			colorifier.style.top = -0.7 + 'px'
 
 			animation.iposition.x = (windowW >> 1) - (screenHolderSize[0] >> 1)

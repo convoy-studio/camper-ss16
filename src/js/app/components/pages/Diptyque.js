@@ -59,7 +59,7 @@ export default class Diptyque extends Page {
 		this.funFact = funFact(this.pxContainer, this.element, this.mouse, this.props.data, this.props)
 		this.arrowsWrapper = arrowsWrapper(this.element, this.onArrowMouseEnter, this.onArrowMouseLeave)
 		this.selfieStick = selfieStick(this.element, this.mouse, this.props.data)
-		this.mainBtns = mainBtns(this.element, this.props.data, this.mouse, this.onMainBtnsEventHandler)
+		this.mainBtns = mainBtns(this.element, this.props.data, this.mouse, this.onMainBtnsEventHandler, this.pxContainer)
 
 		dom.event.on(this.selfieStick.el, 'click', this.onSelfieStickClicked)
 		dom.event.on(window, 'mousemove', this.onMouseMove)
@@ -73,6 +73,15 @@ export default class Diptyque extends Page {
 	setupAnimations() {
 		this.updateTimelines()
 		super.setupAnimations()
+	}
+	willTransitionOut() {
+		this.selfieStick.ignoreOpen = true
+		if(this.funFact.isOpen) {
+			this.funFact.close(true)
+			setTimeout(()=>super.willTransitionOut(), 100)
+		}else{
+			super.willTransitionOut()
+		}
 	}
 	updateTimelines() {
 		var windowW = AppStore.Window.w

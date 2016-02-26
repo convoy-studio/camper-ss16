@@ -27,6 +27,10 @@
 		& > * {
 			position: absolute;
 		}
+		@include anim(.6s, .0s, $easeOutExpo, translateY(- $overallMargin - 40), 0%, 100%, transform);
+		&.show {
+			@include anim(.6s, .0s, $easeOutExpo, translateY(0), 0%, 100%, transform);
+		}
 		.shop-wrapper {
 			& > div {
 				@include inline-block;

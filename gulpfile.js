@@ -213,7 +213,7 @@ var tasks = {
 
     optimizeImages: function() {
 
-        var dir = './deploy/www/image'
+        var dir = './www/image'
 
         return gulp.src("")
             .pipe(shell([

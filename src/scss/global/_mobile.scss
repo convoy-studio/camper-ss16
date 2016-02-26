@@ -81,6 +81,8 @@ html.mobile {
 		padding-top: $headerH;
 		width: 100%;
 
+		
+
 		.logo {
 			$lh: 110px;
 			width: 100%;
@@ -135,6 +137,7 @@ html.mobile {
 					left: 10px;
 					top: 12px;
 					li {
+						cursor: pointer;
 						$size: 24px;
 						width: $size;
 						height: $size;
@@ -142,6 +145,12 @@ html.mobile {
 						margin-right: 10px;
 						&:last-child {
 							margin-right: 0px;
+						}
+						svg {
+							@include anim(.4s, .0s, $easeOutExpo, scale(1), 50%, 50%, transform);
+							&.highlight {
+								@include anim(.4s, .0s, $easeOutElastic, scale(1.2), 50%, 50%, transform);
+							}
 						}
 					}
 				}
@@ -158,7 +167,16 @@ html.mobile {
 				.comment {
 					font-size: 12px;
 					letter-spacing: 0.64px;
-					line-height: 15.85px;
+					line-height: 21px;
+					
+					a {
+						color: black;
+						border-bottom: 1px solid black;
+						font-size: 12px;
+						letter-spacing: 0.64px;
+						line-height: 21px;
+					}
+
 					.name {
 						text-transform: uppercase;
 						color: black;

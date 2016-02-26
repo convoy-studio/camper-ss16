@@ -109,7 +109,7 @@ export default (parent, type) => {
 				var dot = mapdots[i]
 				var id = dot.id
 				var parentId = dot.getAttribute('data-parent-id')
-				if(id == oldHash.target && parentId == oldHash.parent) selectedDots.push(dot)
+				// if(id == oldHash.target && parentId == oldHash.parent) selectedDots.push(dot)
 				if(id == newHash.target && parentId == newHash.parent)  selectedDots.push(dot)
 			}
 			for (var i = 0; i < selectedDots.length; i++) {
@@ -124,10 +124,16 @@ export default (parent, type) => {
 			for (var i = 0; i < footsteps.length; i++) {
 				var step = footsteps[i]
 				var id = step.id
+				// console.log(id, oldId, newId)
 				if(id.indexOf(oldId) > -1 && id.indexOf(newId) > -1) {
+
+					// console.log(oldId, newId)
 					// check if the last one
-					if(i == previousHighlightIndex) stepEl = footsteps[footsteps.length-1]
-					else stepEl = step
+					// if(i == previousHighlightIndex) stepEl = footsteps[footsteps.length-1]
+					// else stepEl = step
+					
+					stepEl = step
+					// console.log(stepEl)
 
 					dir = id.indexOf(current) > -1 ? AppConstants.FORWARD : AppConstants.BACKWARD
 					previousHighlightIndex = i
@@ -136,27 +142,28 @@ export default (parent, type) => {
 
 			scope.highlightDots(oldHash, newHash)
 
-			currentPaths = dom.select.all('path', stepEl)
-			dashedLine = currentPaths[0]
+			// currentPaths = dom.select.all('path', stepEl)
+			// fillLine = currentPaths[0]
+			// // dashedLine = currentPaths[0]
 
-			// choose path depends of footstep direction
-			if(dir == AppConstants.FORWARD) {
-				fillLine = currentPaths[1]
-				currentPaths[2].style.opacity = 0
-			}else{
-				fillLine = currentPaths[2]
-				currentPaths[1].style.opacity = 0
-			}
+			// // choose path depends of footstep direction
+			// // if(dir == AppConstants.FORWARD) {
+			// // 	fillLine = currentPaths[0]
+			// // 	currentPaths[1].style.opacity = 0
+			// // }else{
+			// // 	fillLine = currentPaths[1]
+			// // 	currentPaths[0].style.opacity = 0
+			// // }
 
 			// stepEl.style.opacity = 1
 
 			// // find total length of shape
 			// stepTotalLen = fillLine.getTotalLength()
-			// fillLine.style['stroke-dashoffset'] = 0
-			// fillLine.style['stroke-dasharray'] = stepTotalLen
+			// fillLine.style['stroke-dashoffset'] = stepTotalLen
+			// fillLine.style['stroke-dasharray'] = 0
 			
 			// // start animation of dashed line
-			// dom.classes.add(dashedLine, 'animate')
+			// // dom.classes.add(dashedLine, 'animate')
 
 			// // start animation
 			// dom.classes.add(fillLine, 'animate')
@@ -165,10 +172,10 @@ export default (parent, type) => {
 		resetHighlight: ()=> {
 			setTimeout(()=>{
 				// stepEl.style.opacity = 0
-				currentPaths[1].style.opacity = 1
-				currentPaths[2].style.opacity = 1
-				dom.classes.remove(fillLine, 'animate')
-				dom.classes.remove(dashedLine, 'animate')
+				// currentPaths[0].style.opacity = 1
+				// currentPaths[1].style.opacity = 1
+				// dom.classes.remove(fillLine, 'animate')
+				// dom.classes.remove(dashedLine, 'animate')
 				for (var i = 0; i < selectedDots.length; i++) {
 					var dot = selectedDots[i]
 					dom.classes.remove(dot, 'animate')
@@ -177,8 +184,9 @@ export default (parent, type) => {
 		},
 		updateProgress: (progress)=> {
 			// if(fillLine == undefined) return
-			// var dashOffset = (progress / 1) * stepTotalLen
-			// fillLine.style['stroke-dashoffset'] = dashOffset
+			var dashOffset = (progress / 1) * stepTotalLen
+			// fillLine.style['stroke-dashoffset'] = stepTotalLen - dashOffset
+			// fillLine.style['stroke-dasharray'] = dashOffset
 		},
 		clear: ()=> {
 			if(type == AppConstants.INTERACTIVE) {
