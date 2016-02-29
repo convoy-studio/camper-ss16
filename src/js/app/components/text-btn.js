@@ -18,6 +18,7 @@ export default (container)=> {
 	var bgBoxLeft = dom.select('.bg-box', rectContainers[0])
 	var bgLinesRight = dom.select.all('.bg-line', rectContainers[1])
 	var bgBoxRight = dom.select('.bg-box', rectContainers[1])
+	var isActivated = false
 	
 	var tweenIn = (direction)=> {
 		if(direction == AppConstants.LEFT) {
@@ -34,6 +35,7 @@ export default (container)=> {
 
 	var mouseEnter = (e)=> {
 		e.preventDefault()
+		if(isActivated) return
 		var rect = e.currentTarget.getBoundingClientRect();
 		var xMousePos = e.clientX
 		var xPos = xMousePos - rect.left
@@ -46,7 +48,17 @@ export default (container)=> {
 	}
 	var mouseLeave = (e)=> {
 		e.preventDefault()
+		if(isActivated) return
 		tweenOut()
+	}
+	var activate = ()=> {
+		isActivated = true
+		currentTl.timeScale(3).tweenTo('in')
+	}
+	var disactivate = ()=> {
+		isActivated = false
+		tlLeft.timeScale(3).tweenTo('out')
+		tlRight.timeScale(3).tweenTo('out')
 	}
 
 	dom.event.on(container, 'mouseenter', mouseEnter)
@@ -57,10 +69,10 @@ export default (container)=> {
 	tlLeft.fromTo(bgLinesLeft[0], 1, { scaleX:0, transformOrigin:'0% 50%' }, { scaleX:1, transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0)
 	tlLeft.fromTo(bgBoxLeft, 1, { scaleX:0, transformOrigin:'0% 50%' }, { scaleX:1, transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.2)
 	tlLeft.fromTo(bgLinesLeft[1], 1, { scaleX:0, transformOrigin:'0% 50%' }, { scaleX:1, transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.4)
-	tlLeft.to(bgLinesLeft[0], 1, { x:'100%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.5)
-	tlLeft.to(bgBoxLeft, 1, { x:'100%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.6)
+	tlLeft.to(bgLinesLeft[0], 1, { x:'105%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.5)
+	tlLeft.to(bgBoxLeft, 1, { x:'105%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 0.6)
 	tlLeft.addLabel('in')
-	tlLeft.to(bgLinesLeft[1], 1, { x:'100%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 'in')
+	tlLeft.to(bgLinesLeft[1], 1, { x:'105%', transformOrigin:'0% 50%', ease:Expo.easeInOut }, 'in')
 	tlLeft.addLabel('out')
 	tlLeft.pause(0)
 
@@ -68,16 +80,18 @@ export default (container)=> {
 	tlRight.fromTo(bgLinesRight[0], 1, { scaleX:0, transformOrigin:'100% 50%' }, { scaleX:1, transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0)
 	tlRight.fromTo(bgBoxRight, 1, { scaleX:0, transformOrigin:'100% 50%' }, { scaleX:1, transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.2)
 	tlRight.fromTo(bgLinesRight[1], 1, { scaleX:0, transformOrigin:'100% 50%' }, { scaleX:1, transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.4)
-	tlRight.to(bgLinesRight[0], 1, { x:'-100%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.5)
-	tlRight.to(bgBoxRight, 1, { x:'-100%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.6)
+	tlRight.to(bgLinesRight[0], 1, { x:'-105%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.5)
+	tlRight.to(bgBoxRight, 1, { x:'-105%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 0.6)
 	tlRight.addLabel('in')
-	tlRight.to(bgLinesRight[1], 1, { x:'-100%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 'in')
+	tlRight.to(bgLinesRight[1], 1, { x:'-105%', transformOrigin:'100% 50%', ease:Expo.easeInOut }, 'in')
 	tlRight.addLabel('out')
 	tlRight.pause(0)
 
 	scope = {
 		size: size,
 		el: container,
+		activate: activate,
+		disactivate: disactivate,
 		clear: ()=> {
 			tlLeft.clear()
 			tlRight.clear()

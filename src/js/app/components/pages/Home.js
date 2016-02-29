@@ -96,7 +96,6 @@ export default class Home extends Page {
 			}
 		};
 		this.usedSeats.push(index)
-		this.grid.transitionInItem(index, type)
 	}
 	onItemEnded(item) {
 		for (var i = 0; i < this.usedSeats.length; i++) {

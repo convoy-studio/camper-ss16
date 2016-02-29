@@ -57,10 +57,9 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		if(!scope.isOpen) return
 		AppActions.closeFunFact()
 	}
-	
-	mVideo.on('ended', onCloseFunFact)
 
 	var open = ()=> {
+		mVideo.on('ended', onCloseFunFact)
 		el.style['z-index'] = 29
 		scope.isOpen = true
 		scope.leftRects.open()
@@ -68,13 +67,15 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		var delay = 350
 		setTimeout(()=>leftTl.timeScale(1.5).play(0), delay)
 		setTimeout(()=>rightTl.timeScale(1.5).play(0), delay)
-		setTimeout(()=>mVideo.play(), delay+200)
+		setTimeout(()=>mVideo.play(0), delay+200)
 		clearTimeout(onCloseTimeout)
 		onCloseTimeout = setTimeout(()=>dom.event.on(parent, 'click', onCloseFunFact), delay+200)
 		parent.style.cursor = 'none'
 		dom.classes.add(cross.el, 'active')
 	}
 	var close = (force)=> {
+		mVideo.off('ended', onCloseFunFact)
+		mVideo.pause()
 		el.style['z-index'] = 27
 		scope.isOpen = false
 		scope.leftRects.close()
@@ -177,6 +178,8 @@ export default (pxContainer, parent, mouse, data, props)=> {
 			Utils.Translate(cross.el, cross.x, cross.y, 1)
 		},
 		clear: ()=> {
+			mVideo.off('ended', onCloseFunFact)
+			mVideo.clear()
 			dom.event.off(parent, 'click', onCloseFunFact)
 			dom.classes.remove(cross.el, 'active')
 			pxContainer.removeChild(holder)
@@ -189,6 +192,7 @@ export default (pxContainer, parent, mouse, data, props)=> {
 			leftTl = null
 			rightTl = null
 			holder = null
+			mVideo = null
 		}
 	}
 	return scope

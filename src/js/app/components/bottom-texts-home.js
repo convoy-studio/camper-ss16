@@ -1,6 +1,7 @@
 import AppStore from 'AppStore'
 import AppConstants from 'AppConstants'
 import dom from 'dom-hand'
+import textBtn from 'text-btn'
 
 var bottomTexts = (parent)=> {
 
@@ -12,8 +13,37 @@ var bottomTexts = (parent)=> {
 	var textsEls = dom.select.all('.texts-wrapper .txt', el)
 	var texts = []
 	var ids = ['generic', 'deia', 'es-trenc', 'arelluf']
-	var oldTl, currentOpenId;
+	var oldText, currentOpenId;
+	var masksParent = dom.select('.inner-mask-background', el)
+	var background = dom.select('.inner-background', el)
+	var masksChildren = dom.select.all('.inner-mask-background div', masksParent).reverse()
+	var masksTween = undefined
 	var firstTime = true
+	var changeTextAnimTimeout;
+	var isAnimate = false
+
+	var simpleTextBtnsEl = dom.select.all('.text-btn', titlesWrapper)
+	var simpleBtns = []
+	var i, s, e, id;
+	for (i = 0; i < simpleTextBtnsEl.length; i++) {
+		e = simpleTextBtnsEl[i]
+		id = e.id
+		s = textBtn(e)
+		s.id = id
+		simpleBtns[i] = s
+	}
+
+	var setupMaskTween = (blockSize)=> {
+		if(masksTween != undefined) {
+			masksTween.clear()
+			masksTween = null
+		}
+ 		masksTween = new TimelineMax()
+		masksTween.staggerFromTo(masksChildren, 1, { x:blockSize[0]+2, scaleY:4, transformOrigin:'0% 0%' }, { x:-blockSize[0]-2, scaleY:1, transformOrigin:'0% 0%', ease:Expo.easeInOut }, 0.08, 0.1)
+		masksTween.to(background, 0.4, { scale:1.2, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0)
+		masksTween.to(background, 0.5, { scale:1, transformOrigin:'50% 50%', ease:Elastic.easeOut }, 0.1)
+		masksTween.pause(0)
+	}
 
 	var onTitleClicked = (e)=> {
 		e.preventDefault()
@@ -31,10 +61,16 @@ var bottomTexts = (parent)=> {
 	for (i = 0; i < ids.length; i++) {
 		id = ids[i]
 		e = textsEls[i]
-		
+		var txtBtn = undefined
+		for (var j = 0; j < simpleBtns.length; j++) {
+			if(simpleBtns[j].id == id) {
+				txtBtn = simpleBtns[j]
+			}
+		}
 		texts[i] = {
 			id: id,
-			el: e
+			el: e,
+			btn: txtBtn
 		}
 	}
 
@@ -78,6 +114,8 @@ var bottomTexts = (parent)=> {
 			socialWrapper.style.left = (innerBlockSize[0] >> 1) - (socialSize[0] >> 1) + 'px'
 			socialWrapper.style.top = innerBlockSize[1] - socialSize[1] - (padding >> 1) + 'px'
 
+			setupMaskTween(innerBlockSize)
+
 			if(currentOpenId != undefined) {
 				scope.openTxtById(currentOpenId, true)
 			}
@@ -92,19 +130,32 @@ var bottomTexts = (parent)=> {
 		openTxtById: (id, force)=> {
 			currentOpenId = id
 			var f = force || false
+			if(!f) {
+				if(isAnimate) return
+				isAnimate = true
+				changeTextAnimTimeout = setTimeout(()=>{
+					isAnimate = false
+				}, 1100)
+			}
 			var i, text;
 			for (i = 0; i < texts.length; i++) {
 				text = texts[i]
 				if(id == text.id) {
-					if(oldTl != undefined) oldTl.timeScale(2.6).reverse()
+					if(oldText != undefined){
+						// if(id == oldText.id) return
+						oldText.tl.timeScale(2.6).reverse()
+						if(oldText.btn != undefined) oldText.btn.disactivate()
+					}
 
 					if(f) {
 						text.tl.pause(text.tl.totalDuration())
 					}else{
-						setTimeout(()=>text.tl.timeScale(1.2).play(), 600)
+						setTimeout(()=>text.tl.timeScale(1.2).play(), 900)
+						setTimeout(()=>masksTween.play(0), 200)
+						if(text.btn != undefined) text.btn.activate()
 					}
 
-					oldTl = text.tl
+					oldText = text
 					return
 				}
 			}
@@ -119,10 +170,12 @@ var bottomTexts = (parent)=> {
 				t = texts[i]
 				t.tl.clear()
 			}
+			masksTween.clear()
 			ids = null
 			texts = null
 			allTitles = null
 			textsEls = null
+			masksTween = null
 		}
 	}
 

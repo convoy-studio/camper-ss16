@@ -108,7 +108,7 @@ export default (holder, mouse, data)=> {
 				animation.fposition.x = animation.iposition.x
 				animation.fposition.y = animation.iposition.y
 				animation.fposition.x += (mouse.nX - 0.5) * 20
-				animation.fposition.y -= (mouse.nY - 0.5) * 20
+				animation.fposition.y -= (mouse.nY - 0.5) * (mouse.nY * 60)
 			}
 
 			springTo(animation, animation.fposition, 1)

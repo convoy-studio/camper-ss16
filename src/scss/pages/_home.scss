@@ -70,6 +70,9 @@
 		z-index: 4;
 		top: 0;
 		left: 0;
+		.text-btn {
+			position: relative;
+		}
 		.titles-wrapper {
 			color: $green;
 			position: absolute;
@@ -111,10 +114,31 @@
 
 			}
 		}
-		.background {
+		.inner-mask-background {
+			position: absolute;
+			@extend .full;
+			z-index: 1;
+			overflow: hidden;
+			& > div {
+				position: absolute;
+				@extend .full;
+			}
+			div {
+				&:first-child {
+					background-color: $green;
+					z-index: 1;
+				}
+				&:last-child {
+					background-color: $green-light;	
+					z-index: 0;
+				}
+			}
+		}
+		.inner-background {
 			@extend .full;
 			background-color: #ffffff;
 			// border: 2px solid $green;
+			z-index: 0;
 		}
 		#social-wrapper{
 			position: absolute;

@@ -21,7 +21,7 @@ AppStore.Detector.isSupportWebGL = Utils.SupportWebGL()
 if(AppStore.Detector.oldIE) AppStore.Detector.isMobile = true
 
 // Debug
-AppStore.Detector.isMobile = true
+// AppStore.Detector.isMobile = true
 
 var app;
 if(AppStore.Detector.isMobile) {

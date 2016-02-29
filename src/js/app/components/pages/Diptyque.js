@@ -53,6 +53,11 @@ export default class Diptyque extends Page {
 			this.getImageUrlById('character-bg')
 		)
 
+		this.blurFilter = new PIXI.filters.BlurFilter()
+		this.blurFilter.blurX = 0
+		this.blurFilter.blurY = 0
+		this.pxContainer.filters = [ this.blurFilter ]
+
 		var imgExt = AppStore.getImageDeviceExtension()
 
 		this.character = character(this.rightPart.holder, this.getImageUrlById('character'+imgExt), this.getImageSizeById('character'+imgExt))
@@ -123,6 +128,14 @@ export default class Diptyque extends Page {
 		this.mouse.y = e.clientY
 		this.mouse.nX = (e.clientX / windowW) * 1
 		this.mouse.nY = (e.clientY / windowH) * 1
+
+		var newBlur;
+		if(this.selfieStick.isOpened) {
+			newBlur = 4 + (0.5 * this.mouse.nY)
+		}else{
+			newBlur = 6 * Math.max(this.mouse.nY - 0.5, 0)
+		}
+		this.blurFilter.blurY += (newBlur - this.blurFilter.blurY) * 0.1
 	}
 	onSelfieStickClicked(e) {
 		e.preventDefault()
@@ -234,6 +247,7 @@ export default class Diptyque extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
+		this.pxContainer.filters = []
 		AppStore.off(AppConstants.OPEN_FUN_FACT, this.onOpenFact)
 		AppStore.off(AppConstants.CLOSE_FUN_FACT, this.onCloseFact)
 		dom.event.off(window, 'mousemove', this.onMouseMove)
@@ -254,6 +268,7 @@ export default class Diptyque extends Page {
 		this.character = null
 		this.arrowsWrapper = null
 		this.mainBtns = null
+		this.blurFilter = null
 		super.componentWillUnmount()
 	}
 }

@@ -125,28 +125,6 @@ var grid = (props, parent, onItemEnded)=> {
 				}
 			};
 		},
-		transitionInItem: (index, type)=> {
-			// var item = scope.cells[index]
-			// item.seat = index
-
-			// item.canvas.classList.add('enable')
-			
-			// if(type == AppConstants.ITEM_VIDEO) {
-			// 	item.play()
-			// }else{
-			// 	item.timeout(imageEnded, 2000)
-			// 	item.seek(Utils.Rand(2, 10, 0))
-			// }
-		},
-		transitionOutItem: (item)=> {
-			// item.canvas.classList.remove('enable')
-
-			// item.video.currentTime(0)
-			// item.pause()
-			// setTimeout(()=>{
-			// 	item.drawOnce()
-			// }, 500)
-		},
 		clear: ()=> {
 			for (var i = 0; i < cells.length; i++) {
 				if(cells[i] != undefined) {
