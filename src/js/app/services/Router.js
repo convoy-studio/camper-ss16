@@ -15,7 +15,8 @@ class Router {
 		hasher.oldHash = undefined
 
 		// remove the analytics parameters
-		var hash = window.location.hash.split('?')
+		var loc = AppStore.Detector.isSafari ? location.hash : window.location.hash
+		var hash = loc.split('?')
 		window.location.hash = hash[0]
 
 		hasher.initialized.add(this.didHasherChange.bind(this))

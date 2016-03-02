@@ -43,6 +43,7 @@
     "hbsfy": "^2.2.1",
     "imagemin-pngcrush": "^4.1.0",
     "imagemin-pngquant": "^4.1.0",
+    "intreq": "0.0.0",
     "lazypipe": "^0.2.3",
     "lodash": "^3.10.1",
     "node-dir": "^0.1.8",

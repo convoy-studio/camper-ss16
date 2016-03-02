@@ -176,7 +176,7 @@
 	.around-border-container {
 		$borderSize: 10px;
 		position: absolute;
-		z-index: 2;
+		z-index: 4;
 		top: 0;
 		& > div {
 			position: absolute;
@@ -191,7 +191,7 @@
 	}
 	.around-border-letters-container {
 		position: absolute;
-		z-index: 3;
+		z-index: 5;
 		top: 0;
 		& > div {
 			& > div {

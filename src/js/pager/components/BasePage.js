@@ -21,8 +21,8 @@ export default class BasePage extends BaseComponent {
 	}
 	willTransitionIn() {
 		this.tlIn.eventCallback("onComplete", this.didTransitionInComplete)
-		this.tlIn.timeScale(1.6)
-		setTimeout(()=>this.tlIn.play(0), 800)
+		this.tlIn.timeScale(1.8)
+		setTimeout(()=>this.tlIn.play(0), 0)
 	}
 	willTransitionOut() {
 		if(this.tlOut.getChildren().length < 1) {

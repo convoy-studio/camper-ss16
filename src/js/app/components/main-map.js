@@ -19,6 +19,7 @@ export default (parent, type) => {
 	var currentPaths, fillLine, dashedLine, stepTotalLen = 0;
 	var previousHighlightIndex = undefined;
 	var el = dom.select('.map-wrapper', parent)
+	var svgMap = dom.select('svg', el)
 	var titlesWrapper = dom.select('.titles-wrapper', el)
 	var mapdots = dom.select.all('#map-dots .dot-path', el)
 	var footsteps = dom.select.all('#footsteps g', el)
@@ -85,7 +86,7 @@ export default (parent, type) => {
 			var windowW = AppStore.Window.w
 			var windowH = AppStore.Window.h
 
-			var mapW = 693, mapH = 500
+			var mapW = 760, mapH = 645
 			var mapSize = []
 			var resizeVars = Utils.ResizePositionProportionally(windowW*0.35, windowH*0.35, mapW, mapH)
 			mapSize[0] = mapW * resizeVars.scale
@@ -94,14 +95,17 @@ export default (parent, type) => {
 			el.style.width = mapSize[0] + 'px'
 			el.style.height = mapSize[1] + 'px'
 			el.style.left = (windowW >> 1) - (mapSize[0] >> 1) - 40 + 'px'
-			el.style.top = (windowH >> 1) - (mapSize[1] >> 1) + 'px'
+			el.style.top = (windowH >> 1) - (mapSize[1] >> 1) + (mapSize[1] * 0.08) + 'px'
 
-			titles['deia'].el.style.left = titlePosX(mapSize[0], 800) + 'px'
-			titles['deia'].el.style.top = titlePosY(mapSize[1], 330) + 'px'
-			titles['es-trenc'].el.style.left = titlePosX(mapSize[0], 1250) + 'px'
-			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 850) + 'px'
-			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 426) + 'px'
-			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 500) + 'px'
+			svgMap.style.width = mapSize[0] + 'px'
+			svgMap.style.height = mapSize[1] + 'px'
+
+			titles['deia'].el.style.left = titlePosX(mapSize[0], 640) + 'px'
+			titles['deia'].el.style.top = titlePosY(mapSize[1], 280) + 'px'
+			titles['es-trenc'].el.style.left = titlePosX(mapSize[0], 1070) + 'px'
+			titles['es-trenc'].el.style.top = titlePosY(mapSize[1], 720) + 'px'
+			titles['arelluf'].el.style.left = titlePosX(mapSize[0], 340) + 'px'
+			titles['arelluf'].el.style.top = titlePosY(mapSize[1], 450) + 'px'
 		},
 		highlightDots: (oldHash, newHash)=> {
 			selectedDots = []

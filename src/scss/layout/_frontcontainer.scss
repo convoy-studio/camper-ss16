@@ -13,9 +13,12 @@
 	.logo {
 		position: absolute;
 		$w: 100px;
+		$h: 36px;
 		width: $w;
+		height: $h;
 		@include screen(0px, $MQ_MEDIUM) {
 	        width: $w * 0.8;
+	        height: $h * 0.8;
 	    }
 		left: $PADDING_AROUND;
 		top: $PADDING_AROUND;

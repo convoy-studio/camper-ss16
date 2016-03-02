@@ -66,7 +66,7 @@ var production = deploy
 
 // Aliasify App's paths
 var aliasifyConfig = require('./config/aliasifyConfig')
-aliasifyConfig.configDir = __dirname
+aliasifyConfig.configDir = './'
 aliasifyConfig.buildAliases(srcBasePath)
 var aliasify = require('aliasify').configure(aliasifyConfig)
 
@@ -257,6 +257,10 @@ var tasks = {
             };
 
         });
+
+    },
+
+    intReqTransform: function() {
 
     },
 

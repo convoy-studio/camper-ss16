@@ -247,7 +247,6 @@ export default class Diptyque extends Page {
 		super.resize()
 	}
 	componentWillUnmount() {
-		this.pxContainer.filters = []
 		AppStore.off(AppConstants.OPEN_FUN_FACT, this.onOpenFact)
 		AppStore.off(AppConstants.CLOSE_FUN_FACT, this.onCloseFact)
 		dom.event.off(window, 'mousemove', this.onMouseMove)
@@ -268,7 +267,6 @@ export default class Diptyque extends Page {
 		this.character = null
 		this.arrowsWrapper = null
 		this.mainBtns = null
-		this.blurFilter = null
 		super.componentWillUnmount()
 	}
 }

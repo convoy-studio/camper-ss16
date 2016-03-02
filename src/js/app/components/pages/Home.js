@@ -4,7 +4,7 @@ import Utils from 'Utils'
 import bottomTexts from 'bottom-texts-home'
 import AppConstants from 'AppConstants'
 import grid from 'grid-home'
-import imageCanvasesGrid from 'image-to-canvases-grid'
+import bgImg from 'home-bg-image'
 import aroundBorder from 'around-border-home'
 import map from 'main-map'
 import dom from 'dom-hand'
@@ -29,11 +29,10 @@ export default class Home extends Page {
 		props.data['es-trenc-txt'] = texts['es-trenc']
 
 		super(props)
-		var bgUrl = this.getImageUrlById('background')
-		this.props.data.bgurl = bgUrl
 
-		this.triggerNewItem = this.triggerNewItem.bind(this)
-		this.onItemEnded = this.onItemEnded.bind(this)
+		this.props.data.bgurl = this.getImageUrlById('background')
+		this.props.data.bgdisplacementUrl = this.getImageUrlById('displacement')
+
 		this.onMouseMove = this.onMouseMove.bind(this)
 	}
 	componentDidMount() {
@@ -44,18 +43,9 @@ export default class Home extends Page {
 		this.mouse = new PIXI.Point()
 		this.mouse.nX = this.mouse.nY = 0
 
-		this.seats = [
-			1, 3, 5,
-			7, 9, 11,
-			15, 17,
-			21, 23, 25
-		]
-
-		this.usedSeats = []
-
-		this.imgCGrid = imageCanvasesGrid(this.element)
-		this.imgCGrid.load(this.props.data.bgurl)
-		this.grid = grid(this.props, this.element, this.onItemEnded)
+		this.bgImg = bgImg(this.element, this.pxContainer, this.props.data.bgdisplacementUrl)
+		this.bgImg.load(this.props.data.bgurl)
+		this.grid = grid(this.props, this.element)
 		this.grid.init()
 		this.bottomTexts = bottomTexts(this.element)
 		this.aroundBorder = aroundBorder(this.element)
@@ -70,7 +60,8 @@ export default class Home extends Page {
 
 		this.tlIn.from(this.aroundBorder.el, 1, { opacity:0, ease:Expo.easeInOut }, 0)
 		this.tlIn.from(this.aroundBorder.letters, 1, { opacity:0, ease:Expo.easeInOut }, 0)
-		this.tlIn.from(this.imgCGrid.el, 1, { opacity:0, ease:Expo.easeInOut }, 0)
+		this.tlIn.from(this.bgImg.sprite, 1, { alpha:0, ease:Expo.easeInOut }, 0)
+		this.tlIn.from(this.bgImg.el, 1, { opacity:0.2, ease:Expo.easeInOut }, 0)
 		this.tlIn.staggerFrom(this.grid.children, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.1)
 		this.tlIn.staggerFrom(this.grid.lines.horizontal, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
 		this.tlIn.staggerFrom(this.grid.lines.vertical, 1, { opacity:0, ease:Expo.easeInOut }, 0.01, 0.2)
@@ -83,27 +74,12 @@ export default class Home extends Page {
 		super.didTransitionInComplete()
 	}
 	willTransitionIn() {
-		setTimeout(()=>dom.classes.add(this.map.el, 'green-mode'), 1000)
+		setTimeout(()=>dom.classes.add(this.map.el, 'green-mode'), 500)
 		super.willTransitionIn()
 	}
-	triggerNewItem(type) {
-		var index = this.seats[Utils.Rand(0, this.seats.length - 1, 0)]
-		for (var i = 0; i < this.usedSeats.length; i++) {
-			var seat = this.usedSeats[i]
-			if(seat == index) {
-				if(this.usedSeats.length < this.seats.length - 2) this.triggerNewItem(type)
-				return
-			}
-		};
-		this.usedSeats.push(index)
-	}
-	onItemEnded(item) {
-		for (var i = 0; i < this.usedSeats.length; i++) {
-			var usedSeat = this.usedSeats[i]
-			if(usedSeat == item.seat) {
-				this.usedSeats.splice(i, 1)
-			}
-		};
+	willTransitionOut() {
+		this.bgImg.switchCanvasToDom()
+		super.willTransitionOut()
 	}
 	onMouseMove(e) {
 		e.preventDefault()
@@ -116,17 +92,7 @@ export default class Home extends Page {
 	}
 	update() {
 		if(!this.transitionInCompleted) return
-		// this.videoTriggerCounter += 1
-		// if(this.videoTriggerCounter > 800) {
-		// 	this.videoTriggerCounter = 0
-		// 	this.triggerNewItem(AppConstants.ITEM_VIDEO)
-		// }
-		// this.imageTriggerCounter += 1
-		// if(this.imageTriggerCounter > 30) {
-		// 	this.imageTriggerCounter = 0
-		// 	this.triggerNewItem(AppConstants.ITEM_IMAGE)
-		// }
-		this.imgCGrid.update(this.mouse)
+		this.bgImg.update(this.mouse)
 		super.update()
 	}
 	resize() {
@@ -136,7 +102,7 @@ export default class Home extends Page {
 		var gGrid = gridPositions(windowW, windowH, AppConstants.GRID_COLUMNS, AppConstants.GRID_ROWS, 'cols_rows')
 
 		this.grid.resize(gGrid)
-		this.imgCGrid.resize(gGrid)
+		this.bgImg.resize(gGrid)
 		this.bottomTexts.resize()
 		this.aroundBorder.resize()
 		this.map.resize()

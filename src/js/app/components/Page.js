@@ -19,7 +19,11 @@ export default class Page extends BasePage {
 		super.componentDidMount()
 	}
 	willTransitionIn() {
-		AppStore.Canvas.style['z-index'] = 4
+		if(this.props.hash.type == AppConstants.HOME) {
+			AppStore.Canvas.style['z-index'] = 1
+		}else{
+			AppStore.Canvas.style['z-index'] = 4
+		}
 		super.willTransitionIn()
 	}
 	willTransitionOut() {

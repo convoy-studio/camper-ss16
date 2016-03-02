@@ -129,8 +129,13 @@ var grid = (props, parent, onItemEnded)=> {
 			for (var i = 0; i < cells.length; i++) {
 				if(cells[i] != undefined) {
 					cells[i].clear()
+					cells[i] = null
 				}
 			};
+			gridChildren = null
+			gridFrontChildren = null
+			linesHorizontal = null
+			linesVertical = null
 		}
 	} 
 

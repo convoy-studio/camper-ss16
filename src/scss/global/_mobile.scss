@@ -11,14 +11,15 @@ html.mobile {
 		background-color: $green;
 		position: fixed;
 		.logo {
-			$size: 70px;
-			width: $size;
-			height: $size;
+			$w: 70px;
+			$h: 25.2px;
+			width: $w;
+			height: $h;
 			position: absolute;
 			left: 50%;
-			margin-left: -$size/2;
+			margin-left: -$w/2;
 			top: 50%;
-			margin-top: -10px;
+			margin-top: -$h/2;
 		}
 	}
 
@@ -54,11 +55,12 @@ html.mobile {
 				&.com {
 					background-color: black;
 					.wrapper {
-						$s: 50px;
-						width: $s;
-						height: $s;
+						$w: 50px;
+						$h: 24.2px;
+						width: $w;
+						height: $h;
 						left: 50%;
-						margin-left: -$s/2;
+						margin-left: -$w/2;
 						position: absolute;
 					}
 				}
