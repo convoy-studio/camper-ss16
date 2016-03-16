@@ -5,6 +5,7 @@ import AppConstants from 'AppConstants'
 import Utils from 'Utils'
 import miniVideo from 'mini-video'
 import colorUtils from 'color-utils'
+import Router from 'Router'
 
 export default (holder, mouse, data)=> {
 
@@ -60,7 +61,8 @@ export default (holder, mouse, data)=> {
 	})
 	mVideo.addTo(videoHolder)
 	mVideo.on('ended', onVideoEnded)
-	var videoSrc = data['selfie-stick-video-url']
+	var hashObj = Router.getNewHash()
+	var videoSrc = AppStore.baseMediaPath() + 'image/diptyque/' + hashObj.hash + '/selfie.mp4'
 
 	var stickImg = img(AppStore.baseMediaPath() + 'image/selfiestick.png', ()=> {
 

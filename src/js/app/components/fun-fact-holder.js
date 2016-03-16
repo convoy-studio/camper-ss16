@@ -6,6 +6,7 @@ import dom from 'dom-hand'
 import Utils from 'Utils'
 import colorUtils from 'color-utils'
 import AppActions from 'AppActions'
+import Router from 'Router'
 
 export default (pxContainer, parent, mouse, data, props)=> {
 	var scope;
@@ -46,7 +47,8 @@ export default (pxContainer, parent, mouse, data, props)=> {
 		autoplay: false,
 		loop: true
 	})
-	var videoSrc = data['fun-fact-video-url']
+	var hashObj = Router.getNewHash()
+	var videoSrc = AppStore.baseMediaPath() + 'image/diptyque/' + hashObj.hash + '/funfact.mp4'
 	mVideo.addTo(videoWrapper)
 	mVideo.load(videoSrc, ()=> {
 		isReady = true

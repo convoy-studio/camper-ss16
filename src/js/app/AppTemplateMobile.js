@@ -94,6 +94,12 @@ class AppTemplateMobile extends BaseComponent {
 		super.componentDidMount()
 	}
 	onReady() {
+		
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.src = "http://fast.wistia.com/assets/external/E-v1.js";
+		dom.tree.add(this.element, s)
+
 		AppStore.on(AppConstants.WINDOW_RESIZE, this.resize)
 	}
 	onScroll(e) {

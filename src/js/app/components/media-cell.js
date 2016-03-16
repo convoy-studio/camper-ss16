@@ -19,6 +19,7 @@ export default (container, front, videoUrl)=> {
 	var size, position, resizeVideoVars, resizeImageVars;
 	var img;
 	var isMouseEnter = false;
+	var videoPath = AppStore.baseMediaPath() + 'image/home/videos/' + name + '.mp4'
 
 	var onMouseEnter = (e)=> {
 		e.preventDefault()
@@ -28,7 +29,7 @@ export default (container, front, videoUrl)=> {
 			dom.classes.add(container, 'over')
 			mVideo.play(0)
 		}else{
-			mVideo.load(videoUrl, ()=> {
+			mVideo.load(videoPath, ()=> {
 				if(!isMouseEnter) return
 				dom.classes.add(container, 'over')
 				mVideo.play()
