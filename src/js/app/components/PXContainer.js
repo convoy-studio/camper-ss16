@@ -21,6 +21,7 @@ export default class PXContainer {
 		    antialias: true
 		};
 		this.renderer = new PIXI.autoDetectRenderer(1, 1, renderOptions)
+		this.renderer.backgroundColor = 0xFFFFFF
 		// this.renderer = new PIXI.CanvasRenderer(1, 1, renderOptions)
 		this.currentColor = 0xffffff
 		var el = dom.select(elementId)
